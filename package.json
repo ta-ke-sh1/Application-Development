@@ -1,0 +1,18 @@
+{
+  "dependencies": {
+    "express": "^4.17.3",
+    "hbs": "^4.2.0",
+    "mongodb": "^4.4.1",
+    "nodemon": "^2.0.15"
+  },
+  "name": "march17th",
+  "version": "1.0.0",
+  "main": "app.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ha The Trung",
+  "license": "ISC",
+  "description": ""
+}
