@@ -13,6 +13,29 @@
         {{> cursor }}
         <center>
             <h1>Admin Index</h1>
+            <a href="admin/addBook"><button>Add Book</button></a>
+            <table style="border: 1px solid black;">
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Image</th>
+                    <th>Option</th>
+                </tr>
+                {{#each books}}
+                    <tr>
+                        <td>{{name}}</td>
+                        <td>{{description}}</td>
+                        <td>{{price}}</td>
+                        <td>{{quantity}}</td>
+                        <td><img src="/Books/{{image}}" height="100px">
+                        </td>
+                        <td><a href="admin/deleteBook/{{_id}}">Delete</a></td>
+                    </tr>
+                {{/each}}
+            </table>
         </center>
     </body>
+
 </html>

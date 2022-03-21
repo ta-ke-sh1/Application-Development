@@ -1,10 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const { insertObject } = require("../databaseHandler");
+const { insertObject, getAll, deleteObject, getObject } = require("../databaseHandler");
 
 //neu request la: /admin
-router.get("/", (req, res) => {
-    res.render("Admin/adminIndex");
+router.get("/", async (req, res) => {
+    res.render("Admin/adminIndex", { books: await getAll("Books"), title: "Admin" });
 });
 
 //neu request la: /admin/addUser
@@ -26,12 +26,14 @@ router.post("/addUser", (req, res) => {
     res.render("home");
 });
 
+// Add Book
 router.post("/addNewBook", (req, res) => {
     const name = req.body.txtName;
     const description = req.body.txtDescription;
     const price = req.body.numPrice;
     const quantity = req.body.numQuantity;
     const image = req.files.image;
+    image.name = name + ".jpg";
     const path = __dirname + "/../public/Books/" + image.name;
     image.mv(path, (err) => {
         if (err) throw err;
@@ -44,11 +46,16 @@ router.post("/addNewBook", (req, res) => {
         image: image.name
     }
     insertObject("Books", objectToInsert);
-    res.render("home");
+    res.redirect("/admin/")
 })
-// Add Book
+// Add Book Render
 router.get("/addBook", (req, res) => {
     res.render("Admin/addBook");
+})
+
+router.get("/deleteBook/:id", async (req, res) => {
+    await deleteObject("Books", getObject(req.params.id, "Books"));
+    res.redirect("/");
 })
 
 module.exports = router;

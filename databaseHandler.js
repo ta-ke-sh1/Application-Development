@@ -26,19 +26,23 @@ async function insertObject(collectionName, objectToInsert) {
     );
 }
 
+async function getObject(id, collectionName) {
+    const dbo = await getDB();
+    return await dbo.collection(collectionName).findOne({ _id: ObjectId(id) });
+}
+
+
 async function updateObject(collectionName, objectToUpdate, values) {
     const dbo = await getDB();
     await dbo.collection(collectionName).updateOne(objectToUpdate, values);
-    if (err) throw err;
     console.log("Object updated!");
 }
 
 async function deleteObject(collectionName, objectToDelete) {
     const dbo = await getDB();
     await dbo.collection(collectionName).deleteOne(objectToDelete);
-    if (err) throw err;
     console.log("Object deleted!");
 }
 
 
-module.exports = { insertObject, updateObject, deleteObject, getAll };
+module.exports = { insertObject, updateObject, deleteObject, getAll, getObject };
