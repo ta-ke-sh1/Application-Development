@@ -10,6 +10,11 @@ async function getDB() {
     return dbo;
 }
 
+async function getAll(collectionName) {
+    const dbo = await getDB();
+    return await dbo.collection(collectionName).find({}).toArray();
+}
+
 async function insertObject(collectionName, objectToInsert) {
     const dbo = await getDB();
     const newObject = await dbo
@@ -21,4 +26,19 @@ async function insertObject(collectionName, objectToInsert) {
     );
 }
 
-module.exports = { insertObject };
+async function updateObject(collectionName, objectToUpdate, values) {
+    const dbo = await getDB();
+    await dbo.collection(collectionName).updateOne(objectToUpdate, values);
+    if (err) throw err;
+    console.log("Object updated!");
+}
+
+async function deleteObject(collectionName, objectToDelete) {
+    const dbo = await getDB();
+    await dbo.collection(collectionName).deleteOne(objectToDelete);
+    if (err) throw err;
+    console.log("Object deleted!");
+}
+
+
+module.exports = { insertObject, updateObject, deleteObject, getAll };

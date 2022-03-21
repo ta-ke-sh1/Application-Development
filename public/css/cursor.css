@@ -1,0 +1,34 @@
+.bdy {
+    margin-left: 32px;
+}
+.circle {
+    width: 4px;
+    height: 4px;
+    border-radius: 60%;
+    background-color: #2f1eb8;
+    border: solid 1px #2f1eb8;
+    position: fixed;
+    z-index: 100;
+    pointer-events: none;
+}
+
+.outer-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: solid 1px #2f1eb8;
+    transition-duration: 0.25s;
+    transition-timing-function: ease-out;
+    position: fixed;
+    z-index: 99;
+    pointer-events: none;
+}
+
+body *,
+body button {
+    cursor: none !important;
+}
+
+html:hover {
+    cursor: none;
+}
