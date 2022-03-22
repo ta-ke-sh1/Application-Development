@@ -31,7 +31,6 @@ async function getObject(id, collectionName) {
     return await dbo.collection(collectionName).findOne({ _id: ObjectId(id) });
 }
 
-
 async function updateObject(collectionName, objectToUpdate, values) {
     const dbo = await getDB();
     await dbo.collection(collectionName).updateOne(objectToUpdate, values);
@@ -44,5 +43,31 @@ async function deleteObject(collectionName, objectToDelete) {
     console.log("Object deleted!");
 }
 
+async function checkUser(username, password) {
+    const dbo = await getDB();
+    const user = await dbo
+        .collection("Users")
+        .findOne({ userName: username, password: password });
+    if (user != null) {
+        return true;
+    } else return false;
+}
 
-module.exports = { insertObject, updateObject, deleteObject, getAll, getObject };
+async function getUser(username) {
+    const dbo = await getDB();
+    const user = await dbo.collection("Users").findOne({ userName: username });
+    if (user != null) {
+        console.log(user);
+        return user.role;
+    } else return "-1";
+}
+
+module.exports = {
+    insertObject,
+    updateObject,
+    deleteObject,
+    getAll,
+    getObject,
+    checkUser,
+    getUser,
+};

@@ -3,10 +3,10 @@ const app = express();
 const fs = require("fs");
 const hbs = require("hbs");
 const path = require("path");
-const fileUpload = require('express-fileupload');
+const fileUpload = require("express-fileupload");
 const { getAll } = require("./databaseHandler");
 
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + "/public"));
 
 // Set view engine
 app.set("view engine", "hbs");
@@ -19,7 +19,13 @@ app.use(fileUpload());
 hbs.registerPartials(path.join(__dirname, "views", "headers"));
 hbs.registerPartial(
     "header",
-    fs.readFileSync(__dirname + "/views/header.hbs", "utf8")
+    fs.readFileSync(__dirname + "/views/Headers/header.hbs", "utf8")
+);
+
+hbs.registerPartials(path.join(__dirname, "views", "AdminHeader"));
+hbs.registerPartial(
+    "AdminHeader",
+    fs.readFileSync(__dirname + "/views/Headers/AdminHeader.hbs", "utf8")
 );
 
 hbs.registerPartials(path.join(__dirname, "views", "cursor"));
@@ -34,7 +40,7 @@ app.use("/admin", adminController);
 
 // Homepage
 app.get("/", async (req, res) => {
-    var result = await getAll("Books")
+    var result = await getAll("Books");
     res.render("home", { books: result });
 });
 
