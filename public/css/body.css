@@ -1,0 +1,28 @@
+@font-face {
+    font-family: Maison-Medium;
+    src: url("../Fonts/MaisonNeue-Medium.otf");
+}
+
+@font-face {
+    font-family: Maison-Book;
+    src: url("../Fonts/MaisonNeue-Book.otf");
+}
+
+@font-face {
+    font-family: Maison-Demi;
+    src: url("../Fonts/MaisonNeue-Demi.otf");
+}
+
+@font-face {
+    font-family: Maison-Thin;
+    src: url("../Fonts/MaisonNeue-Thin.otf");
+}
+
+@font-face {
+    font-family: Maison-Light;
+    src: url("../Fonts/MaisonNeue-Light.otf");
+}
+
+body {
+    font-family: Maison-Medium;
+}

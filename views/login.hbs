@@ -14,16 +14,31 @@
         <br /><br />
         <center>
             <h1>Login</h1>
+            <br>
             <form action="/admin/login" method="post">
-                <input type="text" name="txtUsername" id="" placeholder="Enter user name">
-                <br><br>
-                <input type="password" name="txtPassword" id="" placeholder="Enter password">
-                <br><br>
-                <input type="submit" value="Log in">
-                <br><br>
+                <input type="text" name="txtUsername" id="" placeholder="Enter user name" class="inp">
+                <br>
+                <input type="password" name="txtPassword" id="password" placeholder="Enter password" class="inp">
+                <br>
+                <div class="toggle">
+                    <input type="checkbox" onclick="toggleVisibility()" > Show Password
+                    <span class="left"><a href="">Forgot Password?</a></span>
+                </div>
+                <br>
+                <input type="submit" value="Log in" id="btn_Save" class="inp">
+                <br>
                 Not a member? <a href="/admin/register">Register here!</a>
             </form>
         </center>
     </body>
-
+    <script>
+function toggleVisibility() {
+  var x = document.getElementById("password");
+  if (x.type === "password") {
+    x.type = "text";
+  } else {
+    x.type = "password";
+  }
+}
+</script>
 </html>

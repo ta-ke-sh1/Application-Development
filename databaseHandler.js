@@ -49,8 +49,8 @@ async function checkUser(username, password) {
         .collection("Users")
         .findOne({ userName: username, password: password });
     if (user != null) {
-        return true;
-    } else return false;
+        return user.role;
+    } else return "-1";
 }
 
 async function getUser(username) {
@@ -58,8 +58,8 @@ async function getUser(username) {
     const user = await dbo.collection("Users").findOne({ userName: username });
     if (user != null) {
         console.log(user);
-        return user.role;
-    } else return "-1";
+        return true;
+    } else return false;
 }
 
 module.exports = {

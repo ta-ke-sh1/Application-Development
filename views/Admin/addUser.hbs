@@ -13,20 +13,19 @@
         {{> cursor }}
         <br /><br />
         <center>
-            <h1>Register a new User</h1>
+            <h1>Add new User</h1>
+            <br>
             <form method="post" action="addUser">
-                Name : <input type="text" name="txtName">
-                <br><br>
-                Role:
-                <select name="Role">
+                <input type="text" name="txtName" class="inp" placeholder="Enter username">
+                <br>
+                <select name="Role" class="inp">
                     <option value="admin">Admin</option>
                     <option value="staff">Staff</option>
                 </select>
-                <br><br>
-                Password:
-                <input type="password" name="txtPassword">
-                <br><br>
-                <input type="submit" value="Add User">
+                <br>
+                <input type="password" name="txtPassword" class="inp" placeholder="Enter password">
+                <br>
+                <input type="submit" value="Add User" class="inp" id="btn_Save">
             </form>
         </center>
     </body>

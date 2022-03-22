@@ -9,16 +9,21 @@
 <body>
    {{> header }}
    {{> cursor }}
+   <center>
+      <h1>Register</h1>
+      <br>
    <div class="form-input">
       <form action="register" method="post">
-         <input type="text" name="txtName">
-         <br><br>
-         <input type="password" name="txtPassword" placeholder="Enter password">
-         <br><br>
-         <input type="password" name="txtConfirmPassword" placeholder="Re-enter your password">
-         <br><br>
-         <input type="submit" value="Add User">
+         <input type="text" name="txtName" class="inp" placeholder="Enter your username">
+         <br>
+         <input type="password" name="txtPassword" placeholder="Enter password" class="inp" id="password">
+         <br>
+         <input type="password" name="txtConfirmPassword" placeholder="Re-enter your password" class="inp">
+         <br>
+
+         <input type="submit" value="Add User" id="btn_Save" class="inp">
       </form>
    </div>
+   </center>
 </body>
 </html>

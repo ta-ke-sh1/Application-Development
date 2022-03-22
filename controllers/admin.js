@@ -99,12 +99,17 @@ router.post("/login", async (req, res) => {
     const password = req.body.txtPassword;
     var role = await checkUser(name, password);
     if (role == "-1") {
-        res.end("Invalid User!");
+        console.log("Invalid User!");
+        res.render("login", {
+            error: "Wrong password or username!",
+        });
     } else {
-        res.end("You are " + role);
-        // res.render('/login', {
-        //     error: "Wrong password or username!"
-        // });
+        console.log("You are " + role);
+        req.session["User"] = {
+            userName: name,
+            role: role,
+        };
+        res.redirect("/");
     }
 });
 

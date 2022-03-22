@@ -13,18 +13,20 @@
         {{> cursor }}
         <center>
             <br>
+            <h1>Add new Book</h1>
+            <br>
             <form action="addNewBook" method="POST" class="input-form" enctype="multipart/form-data">
-                <input type="text" name="txtName" id="" placeholder="Enter book's name">
+                <input type="text" name="txtName" id="" placeholder="Enter book's name" class="inp">
                 <br>
-                <input type="text" name="txtDescription" placeholder="Enter book's description" id="description">
+                <input type="text" name="txtDescription" placeholder="Enter book's description" id="description" class="inp">
                 <br>
-                <input type="number" name="numPrice" placeholder="Enter book's price">
+                <input type="number" name="numPrice" placeholder="Enter book's price" class="inp">
                 <br>
-                <input type="number" name="numQuantity" placeholder="Enter quantity in storage">'
+                <input type="number" name="numQuantity" placeholder="Enter quantity in storage" class="inp">
                 <br>
-                <input type="file" name="image" placeholder="Select book's image">
+                <input type="file" name="image" placeholder="Select book's image" class="inp">
                 <br>
-                <input type="submit" value="Add book" id="">
+                <input type="submit" value="Add book" id="btn_Save" class="inp">
             </form>
         </center>
     </body>

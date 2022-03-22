@@ -5,8 +5,19 @@ const hbs = require("hbs");
 const path = require("path");
 const fileUpload = require("express-fileupload");
 const { getAll } = require("./databaseHandler");
+const session = require("express-session");
+const oneDay = 1000 * 60 * 60 * 24;
 
 app.use(express.static(__dirname + "/public"));
+app.use(
+    session({
+        secret: "mysecretkey",
+        saveUninitialized: true,
+        cookie: { maxAge: oneDay },
+        resave: false,
+        saveUninitialized: false,
+    })
+);
 
 // Set view engine
 app.set("view engine", "hbs");
@@ -41,11 +52,19 @@ app.use("/admin", adminController);
 // Homepage
 app.get("/", async (req, res) => {
     var result = await getAll("Books");
-    res.render("home", { books: result });
+    res.render("home", {
+        books: result,
+        userInfo: req.session.User,
+    });
 });
 
 app.get("/login", (req, res) => {
     res.render("login");
+});
+
+app.get("/logout", (req, res) => {
+    req.session.destroy();
+    res.redirect("/");
 });
 
 const PORT = process.env.PORT || 5000;
