@@ -14,8 +14,8 @@
         <br /><br />
         <center>
             <h1>Login</h1>
-            <br>
-            <form action="/admin/login" method="post">
+            <form action="/login" method="post">
+                <div class="error">{{ error }}</div>
                 <input type="text" name="txtUsername" id="" placeholder="Enter user name" class="inp">
                 <br>
                 <input type="password" name="txtPassword" id="password" placeholder="Enter password" class="inp">
@@ -27,7 +27,7 @@
                 <br>
                 <input type="submit" value="Log in" id="btn_Save" class="inp">
                 <br>
-                Not a member? <a href="/admin/register">Register here!</a>
+                Not a member? <a href="/register">Register here!</a>
             </form>
         </center>
     </body>

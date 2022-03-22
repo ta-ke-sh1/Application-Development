@@ -1,17 +1,14 @@
 const express = require("express");
 const router = express.Router();
 
-
-
 const {
     insertObject,
     getAll,
     deleteObject,
     getObject,
     checkUser,
-    updateObject
+    updateObject,
 } = require("../databaseHandler");
-
 
 //neu request la: /admin
 router.get("/", async (req, res) => {
@@ -87,11 +84,10 @@ router.post("/addNewBook", (req, res) => {
 // Add Book Render
 router.get("/addBook", (req, res) => {
     res.render("Admin/addBook");
-
-})
+});
 //Update Book
 router.post("/updateBook", async (req, res) => {
-    const id = req.body.txtID
+    const id = req.body.txtID;
     const name = req.body.txtName;
     const description = req.body.txtDescription;
     const price = req.body.numPrice;
@@ -102,55 +98,41 @@ router.post("/updateBook", async (req, res) => {
         const path = __dirname + "/../public/Books/" + image.name;
         image.mv(path, (err) => {
             if (err) throw err;
-        })
-        var updateValues = { $set: { name: name, description: description, price: price, quantity: quantity, image: image.name } }
-    }
+        });
+        var updateValues = {
+            $set: {
+                name: name,
+                description: description,
+                price: price,
+                quantity: quantity,
+                image: image.name,
+            },
+        };
+    } else
+        var updateValues = {
+            $set: {
+                name: name,
+                description: description,
+                price: price,
+                quantity: quantity,
+            },
+        };
 
-    else
-    var updateValues = { $set: { name: name, description: description, price: price, quantity: quantity } }
-    
-    const objectToUpdate = await getObject(id, "Books")
+    const objectToUpdate = await getObject(id, "Books");
     await updateObject("Books", objectToUpdate, updateValues);
-    res.redirect("/admin/")
-})
+    res.redirect("/admin/");
+});
 //Update Book Render
 router.get("/edit", async (req, res) => {
-    const idValue = req.query.id
-    const objectToUpdate = await getObject(idValue, "Books")
-    res.render("Admin/updateBook", { book: objectToUpdate })
-})
-
-
-
+    const idValue = req.query.id;
+    const objectToUpdate = await getObject(idValue, "Books");
+    res.render("Admin/updateBook", { book: objectToUpdate });
+});
 
 //Delete book
 router.get("/deleteBook/:id", async (req, res) => {
     await deleteObject("Books", getObject(req.params.id, "Books"));
     res.redirect("/");
-});
-
-router.get("/login", async (req, res) => {
-    res.render("login");
-});
-
-// Kiem tra thong tin dang nhap
-router.post("/login", async (req, res) => {
-    const name = req.body.txtUsername;
-    const password = req.body.txtPassword;
-    var role = await checkUser(name, password);
-    if (role == "-1") {
-        console.log("Invalid User!");
-        res.render("login", {
-            error: "Wrong password or username!",
-        });
-    } else {
-        console.log("You are " + role);
-        req.session["User"] = {
-            userName: name,
-            role: role,
-        };
-        res.redirect("/");
-    }
 });
 
 module.exports = router;
