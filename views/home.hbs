@@ -22,7 +22,6 @@
                     <th>Price</th>
                     <th>Quantity</th>
                     <th>Image</th>
-                    <th>Option</th>
                 </tr>
                 {{#each books}}
                     <tr>
@@ -32,9 +31,6 @@
                         <td>{{quantity}}</td>
                         <td>
                             <img src="/Books/{{image}}" height="100px">
-                        </td>
-                        <td>
-                            <td><a href="/updateBook/{{_id}}">Update</a></td>
                         </td>
                     </tr>
                 {{/each}}

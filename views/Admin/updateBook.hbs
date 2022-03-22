@@ -13,20 +13,31 @@
         {{> cursor }}
         <center>
             <br>
-            <form action="updateBook" method="POST" class="input-form" enctype="multipart/form-data">
-                <input type="hidden" name="txtID" value="{{book._id}}">
-                <input type="text" name="txtName" id="" placeholder="Enter book's name" value="{{ book.name }}">
+            <center><h1>Update Book</h1></center>
+            <div class="container-fluid">
                 <br>
-                <input type="text" name="txtDescription" placeholder="Enter book's description" id="description" value="{{ book.description }}">
-                <br>
-                <input type="number" name="numPrice" placeholder="Enter book's price" value="{{ book.price }}">
-                <br>
-                <input type="number" name="numQuantity" placeholder="Enter quantity in storage" value="{{ book.quantity }}">'
-                <br>
-                <input type="file" name="image" placeholder="Select book's image" value="{{ book.image.name }}">
-                <br>
-                <input type="submit" value="Update book" id="">
-            </form>
+                <div class="row">
+                    <div class="col">
+                        <img src="/Books/{{ book.image }}" height="600px" style="margin-right: -100px;">
+                    </div>
+                    <div class="col" style="margin-left: -20%;">
+                        <form action="updateBook" method="POST" class="input-form" enctype="multipart/form-data">
+                            <input type="hidden" name="txtID" value="{{book._id}}">
+                            <input type="text" name="txtName" id="" placeholder="Enter book's name" value="{{ book.name }}" class="inp">
+                            <br>
+                            <input type="text" name="txtDescription" placeholder="Enter book's description" id="description" class="inp" value="{{ book.description }}">
+                            <br>
+                            <input type="number" name="numPrice" placeholder="Enter book's price" value="{{ book.price }}" class="inp">
+                            <br>
+                            <input type="number" name="numQuantity" placeholder="Enter quantity in storage" value="{{ book.quantity }}" class="inp">
+                            <br>
+                            <input type="file" name="image" placeholder="Select book's image" value="{{ book.image.name }}" class="inp">
+                            <br>
+                            <input type="submit" value="Update book" id="btn_Save" class="inp">
+                        </form>
+                    </div>
+                </div>
+            </div>
         </center>
     </body>
 </html>
