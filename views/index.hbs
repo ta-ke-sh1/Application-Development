@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Homepage</title>
+    </head>
+    <style>
+        .body {
+            position: absolute;
+            left: 10%;
+            width: 80%;
+        }
+
+        .card {
+            min-width: 300px;
+        }
+    </style>
+    <body>
+        {{> header }}
+        {{> cursor }}
+        <br /><br />
+        <div class="body">
+            <center>
+                <h1 style="margin-top: 10px;">
+                    Welcome to FBooks
+                </h1>
+                <div>
+                    <p>
+                        "Books are the quietest and most constant of friends; they are the most accessible <br>
+                        and wisest of counselors, and the most patient of teachers."
+                    </p>
+                    <p style="margin-top: -12px; margin-left:400px">
+                        - Charles W. Eliot
+                    </p>
+                </div>
+                <img src="/Page/banner.png" alt="" height="550px" width="auto">
+                <br>
+                <input type="search" name="" id="" placeholder="Search for Book" class="inp" width="100%">
+                <div class="container">
+                    <h1>Classics</h1>
+                    <br>
+                    <div class="row row-cols-1 row-cols-md-3 g-4">
+                        {{#each books}}
+                            <div class="col">
+                                <div class="card h-100">
+                                    <div class="card-body">
+                                        <table>
+                                            <tr>
+                                                <td style="height: 60px;">
+                                                    <img src="/Books/{{image}}" height="400px" width="250px">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <center>{{name}}</center>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Price: ${{ price }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Left in storage: {{ quantity}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <a href="">Add to Cart</a>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        {{/each}}
+                    </div>
+                </div>
+            </center>
+        </div>
+    </body>
+</html>

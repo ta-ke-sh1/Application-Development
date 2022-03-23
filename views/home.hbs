@@ -7,35 +7,25 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Homepage</title>
     </head>
+    <style>
+        .body {
+            position: absolute;
+            left: 10%;
+            width: 80%;
+        }
+
+        .card {
+            min-width: 300px;
+        }
+
+    </style>
 
     <body>
         {{> header }}
         {{> cursor }}
         <br /><br />
-        <center>
-            <h1>Homepage</h1>
-            <h1>Welcome {{ userInfo.userName }}, {{ userInfo.role }}</h1>
-            <table style="border: 1px solid black;">
-                <tr>
-                    <th>Name</th>
-                    <th>Description</th>
-                    <th>Price</th>
-                    <th>Quantity</th>
-                    <th>Image</th>
-                </tr>
-                {{#each books}}
-                    <tr>
-                        <td>{{name}}</td>
-                        <td>{{description}}</td>
-                        <td>{{price}}</td>
-                        <td>{{quantity}}</td>
-                        <td>
-                            <img src="/Books/{{image}}" height="100px">
-                        </td>
-                    </tr>
-                {{/each}}
-            </table>
-        </center>
+        <div class="container-fluid">
+            
+        </div>
     </body>
-
 </html>

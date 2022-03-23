@@ -1,4 +1,5 @@
 <html lang="en">
+
     <head>
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -13,7 +14,15 @@
         <link rel="stylesheet" href="/css/body.css" />
         <link rel="stylesheet" href="/css/alert.css" />
         <link rel="stylesheet" href="/css/form.css?version=1.1" />
+        <style>
+            .nav-item { padding: 6px; transition-duration: 0.3s; } hr {
+            margin-top: 0px; } .navbar{ transition-duration: 0.3s; }
+            .navbar:hover { box-shadow: rgba(0, 0, 0, 0.01) 0px 20px 25px -5px,
+            rgba(0, 0, 0, 0.04) 0px 10px 10px -5px; }
+
+        </style>
     </head>
+
     <body>
         <nav class="navbar navbar-expand-md navbar-light">
             <div
@@ -29,8 +38,11 @@
                 </ul>
             </div>
             <div class="mx-auto order-0">
-                <a class="navbar-brand mx-auto" href="/admin">Welcome to FPT
-                    Bookstore</a>
+                <a class="navbar-brand mx-auto" href="/admin"><img
+                        src="/Logo/fpt.png"
+                        height="40px"
+                        alt=""
+                    /></a>
             </div>
             <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
                 <ul class="navbar-nav ml-auto">
@@ -43,5 +55,7 @@
                 </ul>
             </div>
         </nav>
+        <hr />
     </body>
+
 </html>

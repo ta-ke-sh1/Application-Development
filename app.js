@@ -4,7 +4,7 @@ const fs = require("fs");
 const hbs = require("hbs");
 const path = require("path");
 const fileUpload = require("express-fileupload");
-const { getAll } = require("./databaseHandler");
+const { getAll, checkUser } = require("./databaseHandler");
 const session = require("express-session");
 const oneDay = 1000 * 60 * 60 * 24;
 
@@ -49,10 +49,16 @@ hbs.registerPartial(
 const adminController = require("./controllers/admin");
 app.use("/admin", adminController);
 
+// book controller
+const bookController = require("./controllers/book");
+app.use("/book", bookController);
+
 // Homepage
 app.get("/", async (req, res) => {
     var result = await getAll("Books");
+    var categories = await getAll("Categories");
     res.render("home", {
+        categories: categories,
         books: result,
         userInfo: req.session.User,
     });
@@ -60,6 +66,25 @@ app.get("/", async (req, res) => {
 
 app.get("/login", (req, res) => {
     res.render("login");
+});
+
+app.post("/login", async (req, res) => {
+    const name = req.body.txtUsername;
+    const password = req.body.txtPassword;
+    var role = await checkUser(name, password);
+    if (role == "-1") {
+        console.log("Invalid User!");
+        res.render("login", {
+            error: "Wrong password or username!",
+        });
+    } else {
+        console.log("You are " + role);
+        req.session["User"] = {
+            userName: name,
+            role: role,
+        };
+        res.redirect("/");
+    }
 });
 
 app.get("/logout", (req, res) => {

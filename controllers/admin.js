@@ -62,7 +62,11 @@ router.post("/addUser", (req, res) => {
 // Add Book
 router.post("/addNewBook", (req, res) => {
     const name = req.body.txtName;
+    const author = req.body.txtAuthor;
     const description = req.body.txtDescription;
+    var edition = req.body.numEdition;
+    const publisher = req.body.txtPublisher;
+    const language = req.body.txtLanguage;
     const price = req.body.numPrice;
     const quantity = req.body.numQuantity;
     const image = req.files.image;
@@ -71,9 +75,18 @@ router.post("/addNewBook", (req, res) => {
     image.mv(path, (err) => {
         if (err) throw err;
     });
+    str = edition.toString();
+    if (str.endsWith("1")) edition += "st";
+    else if (str.endsWith("2")) edition += "nd";
+    else if (str.endsWith("3")) edition += "rd";
+    else edition += "th";
     const objectToInsert = {
         name: name,
+        author: author,
         description: description,
+        edition: edition,
+        publisher: publisher,
+        language: language,
         price: price,
         quantity: quantity,
         image: image.name,
