@@ -25,6 +25,11 @@
                             <input type="hidden" name="txtID" value="{{book._id}}">
                             <input type="text" name="txtName" id="" placeholder="Enter book's name" value="{{ book.name }}" class="inp">
                             <br>
+                            <select name="cbCategory" class="inp">
+                                {{#each categories}}
+                                    <option value="{{_id}}">{{CategoryName}}</option>
+                                {{/each}}                    
+                            </select>
                             <input type="text" name="txtAuthor" id="" placeholder="Enter book's author" value="{{ book.author }}" class="inp">
                             <br>
                             <input type="number" name="numEdition" placeholder="Enter book's Edition" value="{{ book.edition }}" id="description" class="inp">
