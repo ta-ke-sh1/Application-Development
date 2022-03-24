@@ -25,7 +25,7 @@
                             <input type="hidden" name="txtID" value="{{book._id}}">
                             <input type="text" name="txtName" id="" placeholder="Enter book's name" value="{{ book.name }}" class="inp">
                             <br>
-                            <select name="cbCategory" class="inp">
+                            <select name="cbCategory" class="inp" multiple="true">
                                 {{#each categories}}
                                     <option value="{{_id}}" type="checkbox">{{name}}</option>
                                 {{/each}}                    
