@@ -48,8 +48,9 @@
                 <input type="search" name="" id="" placeholder="Search for Book" class="inp" width="100%">
                 {{#each categories}}
                 <div class="container">
+                    <h1>{{name}}</h1>
                     <section class="cards">
-                    {{#each books}}
+                    {{#each books in categories}}
                         <div class="col">
                             <div class="book-card">
                                 <a href="/book?id={{ _id }}">
