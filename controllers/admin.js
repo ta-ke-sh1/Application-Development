@@ -62,21 +62,21 @@ router.post("/addUser", (req, res) => {
 //Category index
 router.get("/category", async (req, res) => {
     res.render("Admin/category", {
-        categories: await getAll("Categories")
-    })
-})
+        categories: await getAll("Categories"),
+    });
+});
 
 //Add category
 router.post("/addNewCategory", (req, res) => {
     const name = req.body.txtName;
-    const objectToInsert = {name: name}
-    insertObject("Categories", objectToInsert)
-    res.redirect("/admin/category")
-})
+    const objectToInsert = { name: name };
+    insertObject("Categories", objectToInsert);
+    res.redirect("/admin/category");
+});
 //Add category render
 router.get("/addCategory", (req, res) => {
-    res.render("Admin/addCategory")
-})
+    res.render("Admin/addCategory");
+});
 
 //Update category
 router.post("/updateCategory", async (req, res) => {
@@ -90,14 +90,14 @@ router.post("/updateCategory", async (req, res) => {
     const objectToUpdate = await getObject(id, "Categories");
     await updateObject("Categories", objectToUpdate, updateValues);
     res.redirect("/admin/category/");
-})
+});
 
 //Update category render
 router.get("/editCategory", async (req, res) => {
     const idValue = req.query.id;
     const objectToUpdate = await getObject(idValue, "Categories");
     res.render("Admin/updateCategory", { category: objectToUpdate });
-})
+});
 
 //Delete category
 router.get("/deleteCategory/:id", async (req, res) => {
@@ -108,7 +108,7 @@ router.get("/deleteCategory/:id", async (req, res) => {
 // Add Book
 router.post("/addNewBook", (req, res) => {
     const name = req.body.txtName;
-    const categoryID = req.body.cbCategory
+    const categoryID = req.body.cbCategory;
     const author = req.body.txtAuthor;
     const description = req.body.txtDescription;
     var edition = convertEdition(req.body.numEdition);
@@ -141,7 +141,7 @@ router.post("/addNewBook", (req, res) => {
 });
 // Add Book Render
 router.get("/addBook", async (req, res) => {
-    const categories = await getAll("Categories")
+    const categories = await getAll("Categories");
     res.render("Admin/addBook", {
         categories: categories,
     });
@@ -151,7 +151,7 @@ router.get("/addBook", async (req, res) => {
 router.post("/updateBook", async (req, res) => {
     const id = req.body.txtID;
     const name = req.body.txtName;
-    const categoryID = req.body.cbCategory
+    const categoryID = req.body.cbCategory;
     const author = req.body.txtAuthor;
     const description = req.body.txtDescription;
     var edition = convertEdition(req.body.numEdition);
@@ -202,9 +202,12 @@ router.post("/updateBook", async (req, res) => {
 //Update Book Render
 router.get("/edit", async (req, res) => {
     const idValue = req.query.id;
-    const categories = await getAll("Categories")
+    const categories = await getAll("Categories");
     const objectToUpdate = await getObject(idValue, "Books");
-    res.render("Admin/updateBook", { book: objectToUpdate , categories: categories});
+    res.render("Admin/updateBook", {
+        book: objectToUpdate,
+        categories: categories,
+    });
 });
 
 //Delete book
