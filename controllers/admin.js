@@ -59,6 +59,52 @@ router.post("/addUser", (req, res) => {
     res.render("home");
 });
 
+//Category index
+router.get("/category", async (req, res) => {
+    res.render("Admin/category", {
+        categories: await getAll("Categories")
+    })
+})
+
+//Add category
+router.post("/addNewCategory", (req, res) => {
+    const name = req.body.txtName;
+    const objectToInsert = {name: name}
+    insertObject("Categories", objectToInsert)
+    res.redirect("/admin/category")
+})
+//Add category render
+router.get("/addCategory", (req, res) => {
+    res.render("Admin/addCategory")
+})
+
+//Update category
+router.post("/updateCategory", async (req, res) => {
+    const id = req.body.txtID;
+    const name = req.body.txtName;
+    var updateValues = {
+        $set: {
+            name: name,
+        },
+    };
+    const objectToUpdate = await getObject(id, "Categories");
+    await updateObject("Categories", objectToUpdate, updateValues);
+    res.redirect("/admin/category/");
+})
+
+//Update category render
+router.get("/editCategory", async (req, res) => {
+    const idValue = req.query.id;
+    const objectToUpdate = await getObject(idValue, "Categories");
+    res.render("Admin/updateCategory", { category: objectToUpdate });
+})
+
+//Delete category
+router.get("/deleteCategory/:id", async (req, res) => {
+    await deleteObject("Categories", getObject(req.params.id, "Categories"));
+    res.redirect("/admin/category/");
+});
+
 // Add Book
 router.post("/addNewBook", (req, res) => {
     const name = req.body.txtName;

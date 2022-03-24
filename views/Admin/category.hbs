@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Index</title>
+    <title>Category</title>
     <style>
         .widget{
             width: 90%;
@@ -22,15 +22,12 @@
     {{> header }}
     {{> cursor }}
     <center>
-        <h1>Admin Index</h1>
+        <h1>Category</h1>
         <div class="widget">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col">
-                        <input type="search" name="" id="" class="inp" placeholder="Search a book">
-                    </div>
-                    <div class="col">
-                        <a href="admin/addBook" class="button">Add Book</a>
+                        <a href="/admin/addCategory" class="button">Add category</a>
                     </div>
                 </div>
                 <div class="row"></div>
@@ -38,31 +35,16 @@
             <table style="border: 1px solid black;">
                 <tr>
                     <th>Name</th>
-                    <th>Author</th>
-                    <th>Edition</th>
-                    <th>Language</th>
-                    <th>Description</th>
-                    <th>Price</th>
-                    <th>Quantity</th>
-                    <th>Image</th>
                     <th>Option</th>
                 </tr>
-                {{#each books}}
+                {{#each categories}}
                 <tr>
                     <td>{{name}}</td>
-                    <td>{{author}}</td>
-                    <td>{{edition}}</td>
-                    <td>{{language}}</td>
-                    <td>{{description}}</td>
-                    <td>{{price}}</td>
-                    <td>{{quantity}}</td>
-                    <td><img src="/Books/{{image}}" height="100px">
-                    </td>
                     <td>
-                        <a href="/admin/edit?id={{ _id }}">
+                        <a href="/admin/editCategory?id={{ _id }}">
                             Edit
                         </a><br>
-                        <a href="/admin/deleteBook/{{_id}}">Delete</a>
+                        <a href="/admin/deleteCategory/{{_id}}">Delete</a>
                     </td>
                 </tr>
                 {{/each}}
