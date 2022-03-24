@@ -46,6 +46,7 @@
                 <img src="/Page/banner.png" alt="" height="550px" width="auto">
                 <br>
                 <input type="search" name="" id="" placeholder="Search for Book" class="inp" width="100%">
+                {{#each categories}}
                 <div class="container">
                     <section class="cards">
                     {{#each books}}
@@ -53,10 +54,10 @@
                             <div class="book-card">
                                 <a href="/book?id={{ _id }}">
                                 <div class="card-body">
-                                    <img src="/Books/{{image}}" height="400px" width="250px">
-                                    {{name}}
-                                    Price: ${{ price }}
-                                    Left in storage: {{ quantity}}
+                                    <img src="/Books/{{image}}" height="250px" width="160px"> <br>
+                                    {{name}} <br> 
+                                    Price: ${{ price }} <br>
+                                    Left in storage: {{ quantity}} <br>
                                     <a href="">Add to Cart</a>
                                 </div>
                                 </a>
@@ -65,6 +66,7 @@
                     {{/each}}
                     </section>
                 </div>
+                 {{/each}}
             </center>
         </div>
     </body>
