@@ -108,6 +108,7 @@ router.get("/deleteCategory/:id", async (req, res) => {
 // Add Book
 router.post("/addNewBook", (req, res) => {
     const name = req.body.txtName;
+    const categoryID = req.body.cbCategory
     const author = req.body.txtAuthor;
     const description = req.body.txtDescription;
     var edition = convertEdition(req.body.numEdition);
@@ -124,6 +125,7 @@ router.post("/addNewBook", (req, res) => {
 
     const objectToInsert = {
         name: name,
+        categoryID: categoryID,
         author: author,
         description: description,
         edition: edition,
@@ -138,14 +140,18 @@ router.post("/addNewBook", (req, res) => {
     res.redirect("/admin/");
 });
 // Add Book Render
-router.get("/addBook", (req, res) => {
-    res.render("Admin/addBook");
+router.get("/addBook", async (req, res) => {
+    const categories = await getAll("Categories")
+    res.render("Admin/addBook", {
+        categories: categories,
+    });
 });
 
 //Update Book
 router.post("/updateBook", async (req, res) => {
     const id = req.body.txtID;
     const name = req.body.txtName;
+    const categoryID = req.body.cbCategory
     const author = req.body.txtAuthor;
     const description = req.body.txtDescription;
     var edition = convertEdition(req.body.numEdition);
@@ -163,6 +169,7 @@ router.post("/updateBook", async (req, res) => {
         var updateValues = {
             $set: {
                 name: name,
+                categoryID: categoryID,
                 author: author,
                 description: description,
                 edition: edition,
@@ -194,8 +201,9 @@ router.post("/updateBook", async (req, res) => {
 //Update Book Render
 router.get("/edit", async (req, res) => {
     const idValue = req.query.id;
+    const categories = await getAll("Categories")
     const objectToUpdate = await getObject(idValue, "Books");
-    res.render("Admin/updateBook", { book: objectToUpdate });
+    res.render("Admin/updateBook", { book: objectToUpdate , categories: categories});
 });
 
 //Delete book

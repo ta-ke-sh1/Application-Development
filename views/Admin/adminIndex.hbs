@@ -38,6 +38,7 @@
             <table style="border: 1px solid black;">
                 <tr>
                     <th>Name</th>
+                    <th>Category</th>
                     <th>Author</th>
                     <th>Edition</th>
                     <th>Language</th>
@@ -50,6 +51,9 @@
                 {{#each books}}
                 <tr>
                     <td>{{name}}</td>
+                    <td>
+                        {{ each }}
+                    </td>
                     <td>{{author}}</td>
                     <td>{{edition}}</td>
                     <td>{{language}}</td>
