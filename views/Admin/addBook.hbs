@@ -18,9 +18,9 @@
             <form action="addNewBook" method="POST" class="input-form" enctype="multipart/form-data">
                 <input type="text" name="txtName" id="" placeholder="Enter book's name" class="inp">
                 <br>
-                <select name="cbCategory" class="inp" multiple="true">
+                <select name="cbCategory" class="inp" multiple="true" >
                     {{#each categories}}
-                        <option value="{{_id}}">{{name}}</option>
+                        <option value="{{_id}}" type="checkbox">{{name}}</option>
                     {{/each}}                    
                  </select>
                 <br>
