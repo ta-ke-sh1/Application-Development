@@ -6,6 +6,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        .widget{
+            width: 90%;
+        }
+
+        .widget table{
+            max-height: 600px;
+            overflow: scroll;
+        }
+    </style>
 </head>
 
 <body>
@@ -13,39 +23,51 @@
     {{> cursor }}
     <center>
         <h1>Admin Index</h1>
-        <a href="admin/addBook"><button>Add Book</button></a>
-        <table style="border: 1px solid black;">
-            <tr>
-                <th>Name</th>
-                <th>Author</th>
-                <th>Edition</th>
-                <th>Language</th>
-                <th>Description</th>
-                <th>Price</th>
-                <th>Quantity</th>
-                <th>Image</th>
-                <th>Option</th>
-            </tr>
-            {{#each books}}
-            <tr>
-                <td>{{name}}</td>
-                <td>{{author}}</td>
-                <td>{{edition}}</td>
-                <td>{{language}}</td>
-                <td>{{description}}</td>
-                <td>{{price}}</td>
-                <td>{{quantity}}</td>
-                <td><img src="/Books/{{image}}" height="100px">
-                </td>
-                <td>
-                    <a href="/admin/edit?id={{ _id }}">
-                        Edit
-                    </a><br>
-                    <a href="/admin/deleteBook/{{_id}}">Delete</a>
-                </td>
-            </tr>
-            {{/each}}
-        </table>
+        <div class="widget">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col">
+                        <input type="search" name="" id="" class="inp" placeholder="Search a book">
+                    </div>
+                    <div class="col">
+                        <a href="admin/addBook" class="button">Add Book</a>
+                    </div>
+                </div>
+                <div class="row"></div>
+            </div>
+            <table style="border: 1px solid black;">
+                <tr>
+                    <th>Name</th>
+                    <th>Author</th>
+                    <th>Edition</th>
+                    <th>Language</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Image</th>
+                    <th>Option</th>
+                </tr>
+                {{#each books}}
+                <tr>
+                    <td>{{name}}</td>
+                    <td>{{author}}</td>
+                    <td>{{edition}}</td>
+                    <td>{{language}}</td>
+                    <td>{{description}}</td>
+                    <td>{{price}}</td>
+                    <td>{{quantity}}</td>
+                    <td><img src="/Books/{{image}}" height="100px">
+                    </td>
+                    <td>
+                        <a href="/admin/edit?id={{ _id }}">
+                            Edit
+                        </a><br>
+                        <a href="/admin/deleteBook/{{_id}}">Delete</a>
+                    </td>
+                </tr>
+                {{/each}}
+            </table>
+        </div>
     </center>
 </body>
 
