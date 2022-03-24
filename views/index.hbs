@@ -13,8 +13,16 @@
             width: 80%;
         }
 
-        .card {
-            min-width: 300px;
+        .book-card {
+            flex: 0 1 calc(20% - 1em);
+            box-sizing: border-box;
+            margin: 1rem .25em;
+        }
+
+        .cards{
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
         }
     </style>
     <body>
@@ -39,43 +47,23 @@
                 <br>
                 <input type="search" name="" id="" placeholder="Search for Book" class="inp" width="100%">
                 <div class="container">
-                    <h1>Classics</h1>
-                    <br>
-                    <div class="row row-cols-1 row-cols-md-3 g-4">
-                        {{#each books}}
-                            <div class="col">
-                                <div class="card h-100">
-                                    <a href="/book?id={{ _id }}">
-                                    <div class="card-body">
-                                        <table>
-                                            <tr>
-                                                <td style="height: 60px;">
-                                                    <img src="/Books/{{image}}" height="400px" width="250px">
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <center>{{name}}</center>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Price: ${{ price }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Left in storage: {{ quantity}}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <a href="">Add to Cart</a>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                    </a>
+                    <section class="cards">
+                    {{#each books}}
+                        <div class="col">
+                            <div class="book-card">
+                                <a href="/book?id={{ _id }}">
+                                <div class="card-body">
+                                    <img src="/Books/{{image}}" height="400px" width="250px">
+                                    {{name}}
+                                    Price: ${{ price }}
+                                    Left in storage: {{ quantity}}
+                                    <a href="">Add to Cart</a>
                                 </div>
+                                </a>
                             </div>
-                        {{/each}}
-                    </div>
+                        </div>
+                    {{/each}}
+                    </section>
                 </div>
             </center>
         </div>
