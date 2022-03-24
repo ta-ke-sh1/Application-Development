@@ -86,6 +86,7 @@ router.post("/addNewBook", (req, res) => {
         price: price,
         quantity: quantity,
         image: image.name,
+        popularity: 0,
     };
     insertObject("Books", objectToInsert);
     res.redirect("/admin/");

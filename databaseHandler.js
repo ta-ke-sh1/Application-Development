@@ -10,6 +10,35 @@ async function getDB() {
     return dbo;
 }
 
+async function getAllCriterias(collectionName, type) {
+    const dbo = await getDB();
+    switch (type) {
+        case 1: // Sort by Popularity
+            return await dbo
+                .collection(collectionName)
+                .find({})
+                .sort({ popularity: 1 })
+                .toArray();
+        case 2: // Sort by Date Added
+            return await dbo
+                .collection(collectionName)
+                .find({})
+                .sort({ _id: -1 })
+                .toArray();
+        default:
+            return await dbo.collection(collectionName).find({}).toArray();
+    }
+}
+
+async function searchBook(keyword) {
+    console.log("The keyword is: " + keyword);
+    const dbo = await getDB();
+    return await dbo
+        .collection("Books")
+        .find({ name: { $regex: new RegExp(keyword), $options: "-i" } })
+        .toArray();
+}
+
 async function getAll(collectionName) {
     const dbo = await getDB();
     return await dbo.collection(collectionName).find({}).toArray();
@@ -70,4 +99,6 @@ module.exports = {
     getObject,
     checkUser,
     getUser,
+    searchBook,
+    getAllCriterias,
 };
