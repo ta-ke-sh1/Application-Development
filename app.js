@@ -55,9 +55,9 @@ app.use("/book", bookController);
 
 // Homepage
 app.get("/", async (req, res) => {
-    var categories = await getAll("Categories");
+    var books = await getAll("Books");
     res.render("index", {
-        categories: categories,
+        books: books,
         userInfo: req.session.User,
     });
 });
