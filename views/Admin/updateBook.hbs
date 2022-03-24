@@ -27,7 +27,7 @@
                             <br>
                             <select name="cbCategory" class="inp">
                                 {{#each categories}}
-                                    <option value="{{_id}}">{{CategoryName}}</option>
+                                    <option value="{{_id}}">{{name}}</option>
                                 {{/each}}                    
                             </select>
                             <input type="text" name="txtAuthor" id="" placeholder="Enter book's author" value="{{ book.author }}" class="inp">

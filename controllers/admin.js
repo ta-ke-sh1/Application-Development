@@ -184,6 +184,7 @@ router.post("/updateBook", async (req, res) => {
         var updateValues = {
             $set: {
                 name: name,
+                categoryID: categoryID,
                 author: author,
                 description: description,
                 edition: edition,
