@@ -13,4 +13,9 @@ router.get("/", async (req, res) => {
     });
 });
 
+var viewModel = {
+    categories: [],
+    books: [],
+};
+
 module.exports = router;
