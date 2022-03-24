@@ -44,10 +44,6 @@ async function getAll(collectionName) {
     return await dbo.collection(collectionName).find({}).toArray();
 }
 
-async function getBookByCategories() {
-    const dbo = await getDB();
-}
-
 async function insertObject(collectionName, objectToInsert) {
     const dbo = await getDB();
     const newObject = await dbo
