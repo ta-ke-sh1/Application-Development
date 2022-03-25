@@ -4,7 +4,7 @@ const fs = require("fs");
 const hbs = require("hbs");
 const path = require("path");
 const fileUpload = require("express-fileupload");
-const { getAll, checkUser } = require("./databaseHandler");
+const { getAll, checkUser, homepageCategorize } = require("./databaseHandler");
 const session = require("express-session");
 const oneDay = 1000 * 60 * 60 * 24;
 
@@ -56,9 +56,12 @@ app.use("/book", bookController);
 // Homepage
 app.get("/", async (req, res) => {
     var books = await getAll("Books");
+    var categories = await homepageCategorize();
+    console.log(books[0]);
     res.render("index", {
         books: books,
         userInfo: req.session.User,
+        categories: categories
     });
 });
 

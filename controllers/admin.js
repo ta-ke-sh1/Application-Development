@@ -108,12 +108,11 @@ router.get("/deleteCategory/:id", async (req, res) => {
 // Add Book
 router.post("/addNewBook", (req, res) => {
     const name = req.body.txtName;
-    const categoryID = req.body.cbCategory;
+    const category = req.body.txtCategory;
     const author = req.body.txtAuthor;
     const description = req.body.txtDescription;
     var edition = convertEdition(req.body.numEdition);
     const publisher = req.body.txtPublisher;
-    const language = req.body.txtLanguage;
     const price = req.body.numPrice;
     const quantity = req.body.numQuantity;
     const image = req.files.image;
@@ -125,12 +124,11 @@ router.post("/addNewBook", (req, res) => {
 
     const objectToInsert = {
         name: name,
-        categoryID: categoryID,
+        category: category,
         author: author,
         description: description,
         edition: edition,
         publisher: publisher,
-        language: language,
         price: price,
         quantity: quantity,
         image: image.name,
@@ -151,12 +149,11 @@ router.get("/addBook", async (req, res) => {
 router.post("/updateBook", async (req, res) => {
     const id = req.body.txtID;
     const name = req.body.txtName;
-    const categoryID = req.body.cbCategory;
+    const category = req.body.txtCategory;
     const author = req.body.txtAuthor;
     const description = req.body.txtDescription;
     var edition = convertEdition(req.body.numEdition);
     const publisher = req.body.txtPublisher;
-    const language = req.body.txtLanguage;
     const price = req.body.numPrice;
     const quantity = req.body.numQuantity;
     if (req.files != null) {
@@ -169,12 +166,11 @@ router.post("/updateBook", async (req, res) => {
         var updateValues = {
             $set: {
                 name: name,
-                categoryID: categoryID,
+                category: category,
                 author: author,
                 description: description,
                 edition: edition,
                 publisher: publisher,
-                language: language,
                 price: price,
                 quantity: quantity,
                 image: image.name,
@@ -184,12 +180,11 @@ router.post("/updateBook", async (req, res) => {
         var updateValues = {
             $set: {
                 name: name,
-                categoryID: categoryID,
+                category: category,
                 author: author,
                 description: description,
                 edition: edition,
                 publisher: publisher,
-                language: language,
                 price: price,
                 quantity: quantity,
             },

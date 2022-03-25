@@ -41,7 +41,6 @@
                     <th>Category</th>
                     <th>Author</th>
                     <th>Edition</th>
-                    <th>Language</th>
                     <th>Description</th>
                     <th>Price</th>
                     <th>Quantity</th>
@@ -52,13 +51,12 @@
                 <tr>
                     <td>{{name}}</td>
                     <td>
-                    {{ #categoryID }}
-                        {{name}}
-                    {{/categoryID}}
+                    {{ category }}
+                        {{!-- {{name}}
+                    {{/categoryID}} --}}
                     </td>
                     <td>{{author}}</td>
                     <td>{{edition}}</td>
-                    <td>{{language}}</td>
                     <td>{{description}}</td>
                     <td>{{price}}</td>
                     <td>{{quantity}}</td>

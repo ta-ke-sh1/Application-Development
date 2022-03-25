@@ -65,6 +65,19 @@
                     {{/each}}
                     </section>
                 </div>
+                {{#each categories }}
+                    <div class="row">
+                        {{ name }}
+                        <br>
+                        <table>
+                            {{#each Books }}
+                                <tr>{{name}}</tr>
+                                <br>
+                            {{/each}}
+                        </table>
+                    </div>
+                    <br>
+                {{/each}}
             </center>
         </div>
     </body>

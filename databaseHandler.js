@@ -41,8 +41,33 @@ async function searchBook(keyword) {
 
 async function getAll(collectionName) {
     const dbo = await getDB();
-    return await dbo.collection(collectionName).find({}).toArray();
+    return await dbo.collection(collectionName).find({}).sort({ '_id': 1 }).toArray();
 }
+
+async function getAllPopularity(collectionName) {
+    const dbo = await getDB();
+    return await dbo.collection(collectionName).find({}).sort({ 'popularity': -1 }).limit(8).toArray();
+}
+
+async function homepageCategorize() {
+    const dbo = await getDB();
+    return await dbo.collection("Categories").aggregate([{
+        $lookup:
+        {
+            from: "Books",
+            localField: "name",
+            foreignField: "category",
+            pipeline: [
+                { $sort: { 'popularity': -1 } },
+                { $limit: 8 }
+            ],
+            as: "Books"
+        }
+    }]).toArray();
+}
+
+
+
 
 async function insertObject(collectionName, objectToInsert) {
     const dbo = await getDB();
@@ -91,6 +116,7 @@ async function getUser(username) {
     } else return false;
 }
 
+
 module.exports = {
     insertObject,
     updateObject,
@@ -101,4 +127,6 @@ module.exports = {
     getUser,
     searchBook,
     getAllCriterias,
+    homepageCategorize,
+    getAllPopularity
 };
