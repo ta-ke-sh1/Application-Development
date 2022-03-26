@@ -31,3 +31,14 @@ body {
 h1 {
     font-family: Maison-Medium;
 }
+
+.body {
+    position: absolute;
+    width: 80%;
+    left: 10%;
+}
+
+.row{
+    margin-top: 40px;
+    margin-bottom: 20px;
+}

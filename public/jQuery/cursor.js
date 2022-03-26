@@ -55,19 +55,21 @@ jQuery(document).ready(function () {
     });
 
     // Button
-    $(".btn").mouseenter(function () {
-        outer_cursor.css({ "mix-blend-mode": "difference", "background-color": "white", "border": "none" });
+    $(".book-card").mouseenter(function () {
+        outer_cursor.css({ "mix-blend-mode": "difference", transform: "scale(2)", "background-color": "white", "border": "none" });
         cursor.css({ 'visibility': 'hidden' });
+        $('.book-card').find('div').contains("#addCart").css({ 'visibility': 'visible' });
     }).mouseleave(function () {
         outer_cursor.css({ "mix-blend-mode": "normal", "background-color": "transparent", transform: "scale(1)", "border": "solid 1px #2f1eb8" });
         cursor.css({ 'visibility': 'visible' });
+        $('.book-card').find('div').contains("#addCart").css({ 'visibility': 'hidden' });
     });
 
-    $(".btn").hover(function () {
+    $(".book-card").hover(function () {
         outer_cursor.css({ transform: "scale(2)" });
     });
 
-    $(".btn").mouseleave(function () {
+    $(".book-card").mouseleave(function () {
         outer_cursor.css({ transform: "scale(1)" });
     });
 

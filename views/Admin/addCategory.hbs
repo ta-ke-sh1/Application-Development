@@ -9,7 +9,7 @@
     </head>
 
     <body>
-        {{> header }}
+        {{> adminHeader }}
         {{> cursor }}
         <center>
             <br>
@@ -17,6 +17,10 @@
             <br>
             <form action="addNewCategory" method="POST" class="input-form" enctype="multipart/form-data">
                 <input type="text" name="txtName" id="" placeholder="Enter category name" class="inp">
+                <br>
+                <input type="text" name="txtQuote" id="" placeholder="Enter category quote" class="inp">
+                <br>
+                <input type="text" name="txtAuthor" id="" placeholder="Enter quote's author" class="inp">
                 <br>
                 <input type="submit" value="Add category" id="btn_Save" class="inp">
             </form>

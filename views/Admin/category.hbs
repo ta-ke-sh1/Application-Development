@@ -19,7 +19,7 @@
 </head>
 
 <body>
-    {{> header }}
+    {{> adminHeader }}
     {{> cursor }}
     <center>
         <h1>Category</h1>
@@ -32,14 +32,20 @@
                 </div>
                 <div class="row"></div>
             </div>
-            <table style="border: 1px solid black;">
+            <table style="border: 1px solid black;" class="tbl">
                 <tr>
+                    <th>No</th>
                     <th>Name</th>
+                    <th>Quote</th>
+                    <th>Author</th>
                     <th>Option</th>
                 </tr>
                 {{#each categories}}
                 <tr>
+                    <td>{{ @index }}</td>
                     <td>{{name}}</td>
+                    <td>{{quote}}</td>
+                    <td>{{author}}</td>
                     <td>
                         <a href="/admin/editCategory?id={{ _id }}">
                             Edit

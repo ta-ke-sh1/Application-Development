@@ -18,6 +18,13 @@ router.get("/", async (req, res) => {
     });
 });
 
+router.get("/book", async (req, res) => {
+    res.render("Admin/book", {
+        books: await getAll("Books"),
+        title: "Admin",
+    });
+});
+
 //neu request la: /admin/addUser
 router.get("/addUser", (req, res) => {
     res.render("Admin/addUser");
@@ -69,7 +76,13 @@ router.get("/category", async (req, res) => {
 //Add category
 router.post("/addNewCategory", (req, res) => {
     const name = req.body.txtName;
-    const objectToInsert = { name: name };
+    const quote = req.body.txtQuote;
+    const author = req.body.txtAuthor;
+    const objectToInsert = {
+        name: name,
+        quote: quote,
+        author: author,
+    };
     insertObject("Categories", objectToInsert);
     res.redirect("/admin/category");
 });
@@ -82,9 +95,13 @@ router.get("/addCategory", (req, res) => {
 router.post("/updateCategory", async (req, res) => {
     const id = req.body.txtID;
     const name = req.body.txtName;
+    const quote = req.body.txtQuote;
+    const author = req.body.txtAuthor;
     var updateValues = {
         $set: {
             name: name,
+            quote: quote,
+            author: author,
         },
     };
     const objectToUpdate = await getObject(id, "Categories");
@@ -111,7 +128,6 @@ router.post("/addNewBook", (req, res) => {
     const category = req.body.txtCategory;
     const author = req.body.txtAuthor;
     const description = req.body.txtDescription;
-    var edition = convertEdition(req.body.numEdition);
     const publisher = req.body.txtPublisher;
     const price = req.body.numPrice;
     const quantity = req.body.numQuantity;
@@ -127,7 +143,6 @@ router.post("/addNewBook", (req, res) => {
         category: category,
         author: author,
         description: description,
-        edition: edition,
         publisher: publisher,
         price: price,
         quantity: quantity,
@@ -152,7 +167,6 @@ router.post("/updateBook", async (req, res) => {
     const category = req.body.txtCategory;
     const author = req.body.txtAuthor;
     const description = req.body.txtDescription;
-    var edition = convertEdition(req.body.numEdition);
     const publisher = req.body.txtPublisher;
     const price = req.body.numPrice;
     const quantity = req.body.numQuantity;
@@ -169,7 +183,6 @@ router.post("/updateBook", async (req, res) => {
                 category: category,
                 author: author,
                 description: description,
-                edition: edition,
                 publisher: publisher,
                 price: price,
                 quantity: quantity,
@@ -183,7 +196,6 @@ router.post("/updateBook", async (req, res) => {
                 category: category,
                 author: author,
                 description: description,
-                edition: edition,
                 publisher: publisher,
                 price: price,
                 quantity: quantity,
@@ -210,13 +222,5 @@ router.get("/deleteBook/:id", async (req, res) => {
     await deleteObject("Books", getObject(req.params.id, "Books"));
     res.redirect("/");
 });
-
-function convertEdition(edition) {
-    str = edition.toString();
-    if (str.endsWith("1")) return (edition += "st");
-    else if (str.endsWith("2")) return (edition += "nd");
-    else if (str.endsWith("3")) return (edition += "rd");
-    else return (edition += "th");
-}
 
 module.exports = router;

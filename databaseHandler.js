@@ -44,9 +44,9 @@ async function getAll(collectionName) {
     return await dbo.collection(collectionName).find({}).sort({ '_id': 1 }).toArray();
 }
 
-async function getAllPopularity(collectionName) {
+async function getAllPopularity() {
     const dbo = await getDB();
-    return await dbo.collection(collectionName).find({}).sort({ 'popularity': -1 }).limit(8).toArray();
+    return await dbo.collection("Books").find({}).sort({ 'popularity': -1 }).limit(8).toArray();
 }
 
 async function homepageCategorize() {

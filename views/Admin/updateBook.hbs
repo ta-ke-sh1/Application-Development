@@ -9,7 +9,7 @@
     </head>
 
     <body>
-        {{> header }}
+        {{> adminHeader }}
         {{> cursor }}
         <center>
             <br>
@@ -32,14 +32,12 @@
                             </select>
                             <input type="text" name="txtAuthor" id="" placeholder="Enter book's author" value="{{ book.author }}" class="inp">
                             <br>
-                            <input type="number" name="numEdition" placeholder="Enter book's Edition" value="{{ book.edition }}" id="description" class="inp">
-                            <br>
                             <input type="text" name="txtPublisher" placeholder="Enter book's publisher" value="{{ book.publisher }}" id="description"
                                 class="inp">
                             <br>
                             <input type="text" name="txtDescription" placeholder="Enter book's description" id="description" class="inp" value="{{ book.description }}">
                             <br>
-                            <input type="number" name="numPrice" placeholder="Enter book's price" value="{{ book.price }}" class="inp">
+                            <input type="number" name="numPrice" step="0.01" placeholder="Enter book's price" value="{{ book.price }}" class="inp">
                             <br>
                             <input type="number" name="numQuantity" placeholder="Enter quantity in storage" value="{{ book.quantity }}" class="inp">
                             <br>

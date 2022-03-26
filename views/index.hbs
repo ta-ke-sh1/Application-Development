@@ -1,30 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
     <head>
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Homepage</title>
+        <style>
+            html {
+                -webkit-text-size-adjust: 100%;
+                -ms-text-size-adjust: 100%;
+                text-rendering: optimizeLegibility;
+                -webkit-font-smoothing: antialiased;
+            }
+
+        </style>
     </head>
-    <style>
-        .body {
-            position: absolute;
-            left: 10%;
-            width: 80%;
-        }
 
-        .book-card {
-            flex: 0 1 calc(20% - 1em);
-            box-sizing: border-box;
-            margin: 1rem .25em;
-        }
-
-        .cards{
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-        }
-    </style>
     <body>
         {{> header }}
         {{> cursor }}
@@ -46,39 +37,43 @@
                 <img src="/Page/banner.png" alt="" height="550px" width="auto">
                 <br>
                 <input type="search" name="" id="" placeholder="Search for Book" class="inp" width="100%">
-                <div class="container">
-                    <section class="cards">
-                    {{#each books}}
-                        <div class="col">
-                            <div class="book-card">
-                                <a href="/book?id={{ _id }}">
-                                <div class="card-body">
-                                    <img src="/Books/{{image}}" height="200px" width="140px"> <br>
-                                    {{name}} <br> 
-                                    Price: ${{ price }} <br>
-                                    Left in storage: {{ quantity}} <br>
-                                    <a href="">Add to Cart</a>
-                                </div>
-                                </a>
-                            </div>
-                        </div>
-                    {{/each}}
-                    </section>
-                </div>
-                {{#each categories }}
-                    <div class="row">
-                        {{ name }}
-                        <br>
-                        <table>
-                            {{#each Books }}
-                                <tr>{{name}}</tr>
-                                <br>
-                            {{/each}}
-                        </table>
-                    </div>
-                    <br>
-                {{/each}}
             </center>
+            <div class="row">
+                <h1>What's popular?</h1>
+            </div>
+            <div class="container-book">
+                {{#each popular }}
+                    <a href="/book?id={{ _id }}">
+                    <div class="book-card">
+                        <img src="/Books/{{image}}"> <br>
+                        <div class="name">{{name}}</div>
+                        <span class="price">${{ price }} <br></span>
+                        <a href="" class="btn" id="addCart">Add to Cart</a>
+                    </div>
+                    </a>
+                {{/each}}
+
+            </div>
+            {{#each categories }}
+                <div class="row">
+                    <h1>{{ name }}</h1>
+                </div>
+                <div class="container-book">
+                    <br>
+                    {{#each Books }}
+                        <a href="/book?id={{ _id }}">
+                        <div class="book-card">
+                            <img src="/Books/{{image}}"> <br>
+                            <div class="name">{{name}}</div>
+                            <span class="price">${{ price }} <br></span>
+                            <a href="" class="btn" id="addCart">Add to Cart</a>
+                        </div>
+                        </a>
+                    {{/each}}
+                </div>
+                <br>
+            {{/each}}
         </div>
     </body>
+
 </html>
