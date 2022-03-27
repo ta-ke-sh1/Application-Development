@@ -50,7 +50,7 @@
                     </tr>
                     {{#each books}}
                         <tr>
-                            <td>{{@index}}</td>
+                            <td>{{indexFix @index 1}}</td>
                             <td><span class="name">{{name}}</span></td>
                             <td>
                                 {{ category }}
