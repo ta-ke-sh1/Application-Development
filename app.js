@@ -13,6 +13,11 @@ const {
 const session = require("express-session");
 const oneDay = 1000 * 60 * 60 * 24;
 
+hbs.handlebars.registerHelper("indexFix", function(value) {
+    value +=1;
+    return value
+})
+
 app.use(express.static(__dirname + "/public"));
 app.use(
     session({
