@@ -4,14 +4,14 @@ const fs = require("fs");
 const hbs = require("hbs");
 const path = require("path");
 const fileUpload = require("express-fileupload");
-const { getAll, checkUser, homepageCategorize, getAllPopularity } = require("./databaseHandler");
+const {
+    getAll,
+    checkUser,
+    homepageCategorize,
+    getAllPopularity,
+} = require("./databaseHandler");
 const session = require("express-session");
 const oneDay = 1000 * 60 * 60 * 24;
-
-hbs.handlebars.registerHelper('indexFix', function(value) {
-    value += 1
-    return value 
-}) 
 
 app.use(express.static(__dirname + "/public"));
 app.use(
@@ -65,7 +65,7 @@ app.get("/", async (req, res) => {
     res.render("index", {
         popular: popular,
         userInfo: req.session.User,
-        categories: categories
+        categories: categories,
     });
 });
 
