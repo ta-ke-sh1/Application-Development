@@ -13,11 +13,6 @@ router.get("/", async (req, res) => {
     });
 });
 
-var viewModel = {
-    categories: [],
-    books: [],
-};
-
 router.get("/search", async (req, res) => {
     const keyword = req.query.key;
     const books = await searchBook(keyword);

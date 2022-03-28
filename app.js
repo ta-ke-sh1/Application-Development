@@ -10,15 +10,18 @@ const {
     homepageCategorize,
     getAllPopularity,
 } = require("./databaseHandler");
-const session = require("express-session");
+const cookieParser = require("cookie-parser");
+var session = require("express-session");
 const oneDay = 1000 * 60 * 60 * 24;
 
-hbs.handlebars.registerHelper("indexFix", function(value) {
-    value +=1;
-    return value
-})
+hbs.handlebars.registerHelper("indexFix", function (value) {
+    value += 1;
+    return value;
+});
 
 app.use(express.static(__dirname + "/public"));
+
+// Setting up cookie
 app.use(
     session({
         secret: "mysecretkey",
@@ -28,6 +31,13 @@ app.use(
         saveUninitialized: false,
     })
 );
+
+app.use(function (req, res, next) {
+    res.locals.session = req.session;
+    next();
+});
+
+app.use(cookieParser());
 
 // Set view engine
 app.set("view engine", "hbs");
@@ -63,6 +73,10 @@ app.use("/admin", adminController);
 const bookController = require("./controllers/book");
 app.use("/book", bookController);
 
+// book controller
+const userController = require("./controllers/user");
+app.use("/user", userController);
+
 // Homepage
 app.get("/", async (req, res) => {
     var popular = await getAllPopularity();
@@ -89,11 +103,44 @@ app.post("/login", async (req, res) => {
         });
     } else {
         console.log("You are " + role);
-        req.session["User"] = {
-            userName: name,
-            role: role,
-        };
+        session = req.session;
+        session.userName = name;
+        session.role = role;
+        session.password = password;
+        console.log(session);
         res.redirect("/");
+    }
+});
+
+app.get("/logout", (req, res) => {
+    req.session.destroy();
+    res.redirect("/");
+});
+
+app.get("/register", (req, res) => {
+    res.render("Admin/register");
+});
+
+app.post("/register", (req, res) => {
+    const name = req.body.txtName;
+    const pass = req.body.txtPassword;
+    const confirm = req.body.txtConfirmPassword;
+    if (pass != confirm) {
+        res.render("Admin/register", {
+            error: "Unmatched password!",
+        });
+    } else if (!getUser(name)) {
+        const objectToInsert = {
+            userName: name,
+            role: "Customer",
+            password: pass,
+        };
+        insertObject("Users", objectToInsert);
+        res.redirect("/login");
+    } else {
+        res.render("Admin/register", {
+            error: "Existing user!",
+        });
     }
 });
 

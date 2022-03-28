@@ -54,9 +54,21 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/cart">Cart</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/login">Log in</a>
-                    </li>
+                    {{#if session.userName}}
+                        <li class="nav-item">
+                            <a
+                                class="nav-link"
+                                href="#"
+                            >{{session.userName}}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/logout">Log out</a>
+                        </li>
+                    {{else}}
+                        <li class="nav-item">
+                            <a class="nav-link" href="/login">Log in</a>
+                        </li>
+                    {{/if}}
                 </ul>
             </div>
         </nav>
