@@ -9,20 +9,43 @@
 <body>
    {{> header }}
    <center>
-      <h1>Register</h1>
+      <br><br>
+      <h1>Create your Fbooks account</h1>
       <br>
    <div class="form-input">
       <form action="register" method="post">
+         <p style="color: red;">{{error}}</p>
          <input type="text" name="txtName" class="inp" placeholder="Enter your username">
          <br>
          <input type="password" name="txtPassword" placeholder="Enter password" class="inp" id="password">
          <br>
-         <input type="password" name="txtConfirmPassword" placeholder="Re-enter your password" class="inp">
+         <input type="password" name="txtConfirmPassword" placeholder="Re-enter your password" class="inp" id="cfpassword">
+         <p style="margin-top:-18px; margin-bottom: 25px">Use 8 or more characters with a mix of letters & numbers</p>
+         <div class="toggle" style="margin-left: -300px;">
+            <input type="checkbox" onclick="toggleVisibility()" > Show Password
+         </div>
          <br>
-
-         <input type="submit" value="Add User" id="btn_Save" class="inp">
+         <input type="submit" value="Register" id="btn_Save" class="inp">
+         <hr width="450px">
+         <br>
       </form>
+      <a href="/login">
+         <button class="inp">Cancel</button>
+      </a>
    </div>
    </center>
+   <script>
+      function toggleVisibility() {
+         var x = document.getElementById("password");
+         var y = document.getElementById("cfpassword");
+         if (x.type === "password") {
+            x.type = "text";
+            y.type = "text"
+         } else {
+            x.type = "password";
+            y.type = "password"
+         }
+      }
+   </script>
 </body>
 </html>

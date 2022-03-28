@@ -8,6 +8,7 @@ const {
     getObject,
     checkUser,
     updateObject,
+    searchBook,
 } = require("../databaseHandler");
 
 //neu request la: /admin
@@ -218,9 +219,25 @@ router.get("/edit", async (req, res) => {
 });
 
 //Delete book
-router.get("/deleteBook/:id", async (req, res) => {
-    await deleteObject("Books", getObject(req.params.id, "Books"));
-    res.redirect("/");
+router.get("/deleteBook", async (req, res) => {
+    await deleteObject(req.query.id, "Books");
+    res.redirect("/admin/book");
+});
+
+// Search Book
+
+router.post("/search", async (req, res) => {
+    const keyword = req.body.txtKeyword;
+    const books = await searchBook(keyword);
+    if (books.length == 0) {
+        res.render("Book/main.hbs", {
+            error: "No books found!",
+        });
+    } else {
+        res.render("Book/main.hbs", {
+            books: books,
+        });
+    }
 });
 
 module.exports = router;
