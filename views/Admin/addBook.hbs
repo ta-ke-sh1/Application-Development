@@ -10,7 +10,6 @@
 
     <body>
         {{> adminHeader }}
-        {{> cursor }}
         <center>
             <br>
             <h1>Add new Book</h1>
@@ -18,11 +17,19 @@
             <form action="addNewBook" method="POST" class="input-form" enctype="multipart/form-data">
                 <input type="text" name="txtName" id="" placeholder="Enter book's name" class="inp">
                 <br>
-                <select name="txtCategory" class="inp" multiple="true">
+                <select name="txtCategory" id="multi-select" multiple="" class="ui dropdown inp">
+                    <option value="">Select at least 1 category</option>
                     {{#each categories}}
                         <option value="{{name}}" type="checkbox">{{name}}</option>
                     {{/each}}
                 </select>
+                <br>
+                <script>
+                    $('#multi-select').dropdown(
+                        { maxSelections: 3 }
+                    );
+                </script>
+                </div>
                 <br>
                 <input type="text" name="txtAuthor" id="" placeholder="Enter book's author" class="inp">
                 <br>

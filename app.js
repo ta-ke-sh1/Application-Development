@@ -30,19 +30,13 @@ app.use(fileUpload());
 hbs.registerPartials(path.join(__dirname, "views", "headers"));
 hbs.registerPartial(
     "header",
-    fs.readFileSync(__dirname + "/views/Headers/header.hbs", "utf8")
+    fs.readFileSync(__dirname + "/views/partials/header.hbs", "utf8")
 );
 
 hbs.registerPartials(path.join(__dirname, "views", "AdminHeader"));
 hbs.registerPartial(
     "adminHeader",
-    fs.readFileSync(__dirname + "/views/Headers/AdminHeader.hbs", "utf8")
-);
-
-hbs.registerPartials(path.join(__dirname, "views", "cursor"));
-hbs.registerPartial(
-    "cursor",
-    fs.readFileSync(__dirname + "/views/cursor.hbs", "utf8")
+    fs.readFileSync(__dirname + "/views/partials/AdminHeader.hbs", "utf8")
 );
 
 // tat ca cac dia chi co chua admin se goi den controller admin
