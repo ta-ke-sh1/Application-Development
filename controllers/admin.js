@@ -103,6 +103,18 @@ router.post("/addUser", (req, res) => {
     insertObject("Users", objectToInsert);
     res.render("home");
 });
+//User index
+router.get("/users", async (req, res) => {
+    res.render("Admin/users", {
+        categories: await getAll("Users"),
+    });
+})
+
+//Delete user
+router.get("/deleteBook", async (req, res) => {
+    await deleteObject(req.query.id, "Users");
+    res.redirect("/admin/users");
+});
 
 //Category index
 router.get("/category", async (req, res) => {
