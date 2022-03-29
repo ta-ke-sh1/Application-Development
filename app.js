@@ -6,13 +6,17 @@ const path = require("path");
 const fileUpload = require("express-fileupload");
 const {
     getAll,
+    insertObject,
+    getUser,
     checkUser,
     homepageCategorize,
     getAllPopularity,
 } = require("./databaseHandler");
 const cookieParser = require("cookie-parser");
 var session = require("express-session");
+var uniqid = require('uniqid');
 const oneDay = 1000 * 60 * 60 * 24;
+
 
 hbs.handlebars.registerHelper("indexFix", function (value) {
     value += 1;
@@ -53,12 +57,6 @@ hbs.registerPartial(
     fs.readFileSync(__dirname + "/views/partials/header.hbs", "utf8")
 );
 
-hbs.registerPartials(path.join(__dirname, "views", "AdminHeader"));
-hbs.registerPartial(
-    "adminHeader",
-    fs.readFileSync(__dirname + "/views/partials/AdminHeader.hbs", "utf8")
-);
-
 // tat ca cac dia chi co chua admin se goi den controller admin
 const adminController = require("./controllers/admin");
 app.use("/admin", adminController);
@@ -89,18 +87,24 @@ app.get("/login", (req, res) => {
 app.post("/login", async (req, res) => {
     const name = req.body.txtUsername;
     const password = req.body.txtPassword;
-    var role = await checkUser(name, password);
-    if (role == "-1") {
+    var user = await checkUser(name, password);
+    if (user == "-1") {
         console.log("Invalid User!");
         res.render("login", {
             error: "Wrong password or username!",
         });
     } else {
-        console.log("You are " + role);
+        console.log(user.role);
         session = req.session;
-        session.userName = name;
-        session.role = role;
-        session.password = password;
+        session.userName = user.userName;
+        session.role = user.role;
+        session.avatar = user.avatar;
+        session.isAdmin = false;
+
+        if (user.role == "Admin") {
+            session.isAdmin = true
+        }
+
         console.log(session);
         res.redirect("/");
     }
@@ -111,29 +115,52 @@ app.get("/logout", (req, res) => {
     res.redirect("/");
 });
 
-app.get("/register", (req, res) => {
+app.get("/register", async (req, res) => {
     res.render("Admin/register");
 });
 
-app.post("/register", (req, res) => {
+app.post("/register", async (req, res) => {
     const name = req.body.txtName;
-    const pass = req.body.txtPassword;
-    const confirm = req.body.txtConfirmPassword;
-    if (pass != confirm) {
-        res.render("Admin/register", {
-            error: "Unmatched password!",
+    const fname = req.body.txtFirstName;
+    const lname = req.body.txtLastName;
+    const email = req.body.txtEmail;
+    const address = req.body.txtAddress;
+    const phone = req.body.telPhone;
+
+    if (req.files != null) {
+        const avatar = req.files.avatar;
+        avatar.name = fname + uniqid() + ".jpg";
+        const path = __dirname + "/public/Avatars/" + avatar.name;
+        const pass = req.body.txtPassword;
+        avatar.mv(path, (err) => {
+            if (err) throw err;
         });
-    } else if (!getUser(name)) {
-        const objectToInsert = {
-            userName: name,
-            role: "Customer",
-            password: pass,
-        };
-        insertObject("Users", objectToInsert);
-        res.redirect("/login");
-    } else {
-        res.render("Admin/register", {
-            error: "Existing user!",
+        var check = await getUser(name);
+        if ( check == false) {
+            const objectToInsert = {
+                userName: name,
+                firstName: fname,
+                lastName: lname,
+                role: "Customer",
+                password: pass,
+                email: email,
+                address: address,
+                phoneNumber: phone,
+                avatar: avatar.name,
+            };
+            insertObject("Users", objectToInsert);
+            res.redirect("/login");
+        } else {
+            console.log(getUser(name));
+            res.render("Admin/register", {
+                error: "Existing user!",
+            });
+        }
+
+    }
+    else {
+        res.render("Admin/addUser", {
+            error: "Please add an image!",
         });
     }
 });
