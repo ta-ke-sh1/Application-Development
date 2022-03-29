@@ -9,45 +9,83 @@
     </head>
 
     <body>
-        {{> adminHeader }}
-        <center>
-            <br>
-            <h1>Add new Book</h1>
-            <br>
-            <form action="addNewBook" method="POST" class="input-form" enctype="multipart/form-data">
-                <input type="text" name="txtName" id="" placeholder="Enter book's name" class="inp">
-                <br>
-                <select name="txtCategory" id="multi-select" multiple="" class="ui dropdown inp">
-                    <option value="">Select at least 1 category</option>
-                    {{#each categories}}
-                        <option value="{{name}}" type="checkbox">{{name}}</option>
-                    {{/each}}
-                </select>
-                <br>
-                <script>
-                    $('#multi-select').dropdown(
-                        { maxSelections: 3 }
-                    );
-                </script>
+        {{> header }}
+        <br>
+        <div class="container-fluid" style="width: 700px;">
+            <form action="addNewBook" method="POST" class="ui form" enctype="multipart/form-data">
+                <h1 class="ui dividing header">Add Book</h1>
+                <div class="field">
+                    <label>Book Name</label>
+                    <input type="text" name="txtName" id="" placeholder="Enter book's name">
+                </div>
+                <div class="field">
+                    <label>Category</label>
+                    <select name="txtCategory" id="multi-select" multiple="" class="ui dropdown search inp">
+                        <option value="">Select at least 1 category</option>
+                        {{#each categories}}
+                            <option value="{{name}}" type="checkbox">{{name}}</option>
+                        {{/each}}
+                    </select>
+                    <script>
+                        $('#multi-select').dropdown(
+                            { maxSelections: 5 }
+                        );
+                    </script>
+                </div>
+                <div class="field" style="margin-top: -20px;">
+                    <div class="two fields">
+                        <div class="field">
+                            <label>Author</label>
+                                <input type="text" name="txtAuthor" id="" placeholder="Enter book's author">
+                        </div>
+                        <div class="field">
+                            <label>Publisher</label>
+                            <input type="text" name="txtPublisher" placeholder="Enter book's publisher"
+                                   id="description">
+                        </div>
+                    </div>
+                </div>
+                <div class="field">
+                    <label>Description</label>
+                    <textarea spellcheck="false" name="txtDescription"
+                              placeholder="Enter book's description"
+                              value="" id="description"></textarea>
+                </div>
+                <div class="field">
+                    <div class="two fields">
+                        <div class="field">
+                            <label>Price</label>
+                            <input type="number" name="numPrice" step="0.01" placeholder="Enter book's price"
+                                   class="inp">
+                        </div>
+                        <div class="field">
+                            <label>Stock</label>
+                            <input type="number" name="numQuantity" step="0.01" placeholder="Enter book's stock"
+                                   class="inp">
+                        </div>
+                    </div>
+                </div>
+                <div class="field">
+                    <label>Image</label>
+                    <input type="file" name="image" placeholder="Select book's image" class="inp">
                 </div>
                 <br>
-                <input type="text" name="txtAuthor" id="" placeholder="Enter book's author" class="inp">
-                <br>
-                <input type="text" name="txtPublisher" placeholder="Enter book's publisher" id="description"
-                       class="inp">
-                <br>
-                <input type="text" name="txtDescription" placeholder="Enter book's description" id="description"
-                       class="inp">
-                <br>
-                <input type="number" name="numPrice" step="0.01" placeholder="Enter book's price" class="inp">
-                <br>
-                <input type="number" name="numQuantity" placeholder="Enter quantity in storage" class="inp">
-                <br>
-                <input type="file" name="image" placeholder="Select book's image" class="inp">
-                <br>
-                <input type="submit" value="Add book" id="btn_Save" class="inp">
+                <div class="field">
+                    <div class="two fields">
+                        <div class="field">
+                            <input type="submit" value="Add Book" id="btn_Save" class="inp" style="width: 100%;">
+                        </div>
+                        <div class="field">
+                            <a href="#">
+                                <div class="inp" style="width: 100%;" id="btn_Cancel">
+                                    <center>Cancel</center>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </form>
-        </center>
+        </div>
     </body>
 
 </html>

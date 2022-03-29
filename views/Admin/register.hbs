@@ -1,62 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-   <meta charset="UTF-8">
-   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Document</title>
-</head>
-<body>
-   {{> header }}
-   <center>
-      <br><br>
-      <h1>Create your Fbooks account</h1>
-      <br>
-   <div class="form-input">
-      <form action="register" method="post">
-         <p style="color: red;">{{error}}</p>
-         <input type="text" name="txtName" class="inp" placeholder="Enter your username">
-         <br>
-         <input type="text" name="txtFirstName" class="inp" placeholder="Enter your first name">
-         <input type="text" name="txtLastName" class="inp" placeholder="Enter your last name">
-         <br>
-         <input type="email" name="txtEmail" class="inp" placeholder="Enter your email">
-         <br>
-         <input type="text" name="txtAddress" class="inp" placeholder="Enter your address">
-         <br>
-         <input type="tel" name="telPhone" class="inp" placeholder="Enter phone number">
-         <br>
-         <input type="file" name="avatar" placeholder="Select your avatar" class="inp">
-         <br>
-         <input type="password" name="txtPassword" placeholder="Enter password" class="inp" id="password">
-         <br>
-         <input type="password" name="txtConfirmPassword" placeholder="Re-enter your password" class="inp" id="cfpassword">
-         <p style="margin-top:-18px; margin-bottom: 25px">Use 8 or more characters with a mix of letters & numbers</p>
-         <div class="toggle" style="margin-left: -300px;">
-            <input type="checkbox" onclick="toggleVisibility()" > Show Password
-         </div>
-         <br>
-         <input type="submit" value="Register" id="btn_Save" class="inp">
-         <hr width="450px">
-         <br>
-      </form>
-      <a href="/login">
-         <button class="inp">Cancel</button>
-      </a>
-   </div>
-   </center>
-   <script>
-      function toggleVisibility() {
-         var x = document.getElementById("password");
-         var y = document.getElementById("cfpassword");
-         if (x.type === "password") {
-            x.type = "text";
-            y.type = "text"
-         } else {
-            x.type = "password";
-            y.type = "password"
+
+   <head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Document</title>
+   </head>
+
+   <body>
+      {{> header }}
+      <div class="container-fluid" style="width: 700px;">
+         <form action="register" method="post" class="ui form" enctype="multipart/form-data">
+            <h3 class="ui dividing header">Register new User</h3>
+            <p style="color: red;">{{error}}</p>
+            <div class="field">
+               <label>Username</label>
+               <input type="text" name="txtName" class="inp" placeholder="Enter your username" required>
+            </div>
+            <div class="field">
+               <label>Password</label>
+               <div class="two fields">
+                  <div class="field">
+                     <input type="password" name="txtPassword" placeholder="Enter password" class="inp" id="password" required>
+                  </div>
+                  <div class="field">
+                     <input type="password" name="txtConfirmPassword" placeholder="Re-enter your password" class="inp" required
+                            id="cfpassword">
+                  </div>
+               </div>
+            </div>
+            <div class="inline field">
+               <div class="ui toggle checkbox">
+                  <input type="checkbox" onclick="toggleVisibility()" tabindex="0"><label>Show password</label>
+               </div>
+            </div>
+            <div class="field">
+               <label>Select an avatar</label>
+               <input type="file" name="avatar" placeholder="Select your avatar" class="inp">
+            </div>
+
+            <div class="field">
+               <label>Name</label>
+               <div class="two fields">
+                  <div class="field">
+                     <input type="text" name="txtFirstName" class="inp" placeholder="First name">
+                  </div>
+                  <div class="field">
+                     <input type="text" name="txtLastName" class="inp" placeholder="Last name">
+                  </div>
+               </div>
+            </div>
+            <div class="field">
+               <label>Email</label>
+               <input type="email" name="txtEmail" class="inp" placeholder="Enter your email">
+            </div>
+
+            <h3 class="ui dividing header">Billing address</h3>
+            <div class="field">
+               <label>Address</label>
+               <input type="text" name="txtAddress" class="inp" placeholder="Enter your address">
+            </div>
+
+            <div class="field">
+               <label>Telephone number</label>
+               <input type="tel" name="telPhone" class="inp" placeholder="Enter phone number">
+            </div>
+            <br>
+            <hr>
+            <br>
+            <div class="field">
+               <div class="two fields">
+                  <div class="field">
+                     <input type="submit" value="Register" id="btn_Save" class="inp" style="width: 100%;">
+                  </div>
+                  <div class="field">
+                     <a href="/login">
+                        <div class="inp" style="width: 100%;" id="btn_Cancel">
+                           <center>Cancel</center>
+                        </div>
+                     </a>
+                  </div>
+               </div>
+            </div>
+         </form>
+      </div>
+      <script>
+         function toggleVisibility() {
+            var x = document.getElementById("password");
+            var y = document.getElementById("cfpassword");
+            if (x.type === "password") {
+               x.type = "text";
+               y.type = "text"
+            } else {
+               x.type = "password";
+               y.type = "password"
+            }
          }
-      }
-   </script>
-</body>
+      </script>
+   </body>
+
 </html>

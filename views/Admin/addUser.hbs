@@ -9,36 +9,115 @@
     </head>
 
     <body>
-        {{> adminHeader }}
+        {{> header }}
         <br /><br />
-        <center>
-            <h1>Add new User</h1>
-            <br>
-            <form method="post" action="addUser">
-                <input type="text" name="txtName" class="inp" placeholder="Enter username">
+        <div class="container-fluid" style="width: 700px;">
+            <form action="addUser" method="post" class="ui form" enctype="multipart/form-data">
+                <h3 class="ui dividing header">Add new User</h3>
+                <p style="color: red;">{{error}}</p>
+                <div class="field">
+                    <label>Username</label>
+                    <input type="text" name="txtName" class="inp" placeholder="Enter your username" required>
+                </div>
+                <div class="field">
+                    <label>Password</label>
+                    <div class="two fields">
+                        <div class="field">
+                            <input type="password" name="txtPassword" placeholder="Enter password" class="inp"
+                                   id="password"
+                                   required>
+                        </div>
+                        <div class="field">
+                            <input type="password" name="txtConfirmPassword" placeholder="Re-enter your password"
+                                   class="inp"
+                                   required
+                                   id="cfpassword">
+                        </div>
+                    </div>
+                </div>
+                <div class="inline field">
+                    <div class="ui toggle checkbox">
+                        <input type="checkbox" onclick="toggleVisibility()" tabindex="0"><label>Show password</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <label>Select an avatar</label>
+                    <input type="file" name="avatar" placeholder="Select your avatar" class="inp">
+                </div>
+
+                <div class="field">
+                    <label>Name</label>
+                    <div class="two fields">
+                        <div class="field">
+                            <input type="text" name="txtFirstName" class="inp" placeholder="First name">
+                        </div>
+                        <div class="field">
+                            <input type="text" name="txtLastName" class="inp" placeholder="Last name">
+                        </div>
+                    </div>
+                </div>
+                <div class="field">
+                    <label>Email</label>
+                    <input type="email" name="txtEmail" class="inp" placeholder="Enter your email">
+                </div>
+                <div class="field">
+                    <label>Role</label>
+                    <select name="Role" id="multi-select" multiple="" class="ui dropdown search inp">
+                        <option value="Customer">Select at least 1 Role</option>
+                        <option value="Admin" type="checkbox">Admin</option>
+                        <option value="Staff" type="checkbox">Staff</option>
+                        <option value="Customer" type="checkbox">Customer</option>
+                    </select>
+                    <script>
+                        $('#multi-select').dropdown(
+                            {
+                                maxSelections: 3,
+                            }
+                        );
+                    </script>
+                </div>
+                <h3 class="ui dividing header">Billing address</h3>
+                <div class="field">
+                    <label>Address</label>
+                    <input type="text" name="txtAddress" class="inp" placeholder="Enter your address">
+                </div>
+
+                <div class="field">
+                    <label>Telephone number</label>
+                    <input type="tel" name="telPhone" class="inp" placeholder="Enter phone number">
+                </div>
                 <br>
-                <select name="Role" class="inp">
-                    <option value="admin">Admin</option>
-                    <option value="staff">Staff</option>
-                    <option value="customer">Customer</option>
-                </select>
+                <hr>
                 <br>
-                <input type="password" name="txtPassword" class="inp" placeholder="Enter password">
-                <br>
-                <input type="text" name="txtFirstName" class="inp" placeholder="Enter user's first name">
-                <input type="text" name="txtLastName" class="inp" placeholder="Enter user's last name">
-                <br>
-                <input type="email" name="txtEmail" class="inp" placeholder="Enter user's email">
-                <br>
-                <input type="text" name="txtAddress" class="inp" placeholder="Enter user's address">
-                <br>
-                <input type="tel" name="telPhone" class="inp" placeholder="Enter phone number">
-                <br>
-                <input type="file" name="avatar" placeholder="Select user's avatar" class="inp">
-                <br>
-                <input type="submit" value="Add User" class="inp" id="btn_Save">
+                <div class="field">
+                    <div class="two fields">
+                        <div class="field">
+                            <input type="submit" value="Register" id="btn_Save" class="inp" style="width: 100%;">
+                        </div>
+                        <div class="field">
+                            <a href="/login">
+                                <div class="inp" style="width: 100%;" id="btn_Cancel">
+                                    <center>Cancel</center>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </form>
-        </center>
+        </div>
+        <script>
+            function toggleVisibility() {
+                var x = document.getElementById("password");
+                var y = document.getElementById("cfpassword");
+                if (x.type === "password") {
+                    x.type = "text";
+                    y.type = "text"
+                } else {
+                    x.type = "password";
+                    y.type = "password"
+                }
+            }
+        </script>
     </body>
 
 </html>

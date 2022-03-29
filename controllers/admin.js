@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+var uniqid = require('uniqid');
 
 const {
     insertObject,
@@ -12,15 +13,27 @@ const {
     searchBook,
 } = require("../databaseHandler");
 
+// access control
+function requiresLogin(req, res, next) {
+    if (req.session && req.session.isAdmin) {
+        return next();
+    } else {
+        var err = 'You must be the admin to view this page.';
+        res.render('login', {
+            error: err
+        });
+    }
+}
+
 //neu request la: /admin
-router.get("/", async (req, res) => {
+router.get("/", requiresLogin, async (req, res) => {
     res.render("Admin/adminIndex", {
         books: await getAll("Books"),
         title: "Admin",
     });
 });
 
-router.get("/book", async (req, res) => {
+router.get("/book", requiresLogin, async (req, res) => {
     res.render("Admin/book", {
         books: await getAll("Books"),
         title: "Admin",
@@ -28,15 +41,15 @@ router.get("/book", async (req, res) => {
 });
 
 //neu request la: /admin/addUser
-router.get("/addUser", (req, res) => {
+router.get("/addUser", requiresLogin, (req, res) => {
     res.render("Admin/addUser");
 });
 
-router.get("/register", (req, res) => {
+router.get("/register", requiresLogin, (req, res) => {
     res.render("Admin/register");
 });
 
-router.post("/register", (req, res) => {
+router.post("/register", requiresLogin, async (req, res) => {
     const name = req.body.txtName;
     const fname = req.body.txtFirstName;
     const lname = req.body.txtLastName;
@@ -54,7 +67,7 @@ router.post("/register", (req, res) => {
     if (!getUser(name)) {
         const objectToInsert = {
             userName: name,
-            firstName : fname,
+            firstName: fname,
             lastName: lname,
             role: "Customer",
             password: pass,
@@ -73,7 +86,7 @@ router.post("/register", (req, res) => {
 });
 
 //Submit add User
-router.post("/addUser", (req, res) => {
+router.post("/addUser", requiresLogin, async (req, res) => {
     const name = req.body.txtName;
     const fname = req.body.txtFirstName;
     const lname = req.body.txtLastName;
@@ -82,49 +95,64 @@ router.post("/addUser", (req, res) => {
     const email = req.body.txtEmail;
     const address = req.body.txtAddress;
     const phone = req.body.telPhone;
-    const avatar = req.files.avatar;
-    avatar.name = fname + ".jpg";
-    const path = __dirname + "/../public/Avatars/" + avatar.name;
-    avatar.mv(path, (err) => {
-        if (err) throw err;
-    });
 
-    const objectToInsert = {
-        userName: name,
-        firstName : fname,
-        lastName: lname,
-        role: role,
-        password: pass,
-        email: email,
-        address: address,
-        phoneNumber: phone,
-        avatar: avatar.name,
-    };
-    insertObject("Users", objectToInsert);
-    res.render("home");
+    var check = await getUser(name);
+    if (!check) {
+        if (req.files != null) {
+            const avatar = req.files.avatar;
+            avatar.name = fname + uniqid() + ".jpg";
+            const path = __dirname + "/../public/Avatars/" + avatar.name;
+            avatar.mv(path, (err) => {
+                if (err) throw err;
+            });
+
+            const objectToInsert = {
+                userName: name,
+                firstName: fname,
+                lastName: lname,
+                role: role,
+                password: pass,
+                email: email,
+                address: address,
+                phoneNumber: phone,
+                avatar: avatar.name,
+            };
+            insertObject("Users", objectToInsert);
+            res.render("home");
+        }
+        else {
+            res.render("Admin/addUser", {
+                error: "Please add an image!",
+            });
+        }
+    } else {
+        res.render("Admin/addUser", {
+            error: "Existing user!",
+        });
+    }
 });
 //User index
-router.get("/users", async (req, res) => {
+router.get("/users", requiresLogin, async (req, res) => {
     res.render("Admin/users", {
-        categories: await getAll("Users"),
+        users: await getAll("Users"),
     });
 })
 
 //Delete user
-router.get("/deleteBook", async (req, res) => {
+router.get("/deleteUser", requiresLogin, async (req, res) => {
     await deleteObject(req.query.id, "Users");
     res.redirect("/admin/users");
 });
 
 //Category index
-router.get("/category", async (req, res) => {
+router.get("/category", requiresLogin, async (req, res) => {
     res.render("Admin/category", {
         categories: await getAll("Categories"),
     });
 });
 
 //Add category
-router.post("/addNewCategory", (req, res) => {
+router.post("/addNewCategory", requiresLogin, async (req, res) => {
     const name = req.body.txtName;
     const quote = req.body.txtQuote;
     const author = req.body.txtAuthor;
@@ -133,16 +161,16 @@ router.post("/addNewCategory", (req, res) => {
         quote: quote,
         author: author,
     };
-    insertObject("Categories", objectToInsert);
+    await insertObject("Categories", objectToInsert);
     res.redirect("/admin/category");
 });
 //Add category render
-router.get("/addCategory", (req, res) => {
+router.get("/addCategory", requiresLogin, (req, res) => {
     res.render("Admin/addCategory");
 });
 
 //Update category
-router.post("/updateCategory", async (req, res) => {
+router.post("/updateCategory", requiresLogin, async (req, res) => {
     const id = req.body.txtID;
     const name = req.body.txtName;
     const quote = req.body.txtQuote;
@@ -160,20 +188,20 @@ router.post("/updateCategory", async (req, res) => {
 });
 
 //Update category render
-router.get("/editCategory", async (req, res) => {
+router.get("/editCategory", requiresLogin, async (req, res) => {
     const idValue = req.query.id;
     const objectToUpdate = await getObject(idValue, "Categories");
     res.render("Admin/updateCategory", { category: objectToUpdate });
 });
 
 //Delete category
-router.get("/deleteCategory/:id", async (req, res) => {
+router.get("/deleteCategory/:id", requiresLogin, async (req, res) => {
     await deleteObject("Categories", getObject(req.params.id, "Categories"));
     res.redirect("/admin/category/");
 });
 
 // Add Book
-router.post("/addNewBook", (req, res) => {
+router.post("/addNewBook", requiresLogin, (req, res) => {
     const name = req.body.txtName;
     const category = req.body.txtCategory;
     const author = req.body.txtAuthor;
@@ -182,7 +210,8 @@ router.post("/addNewBook", (req, res) => {
     const price = req.body.numPrice;
     const quantity = req.body.numQuantity;
     const image = req.files.image;
-    image.name = name + ".jpg";
+    image.name = name + uniqid() + ".jpg";
+
     const path = __dirname + "/../public/Books/" + image.name;
     image.mv(path, (err) => {
         if (err) throw err;
@@ -211,10 +240,11 @@ router.get("/addBook", async (req, res) => {
 });
 
 //Update Book
-router.post("/updateBook", async (req, res) => {
+router.post("/updateBook", requiresLogin, async (req, res) => {
     const id = req.body.txtID;
     const name = req.body.txtName;
     const category = req.body.txtCategory;
+    console.log(category);
     const author = req.body.txtAuthor;
     const description = req.body.txtDescription;
     const publisher = req.body.txtPublisher;
@@ -222,7 +252,7 @@ router.post("/updateBook", async (req, res) => {
     const quantity = req.body.numQuantity;
     if (req.files != null) {
         const image = req.files.image;
-        image.name = name + ".jpg";
+        image.name = name + uniqid() + ".jpg";
         const path = __dirname + "/../public/Books/" + image.name;
         image.mv(path, (err) => {
             if (err) throw err;
@@ -239,8 +269,19 @@ router.post("/updateBook", async (req, res) => {
                 image: image.name,
             },
         };
-    } else
+    } else if (category == null) {
         var updateValues = {
+            $set: {
+                name: name,
+                author: author,
+                description: description,
+                publisher: publisher,
+                price: price,
+                quantity: quantity,
+            },
+        };
+    }
+    else var updateValues = {
             $set: {
                 name: name,
                 category: category,
@@ -257,25 +298,27 @@ router.post("/updateBook", async (req, res) => {
     res.redirect("/admin/");
 });
 //Update Book Render
-router.get("/edit", async (req, res) => {
+router.get("/edit", requiresLogin, async (req, res) => {
     const idValue = req.query.id;
     const categories = await getAll("Categories");
     const objectToUpdate = await getObject(idValue, "Books");
+    const cats = objectToUpdate.category;
     res.render("Admin/updateBook", {
         book: objectToUpdate,
         categories: categories,
+        cats: cats
     });
 });
 
 //Delete book
-router.get("/deleteBook", async (req, res) => {
+router.get("/deleteBook", requiresLogin, async (req, res) => {
     await deleteObject(req.query.id, "Books");
     res.redirect("/admin/book");
 });
 
 // Search Book
 
-router.post("/search", async (req, res) => {
+router.post("/search", requiresLogin, async (req, res) => {
     const keyword = req.body.txtKeyword;
     const books = await searchBook(keyword);
     if (books.length == 0) {

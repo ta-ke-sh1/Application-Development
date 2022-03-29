@@ -20,7 +20,7 @@
     </head>
 
     <body>
-        {{> adminHeader }}
+        {{> header }}
         <center>
             <h1>Admin Index</h1>
             <div class="widget">
@@ -45,7 +45,8 @@
                         <th>Author</th>
                         <th>Description</th>
                         <th>Price</th>
-                        <th>Quantity</th>
+                        <th>Stock</th>
+                        <th>Popularity</th>
                         <th>Image</th>
                         <th>Option</th>
                     </tr>
@@ -60,6 +61,7 @@
                             <td>{{description}}</td>
                             <td>{{price}}</td>
                             <td>{{quantity}}</td>
+                            <td>{{popularity}}</td>
                             <td><img src="/Books/{{image}}" height="100px">
                             </td>
                             <td>

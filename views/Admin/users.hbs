@@ -1,59 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Users</title>
-    <style>
-        .widget{
-            width: 90%;
-        }
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Users</title>
+        <style>
+            .widget {
+                width: 90%;
+            }
 
-        .widget table{
-            max-height: 600px;
-            overflow: scroll;
-        }
-    </style>
-</head>
+            .widget table {
+                max-height: 600px;
+                overflow: scroll;
+            }
 
-<body>
-    {{> adminHeader }}
-    <center>
-        <h1>Users</h1>
-        <div class="widget">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col">
-                        <a href="/admin/addUser" class="button">Add user</a>
+        </style>
+    </head>
+
+    <body>
+        {{> header }}
+        <center>
+            <h1>Users</h1>
+            <div class="widget">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col">
+                            <a href="/admin/addUser" class="button">Add user</a>
+                        </div>
                     </div>
+                    <div class="row"></div>
                 </div>
-                <div class="row"></div>
+                <table style="border: 1px solid black;" class="tbl">
+                    <tr>
+                        <th>No</th>
+                        <th>Username</th>
+                        <th>Password</th>
+                        <th>Role</th>
+                        <th>Avatar</th>
+                        <th>Option</th>
+                    </tr>
+                    {{#each users}}
+                        <tr>
+                            <td>{{indexFix @index }}</td>
+                            <td>{{userName}}</td>
+                            <td>{{password}}</td>
+                            <td>{{role}}</td>
+                            <td><img src="/Avatars/{{avatar}}" height="100px">
+                            <td>
+                                <a href="/admin/editUser?id={{ _id }}">
+                                    Edit
+                                </a><br>
+                                <a href="/admin/deleteUser?id={{ _id }}">Delete</a>
+                            </td>
+                        </tr>
+                    {{/each}}
+                </table>
             </div>
-            <table style="border: 1px solid black;" class="tbl">
-                <tr>
-                    <th>No</th>
-                    <th>Username</th>
-                    <th>Password</th>
-                    <th>Option</th>
-                </tr>
-                {{#each users}}
-                <tr>
-                    <td>{{indexFix @index }}</td>
-                    <td>{{name}}</td>
-                    <td>{{pass}}</td>
-                    <td>
-                        <a href="/admin/editUser?id={{ _id }}">
-                            Edit
-                        </a><br>
-                        <a href="/admin/deleteUser/{{_id}}">Delete</a>
-                    </td>
-                </tr>
-                {{/each}}
-            </table>
-        </div>
-    </center>
-</body>
+        </center>
+    </body>
 
 </html>

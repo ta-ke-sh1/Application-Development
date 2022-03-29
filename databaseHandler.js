@@ -66,7 +66,8 @@ async function homepageCategorize() {
         .collection("Categories")
         .aggregate([
             {
-                $lookup: {
+                $lookup:
+                {
                     from: "Books",
                     localField: "name",
                     foreignField: "category",
@@ -74,6 +75,12 @@ async function homepageCategorize() {
                     as: "Books",
                 },
             },
+            {
+                $addFields: { bookCount: { $size: "$Books" } }
+            },
+            {
+                $match: { bookCount: { $gt: 0 } }
+            }
         ])
         .toArray();
 }
@@ -112,7 +119,7 @@ async function checkUser(username, password) {
         .collection("Users")
         .findOne({ userName: username, password: password });
     if (user != null) {
-        return user.role;
+        return user;
     } else return "-1";
 }
 

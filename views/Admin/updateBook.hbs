@@ -9,53 +9,113 @@
     </head>
 
     <body>
-        {{> adminHeader }}
+        {{> header }}
+        <br>
         <center>
-            <br>
-            <center><h1>Update Book</h1></center>
-            <div class="container-fluid">
-                <br>
-                <div class="row">
-                    <div class="col">
-                        <img src="/Books/{{ book.image }}" height="600px" style="margin-right: -100px;">
-                    </div>
-                    <div class="col" style="margin-left: -20%;">
-                        <form action="updateBook" method="POST" class="input-form" enctype="multipart/form-data">
-                            <input type="hidden" name="txtID" value="{{book._id}}">
-                            <input type="text" name="txtName" id="" placeholder="Enter book's name" value="{{ book.name }}" class="inp">
-                            <br>
-                            {{ book.category }}
-                            <br>
-                            <select name="txtCategory" id="multi-select" multiple="" class="ui dropdown inp">
-                                <option value="">Select at least 1 category</option>
+            <h1>Update Book</h1>
+        </center>
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <img src="/Books/{{ book.image }}" height="700px" style="margin-right: -100px;">
+                </div>
+                <div class="col" style="width: 700px;">
+                    <form action="updateBook" method="POST" class="ui form" enctype="multipart/form-data">
+                        <input type="hidden" name="txtID" value="{{book._id}}">
+                        <div class="field">
+                            <label>Book Name</label>
+                            <input type="text" name="txtName" id="" placeholder="Enter book's name"
+                                   value="{{ book.name }}">
+                        </div>
+                        <div class="field">
+                            <label>Category</label>
+                            <p>{{#each cats}}
+                                    <span style="padding: 4px 8px;
+                                                background-color: #E9E8E8;
+                                                margin: 10px 0px;
+                                                margin-right: 6px; 
+                                                border-radius: 6px;
+                                                font-weight: bold;
+                                                border: 1px solid #CDCDCE;">
+                                        {{this}}
+                                    </span>
+                                {{/each}}</p>
+                            <select name="txtCategory" id="multi-select" multiple=""
+                                    class="ui dropdown search inp">
+                                <option value="">Edit selected category</option>
                                 {{#each categories}}
                                     <option value="{{name}}" type="checkbox">{{name}}</option>
                                 {{/each}}
                             </select>
-                            <br>
                             <script>
                                 $('#multi-select').dropdown(
-                                    { maxSelections: 3}
+                                    { maxSelections: 5 }
                                 );
                             </script>
-                            <input type="text" name="txtAuthor" id="" placeholder="Enter book's author" value="{{ book.author }}" class="inp">
-                            <br>
-                            <input type="text" name="txtPublisher" placeholder="Enter book's publisher" value="{{ book.publisher }}" id="description"
-                                class="inp">
-                            <br>
-                            <input type="text" name="txtDescription" placeholder="Enter book's description" id="description" class="inp" value="{{ book.description }}">
-                            <br>
-                            <input type="number" name="numPrice" step="0.01" placeholder="Enter book's price" value="{{ book.price }}" class="inp">
-                            <br>
-                            <input type="number" name="numQuantity" placeholder="Enter quantity in storage" value="{{ book.quantity }}" class="inp">
-                            <br>
-                            <input type="file" name="image" placeholder="Select book's image" value="{{ book.image.name }}" class="inp">
-                            <br>
-                            <input type="submit" value="Update book" id="btn_Save" class="inp">
-                        </form>
-                    </div>
+                        </div>
+                        <div class="field" style="margin-top: -20px;">
+                            <div class="two fields">
+                                <div class="field">
+                                    <label>Author</label>
+                                    <input type="text" name="txtAuthor" id="" placeholder="Enter book's author"
+                                           value="{{ book.author }}">
+                                </div>
+                                <div class="field">
+                                    <label>Publisher</label>
+                                    <input type="text" name="txtPublisher" placeholder="Enter book's publisher"
+                                           value="{{ book.publisher }}"
+                                           id="description">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label>Description</label>
+                            <textarea spellcheck="false" name="txtDescription"
+                                      placeholder="Enter book's description"
+                                      value="" id="description">{{ book.description }}</textarea>
+                        </div>
+                        <div class="field">
+                            <div class="two fields">
+                                <div class="field">
+                                    <label>Price</label>
+                                    <input type="number" name="numPrice" step="0.01"
+                                           placeholder="Enter book's price" value="{{ book.price }}"
+                                           class="inp">
+                                </div>
+                                <div class="field">
+                                    <label>Stock</label>
+                                    <input type="number" name="numQuantity" step="0.01"
+                                           placeholder="Enter book's stock" value="{{ book.quantity }}"
+                                           class="inp">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label>Image</label>
+                            <input type="file" name="image" placeholder="Select book's image" class="inp"
+                                   value="{{ book.image.name }}">
+                        </div>
+                        <br>
+                        <div class="field">
+                            <div class="two fields">
+                                <div class="field">
+                                    <input type="submit" value="Update Book" id="btn_Save" class="inp"
+                                           style="width: 100%;">
+                                </div>
+                                <div class="field">
+                                    <a href="#">
+                                        <div class="inp" style="width: 100%;" id="btn_Cancel">
+                                            <center>Cancel</center>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
-        </center>
+        </div>
+
     </body>
+
 </html>
