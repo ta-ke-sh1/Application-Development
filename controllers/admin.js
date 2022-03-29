@@ -7,6 +7,7 @@ const {
     deleteObject,
     getObject,
     checkUser,
+    getUser,
     updateObject,
     searchBook,
 } = require("../databaseHandler");
@@ -37,12 +38,30 @@ router.get("/register", (req, res) => {
 
 router.post("/register", (req, res) => {
     const name = req.body.txtName;
+    const fname = req.body.txtFirstName;
+    const lname = req.body.txtLastName;
+    const email = req.body.txtEmail;
+    const address = req.body.txtAddress;
+    const phone = req.body.telPhone;
+    const avatar = req.files.avatar;
+    avatar.name = fname + ".jpg";
+    const path = __dirname + "/../public/Avatars/" + avatar.name;
     const pass = req.body.txtPassword;
+    avatar.mv(path, (err) => {
+        if (err) throw err;
+    });
+
     if (!getUser(name)) {
         const objectToInsert = {
             userName: name,
+            firstName : fname,
+            lastName: lname,
             role: "Customer",
             password: pass,
+            email: email,
+            address: address,
+            phoneNumber: phone,
+            avatar: avatar.name,
         };
         insertObject("Users", objectToInsert);
         res.redirect("/login");
@@ -56,12 +75,30 @@ router.post("/register", (req, res) => {
 //Submit add User
 router.post("/addUser", (req, res) => {
     const name = req.body.txtName;
+    const fname = req.body.txtFirstName;
+    const lname = req.body.txtLastName;
     const role = req.body.Role;
     const pass = req.body.txtPassword;
+    const email = req.body.txtEmail;
+    const address = req.body.txtAddress;
+    const phone = req.body.telPhone;
+    const avatar = req.files.avatar;
+    avatar.name = fname + ".jpg";
+    const path = __dirname + "/../public/Avatars/" + avatar.name;
+    avatar.mv(path, (err) => {
+        if (err) throw err;
+    });
+
     const objectToInsert = {
         userName: name,
+        firstName : fname,
+        lastName: lname,
         role: role,
         password: pass,
+        email: email,
+        address: address,
+        phoneNumber: phone,
+        avatar: avatar.name,
     };
     insertObject("Users", objectToInsert);
     res.render("home");
