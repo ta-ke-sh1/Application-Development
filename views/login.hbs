@@ -1,43 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
 
-    <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Homepage</title>
-    </head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Homepage</title>
+  </head>
 
-    <body>
-        {{> header }}
-        <br /><br />
-        <center>
-            <h1>Login</h1>
-            <form action="/login" method="post">
-                <div class="error">{{ error }}</div>
-                <input type="text" name="txtUsername" id="" placeholder="Enter user name" class="inp">
-                <br>
-                <input type="password" name="txtPassword" id="password" placeholder="Enter password" class="inp">
-                <br>
-                <div class="toggle">
-                    <input type="checkbox" onclick="toggleVisibility()" > Show Password
-                    <span class="left"><a href="">Forgot Password?</a></span>
+  <body>
+    {{> header }}
+    <br /><br />
+
+    <div class="container">
+      <div class="row">
+        <div class="col" style="margin-right: 20px; margin-left: -50px"><img src="/Page/banner.png" alt=""
+               height="570px" width="auto"></div>
+        <div class="col">
+          <h1 style="margin-top: 75px;">Log into your <br> FPTBooks account</h1>
+          <br>
+          <form action="/login" method="post">
+            {{#if error}}
+              <div class="ui error message transition" style="margin-bottom: 25px; margin-top:-20px">
+                <i class="close icon"></i>
+                <div class="header">
+                  {{ error }}
                 </div>
-                <br>
-                <input type="submit" value="Log in" id="btn_Save" class="inp">
-                <br>
-                Not a member? <a href="/register">Register here!</a>
-            </form>
-        </center>
-    </body>
-    <script>
-function toggleVisibility() {
-  var x = document.getElementById("password");
-  if (x.type === "password") {
-    x.type = "text";
-  } else {
-    x.type = "password";
-  }
-}
-</script>
+              </div>
+              <script>
+                $('.message .close')
+                  .on('click', function () {
+                    $(this)
+                      .closest('.message')
+                      .transition('fade')
+                      ;
+                  })
+                  ;
+              </script>
+            {{/if}}
+            <input type="text" name="txtUsername" id="" placeholder="Enter user name" class="inp">
+            <br>
+            <input type="password" name="txtPassword" id="password" placeholder="Enter password" class="inp">
+            <br>
+            <div class="toggle">
+              <input type="checkbox" onclick="toggleVisibility()"> Show Password
+            </div>
+            <br>
+            <input type="submit" value="Log in" id="btn_Save" class="inp">
+            <br>
+            <span style="margin-left: 130px;">
+              Not a member? <a href="/register">Register here!</a>
+            </span>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script>
+    function toggleVisibility() {
+      var x = document.getElementById("password");
+      if (x.type === "password") {
+        x.type = "text";
+      } else {
+        x.type = "password";
+      }
+    }
+  </script>
+
 </html>

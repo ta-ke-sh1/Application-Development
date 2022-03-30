@@ -79,11 +79,6 @@
 }
 
 .toggle {
-    max-width: 625px;
-    margin-left: -180px;
     margin-top: -10px;
 }
 
-.toggle .left {
-    float: right;
-}

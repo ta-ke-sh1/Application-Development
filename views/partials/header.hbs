@@ -4,6 +4,7 @@
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="shortcut icon" href="/Logo/favicon.ico" type="image/x-icon">
         <link
               rel="stylesheet"
               href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
@@ -22,54 +23,119 @@
         <link rel="stylesheet" href="/css/body.css" />
         <link rel="stylesheet" href="/css/alert.css" />
         <link rel="stylesheet" href="/css/card.css" />
+        <link rel="stylesheet" href="/css/cursor.css" />
         <link rel="stylesheet" href="/css/button.css?version=1.1" />
         <link rel="stylesheet" href="/css/form.css?version=1.1" />
-        <script src="jQuery/cursor.js"></script>
+        <script src="/jQuery/cursor.js"></script>
         <style>
-            .nav-item { padding: 6px; transition-duration: 0.3s; } hr {
-            margin-top: 0px; } .navbar{ transition-duration: 0.3s; }
-            .navbar:hover { box-shadow: rgba(0, 0, 0, 0.01) 0px 20px 25px -5px,
-            rgba(0, 0, 0, 0.04) 0px 10px 10px -5px; }
+            .nav-item {
+                padding: 6px;
+                transition-duration: 0.3s;
+            }
+
+            hr {
+                margin-top: 0px;
+            }
+
+            .navbar {
+                transition-duration: 0.3s;
+            }
+
+            .navbar:hover {
+                box-shadow: rgba(0, 0, 0, 0.01) 0px 20px 25px -5px,
+                    rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
+            }
+
+            #dropdown {
+                margin-top: 7px;
+            }
 
         </style>
+
     </head>
 
     <body>
         <nav class="navbar navbar-expand-md navbar-light">
             <div
-                class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2"
-            >
+                 class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/">Homepage</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/admin/category">Category</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/admin/addUser">Register</a>
-                    </li>
+                    {{#if session.isAdmin }}
+                        <!-- Admin Headbar -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="/admin/">Homepage</a>
+                        </li>
+                        <li class="nav-item">
+                            <div class="ui pointing dropdown link item" id="dropdown">
+                                <span class="text">Category</span>
+                                <div class="dropdown-menu">
+                                    <div class="dropdown-item">Add new Category</div>
+                                    <div class="dropdown-item">View all Category</div>
+                                </div>
+                            </div>
+                        </li>
+                    {{else}} <!-- Customer Headbar -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="/">Homepage</a>
+                        </li>
+                        <li class="nav-item">
+                            <div class="ui simple dropdown item" id="dropdown">
+                                <span class="text">Books</span>
+                                <i class="dropdown icon"></i>
+                                <div class="menu">
+                                    <div class="item">What's Popular</div>
+                                    <div class="item">Bestsellers</div>
+                                    <div class="item">Newly Added</div>
+                                    <div class="item">Staff Picks</div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/">Categories</a>
+                        </li>
+                    {{/if}}
+                    <script>
+                        $('.dropdown')
+                            .dropdown({});
+                    </script>
                 </ul>
             </div>
-            <div class="mx-auto order-0">
+            {{!-- <div class="mx-auto order-0">
                 <a class="navbar-brand mx-auto" href="/admin"><img
-                        src="/Logo/fpt.png"
-                        height="40px"
-                        alt=""
-                    /></a>
-            </div>
+                         src="/Logo/fpt.png"
+                         height="40px"
+                         alt="" /></a>
+            </div> --}}
             <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
+                        <div class="ui fluid search" style="margin-right: 30px">
+                            <div class="ui icon input">
+                                <input class="prompt" type="text" placeholder="Search for Books..."
+                                       style="width: 400px;">
+                                <i class="search icon"></i>
+                            </div>
+                            <div class="results"></div>
+                        </div>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="/cart">Cart</a>
                     </li>
-                    {{#if session.userName}}
+                    {{#if session.userName }}
                         <li class="nav-item">
-                            <a
-                                class="nav-link"
-                                href="#"
-                            >{{session.userName}}</a>
+                            <div class="ui simple dropdown item" id="dropdown">
+                                <span class="text"><img src="/Avatars/{{session.avatar}}" style="height: 50px; border-radius: 20px" alt=""></span>
+                                <div class="menu" style="margin-top: 5px;">
+                                    <div class="item disabled">Hello, {{session.firstName}}</div>
+                                    <div class="item">View Profile</div>
+                                    <div class="item">Edit Profile</div>
+                                    <div class="item">Purchase History</div>
+                                </div>
+                            </div>
                         </li>
+                        <script>
+                            $('.dropdown')
+                                .dropdown({});
+                        </script>
                         <li class="nav-item">
                             <a class="nav-link" href="/logout">Log out</a>
                         </li>

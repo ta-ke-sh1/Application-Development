@@ -232,7 +232,7 @@ router.post("/addNewBook", requiresLogin, (req, res) => {
     res.redirect("/admin/");
 });
 // Add Book Render
-router.get("/addBook", async (req, res) => {
+router.get("/addBook", requiresLogin, async (req, res) => {
     const categories = await getAll("Categories");
     res.render("Admin/addBook", {
         categories: categories,
@@ -244,7 +244,6 @@ router.post("/updateBook", requiresLogin, async (req, res) => {
     const id = req.body.txtID;
     const name = req.body.txtName;
     const category = req.body.txtCategory;
-    console.log(category);
     const author = req.body.txtAuthor;
     const description = req.body.txtDescription;
     const publisher = req.body.txtPublisher;

@@ -1,7 +1,9 @@
 .error {
-    margin-top: 10px;
-    margin-bottom: 20px;
-    color: white;
+    color: red;
+    margin-bottom: 30px;
+    font-family: Maison-Demi;
     width: 450px;
-    background-color: red;
+    padding: 12px 12px;
+    border: 1px solid red ;
+    border-radius: 15px;
 }

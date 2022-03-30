@@ -97,6 +97,7 @@ app.post("/login", async (req, res) => {
         console.log(user.role);
         session = req.session;
         session.userName = user.userName;
+        session.firstName = user.firstName;
         session.role = user.role;
         session.avatar = user.avatar;
         session.isAdmin = false;
