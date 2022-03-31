@@ -66,8 +66,7 @@ async function homepageCategorize() {
         .collection("Categories")
         .aggregate([
             {
-                $lookup:
-                {
+                $lookup: {
                     from: "Books",
                     localField: "name",
                     foreignField: "category",
@@ -76,11 +75,11 @@ async function homepageCategorize() {
                 },
             },
             {
-                $addFields: { bookCount: { $size: "$Books" } }
+                $addFields: { bookCount: { $size: "$Books" } },
             },
             {
-                $match: { bookCount: { $gt: 0 } }
-            }
+                $match: { bookCount: { $gt: 0 } },
+            },
         ])
         .toArray();
 }
@@ -132,6 +131,19 @@ async function getUser(username) {
     } else return false;
 }
 
+async function sortBook(priceLow, priceHigh, keyword) {
+    const dbo = await getDB();
+    return await dbo
+        .collection("Books")
+        .find({
+            name: { $regex: new RegExp(keyword), $options: "-i" },
+            price: { $gt: parseFloat(priceLow), $lt: parseFloat(priceHigh) },
+        })
+        .sort({ popularity: -1 })
+        .limit(8)
+        .toArray();
+}
+
 module.exports = {
     insertObject,
     updateObject,
@@ -141,6 +153,7 @@ module.exports = {
     checkUser,
     getUser,
     searchBook,
+    sortBook,
     getAllCriterias,
     homepageCategorize,
     getAllPopularity,

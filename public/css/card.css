@@ -1,85 +1,11 @@
-.book-card img {
-    max-width: 210px;
-    height: 300px;
+.card img {
+    width: auto;
+    max-height: 350px;
     object-fit: contain;
     border-radius: 15px;
 }
 
-.container-book {
-    top: 60px;
-    display: flex;
-}
-
-.book-card {
-    max-width: 235px;
-    height: 440px;
-    background-color: white;
-    border-radius: 20px;
-    box-shadow: rgba(17, 17, 26, 0.1) 0px 8px 24px,
-        rgba(17, 17, 26, 0.1) 0px 16px 56px, rgba(17, 17, 26, 0.1) 0px 24px 80px;
-    /*   margin-left: -50px; */
-    transition: 0.4s ease-out;
-    position: relative;
-    left: 0px;
-    padding: 12px 14px;
-    align-items: center;
-}
-
-.book-card a{
-    text-decoration: none;
-    color: black;
-    font-family: Maison-Medium;
-}
-
-.book-card .price{
-    padding: 4px 16px;
-    border-radius: 16px;
-    background-image: linear-gradient(60deg , #ff8177 0%, #ff867a 0%, #ff8c7f 21%, #f99185 52%, #cf556c 78%, #b12a5b 100%);
-    
-    color: white;
-    position: absolute;
-    top: 395px;
-    left: 12px;
-}
-
-#addCart {
-    position: absolute;
-    top: 130px;
-    left: 60px;
-    visibility: hidden;
-}
-
-.name{
-    margin-top: 12px;
-    inline-size: 200px;
-    overflow-wrap: break-word;
-}
-
-.book-card:not(:first-child) {
-    margin-left: -35px;
-}
-
-.book-card:hover {
-    transform: translateY(-30px);
-    transition: 0.4s ease-out;
-}
-
-
-.book-card:hover ~ .book-card {
-    position: relative;
-    left: 45px;
-    transition: 0.4s ease-out;
-}
-
-.title {
-    color: white;
-    font-weight: 300;
-    position: absolute;
-    left: 20px;
-    top: 15px;
-}
-
-svg {
-    fill: #17141d;
-    stroke-width: 2px;
+.card:hover {
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px,
+        rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
 }

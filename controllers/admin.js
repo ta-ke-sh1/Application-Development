@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-var uniqid = require('uniqid');
+var uniqid = require("uniqid");
 
 const {
     insertObject,
@@ -18,9 +18,9 @@ function requiresLogin(req, res, next) {
     if (req.session && req.session.isAdmin) {
         return next();
     } else {
-        var err = 'You must be the admin to view this page.';
-        res.render('login', {
-            error: err
+        var err = "You must be the admin to view this page.";
+        res.render("login", {
+            error: err,
         });
     }
 }
@@ -119,8 +119,7 @@ router.post("/addUser", requiresLogin, async (req, res) => {
             };
             insertObject("Users", objectToInsert);
             res.render("home");
-        }
-        else {
+        } else {
             res.render("Admin/addUser", {
                 error: "Please add an image!",
             });
@@ -136,7 +135,7 @@ router.get("/users", requiresLogin, async (req, res) => {
     res.render("Admin/users", {
         users: await getAll("Users"),
     });
-})
+});
 
 //Delete user
 router.get("/deleteUser", requiresLogin, async (req, res) => {
@@ -207,8 +206,8 @@ router.post("/addNewBook", requiresLogin, (req, res) => {
     const author = req.body.txtAuthor;
     const description = req.body.txtDescription;
     const publisher = req.body.txtPublisher;
-    const price = req.body.numPrice;
-    const quantity = req.body.numQuantity;
+    const price = parseFloat(req.body.numPrice);
+    const quantity = parseInt(req.body.numQuantity);
     const image = req.files.image;
     image.name = name + uniqid() + ".jpg";
 
@@ -247,8 +246,8 @@ router.post("/updateBook", requiresLogin, async (req, res) => {
     const author = req.body.txtAuthor;
     const description = req.body.txtDescription;
     const publisher = req.body.txtPublisher;
-    const price = req.body.numPrice;
-    const quantity = req.body.numQuantity;
+    const price = parseFloat(req.body.numPrice);
+    const quantity = parseInt(req.body.numQuantity);
     if (req.files != null) {
         const image = req.files.image;
         image.name = name + uniqid() + ".jpg";
@@ -279,8 +278,8 @@ router.post("/updateBook", requiresLogin, async (req, res) => {
                 quantity: quantity,
             },
         };
-    }
-    else var updateValues = {
+    } else
+        var updateValues = {
             $set: {
                 name: name,
                 category: category,
@@ -305,7 +304,7 @@ router.get("/edit", requiresLogin, async (req, res) => {
     res.render("Admin/updateBook", {
         book: objectToUpdate,
         categories: categories,
-        cats: cats
+        cats: cats,
     });
 });
 

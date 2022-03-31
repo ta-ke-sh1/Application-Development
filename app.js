@@ -14,9 +14,8 @@ const {
 } = require("./databaseHandler");
 const cookieParser = require("cookie-parser");
 var session = require("express-session");
-var uniqid = require('uniqid');
+var uniqid = require("uniqid");
 const oneDay = 1000 * 60 * 60 * 24;
-
 
 hbs.handlebars.registerHelper("indexFix", function (value) {
     value += 1;
@@ -103,7 +102,7 @@ app.post("/login", async (req, res) => {
         session.isAdmin = false;
 
         if (user.role == "Admin") {
-            session.isAdmin = true
+            session.isAdmin = true;
         }
 
         console.log(session);
@@ -137,7 +136,7 @@ app.post("/register", async (req, res) => {
             if (err) throw err;
         });
         var check = await getUser(name);
-        if ( check == false) {
+        if (check == false) {
             const objectToInsert = {
                 userName: name,
                 firstName: fname,
@@ -157,9 +156,7 @@ app.post("/register", async (req, res) => {
                 error: "Existing user!",
             });
         }
-
-    }
-    else {
+    } else {
         res.render("Admin/addUser", {
             error: "Please add an image!",
         });

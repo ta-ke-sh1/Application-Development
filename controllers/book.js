@@ -1,5 +1,11 @@
 const express = require("express");
-const { getObject, updateObject, searchBook } = require("../databaseHandler");
+const {
+    getObject,
+    updateObject,
+    getAll,
+    searchBook,
+    sortBook,
+} = require("../databaseHandler");
 const router = express.Router();
 
 router.get("/", async (req, res) => {
@@ -16,6 +22,24 @@ router.get("/", async (req, res) => {
 router.get("/search", async (req, res) => {
     const keyword = req.query.key;
     const books = await searchBook(keyword);
+    if (books.length == 0) {
+        res.render("Book/main.hbs", {
+            error: "No books found!",
+        });
+    } else {
+        res.render("Book/main.hbs", {
+            books: books,
+        });
+    }
+});
+
+router.get("/sort", async (req, res) => {
+    const keyword = req.query.key;
+    const low = req.query.low;
+    const high = req.query.high;
+    if (low == "") low = 0;
+    if (high == "") high = 1000;
+    const books = await sortBook(low, high, keyword);
     if (books.length == 0) {
         res.render("Book/main.hbs", {
             error: "No books found!",
