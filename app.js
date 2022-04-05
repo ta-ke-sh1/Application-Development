@@ -10,8 +10,8 @@ const {
     insertObject,
     getUser,
     checkUser,
-    homepageCategorize,
-    getAllPopularity,
+    getByCriteria,
+    getCategoryByName
 } = require("./databaseHandler");
 const cookieParser = require("cookie-parser");
 var session = require("express-session");
@@ -64,6 +64,12 @@ hbs.registerPartial(
     fs.readFileSync(__dirname + "/views/partials/header.hbs", "utf8")
 );
 
+hbs.registerPartial(
+    "footer",
+    fs.readFileSync(__dirname + "/views/partials/footer.hbs", "utf8")
+);
+
+
 // tat ca cac dia chi co chua admin se goi den controller admin
 const adminController = require("./controllers/admin");
 app.use("/admin", adminController);
@@ -78,12 +84,14 @@ app.use("/user", userController);
 
 // Homepage
 app.get("/", async (req, res) => {
-    var popular = await getAllPopularity();
-    var categories = await homepageCategorize();
+    let popular = await getByCriteria("popularity");
+    let newlyAdded = await getByCriteria("date");
+    let editorChoice = await getCategoryByName("Editor's Choice");
     res.render("index", {
         popular: popular,
         userInfo: req.session.User,
-        categories: categories,
+        editorChoice: editorChoice,
+        newlyAdded: newlyAdded
     });
 });
 

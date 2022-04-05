@@ -23,33 +23,90 @@
             }
 
             .book-cards {
+                margin: 17px 0px;
                 display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-                grid-gap: 22px;
+                grid-template-columns: repeat(6, 1fr);
             }
 
-            .items {}
+            .book-info h3,
+            h5 {
+                margin: 0;
+            }
 
             .book-card {
-                align-items: center;
+                position: relative;
                 margin: 7px 0px;
                 border: 1px solid #ccc;
-                height: 500px;
-                width: 250px;
+                height: 490px;
+                width: 240px;
                 transition-duration: 0.3s;
             }
 
             .book-card:hover {
+                border: 1px solid crimson;
                 box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px,
                     rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
+                
+            }
+
+            .book-card .img-card :hover {
+                background-size: 130% 150%;
             }
 
             .img-card {
-                height: 360px;
-                width: 250px;
+                height: 350px;
+                width: 240px;
                 background-size: cover;
                 background-repeat: no-repeat;
                 background-position: center;
+            }
+
+            .heading {
+                font-size: 22px;
+                font-family: Maison-Medium;
+            }
+
+            .head-link {
+                font-size: 18px;
+                font-family: Maison-Medium;
+            }
+
+            .tags {
+                margin-top: 60px;
+                margin-bottom: 30px;
+            }
+
+            .book-card button {
+                position: absolute;
+                border: none;
+                outline: 0;
+                padding: 12px;
+                color: white;
+                background-color: #282828;
+                text-align: center;
+                cursor: pointer;
+                width: 100%;
+                font-size: 18px;
+                transition-duration: 0.6s;
+                transition: all 0.6s ease-in-out;
+                left: 0;
+                bottom: 0;
+            }
+
+            .book-card h3 {
+                padding: 10px;
+                height: 60px;
+                word-wrap: break-word;
+                overflow: hidden;
+            }
+
+            .book-card button:hover {
+                background-color: crimson;
+            }
+
+            .price {
+                color: grey;
+                font-size: 18px;
             }
 
         </style>
@@ -77,11 +134,12 @@
                 </div>
                 <img src="/Page/banner.png" alt="" height="550px" width="auto">
                 <br>
-                <input type="search" name="" id="" placeholder="Search for Book" class="inp" width="100%">
             </center>
-            <div class="row">
-                <h1>What's popular?</h1>
+            <div class="row tags" style="display: inline;">
+                <span class="heading">What's popular</span>
+                <span class="head-link" style="float: right;"> <a href="">See more</a></span>
             </div>
+            <br>
             <div class="book-cards">
                 {{#each popular }}
                     <div class="item">
@@ -89,48 +147,70 @@
                             <div class="book-card">
                                 <div class="img-card" style="background-image: url('/Books/{{image}}');">
                                 </div>
-                                <div class="book-info">
-                                    <h3>{{name}}</h3>
-                                    <h5>${{ price }}</h5>
-                                    <h5><a href="">Add to Cart</a></h5>
-                                </div>
+                                <center>
+                                    <div class="book-info">
+                                        <h3>{{name}}</h3>
+                                        <p class="price">${{ price }}</p>
+                                        <p><a href=""><button>Add to Cart</button></a></p>
+                                    </div>
+                                </center>
                             </div>
                         </a>
                     </div>
                 {{/each}}
             </div>
-            {{#each categories }}
-                <div class="row">
-                    <h1>{{ name }}</h1>
-                </div>
-                <div class="ui special cards">
-                    {{#each Books }}
+            <br>
+            <div class="row tags" style="display: inline;">
+                <span class="heading">Editor's Choice</span>
+                <span class="head-link" style="float: right;"> <a href="">See more</a></span>
+            </div>
+            <br>
+            <div class="book-cards">
+                {{#each editorChoice }}
+                    <div class="item">
                         <a href="/book?id={{ _id }}">
-                            <div class="card">
-                                <div class="blurring dimmable image">
-                                    <div class="ui dimmer">
-                                        <div class="content">
-                                            <div class="center">
-                                                <div class="ui inverted button">
-                                                    <a href="" id="addCart">Add to Cart</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <img src="/Books/{{image}}">
+                            <div class="book-card">
+                                <div class="img-card" style="background-image: url('/Books/{{image}}');">
                                 </div>
-                                <div class="content">
-                                    <a class="header">{{name}}</a>
-                                    <div class="meta">
-                                        <span class="price">${{ price }} <br></span>
+                                <center>
+                                    <div class="book-info">
+                                        <h3>{{name}}</h3>
+                                        <p class="price">${{ price }}</p>
+                                        <p><a href=""><button>Add to Cart</button></a></p>
                                     </div>
-                                </div>
+                                </center>
                             </div>
                         </a>
-                    {{/each}}
-                </div>
-                <br>
-            {{/each}}
+                    </div>
+                {{/each}}
+            </div>
+            <br>
+            <div class="row tags" style="display: inline;">
+                <span class="heading">Newly Added</span>
+                <span class="head-link" style="float: right;"><a href="">See more</a></span>
+            </div>
+            <br>
+            <div class="book-cards">
+                {{#each newlyAdded }}
+                    <div class="item">
+                        <a href="/book?id={{ _id }}">
+                            <div class="book-card">
+                                <div class="img-card" style="background-image: url('/Books/{{image}}');">
+                                </div>
+                                <center>
+                                    <div class="book-info">
+                                        <h3>{{name}}</h3>
+                                        <p class="price">${{ price }}</p>
+                                        <p><a href=""><button>Add to Cart</button></a></p>
+                                    </div>
+                                </center>
+                            </div>
+                        </a>
+                    </div>
+                {{/each}}
+            </div>
         </div>
     </body>
+    {{> footer }}
+
 </html>

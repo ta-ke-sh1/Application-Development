@@ -50,14 +50,39 @@ async function getAll(collectionName) {
         .toArray();
 }
 
-async function getAllPopularity() {
+async function getCategoryByName(name) {
     const dbo = await getDB();
     return await dbo
         .collection("Books")
-        .find({})
+        .find({ "category": name })
         .sort({ popularity: -1 })
-        .limit(12)
         .toArray();
+}
+
+async function getByCriteria(criteria) {
+    const dbo = await getDB();
+    if (criteria == "popularity") {
+        return await dbo
+            .collection("Books")
+            .find({})
+            .sort({ popularity: -1 })
+            .limit(12)
+            .toArray();
+    }
+    else if (criteria == "date") {
+        return await dbo.collection("Books")
+            .find({})
+            .sort({ _id: 1 })
+            .limit(12)
+            .toArray();
+    }
+    else {
+        return await dbo.collection("Books")
+            .find({})
+            .sort({ quantity: -1 })
+            .limit(12)
+            .toArray();
+    }
 }
 
 async function homepageCategorize() {
@@ -156,5 +181,6 @@ module.exports = {
     sortBook,
     getAllCriterias,
     homepageCategorize,
-    getAllPopularity,
+    getByCriteria,
+    getCategoryByName
 };

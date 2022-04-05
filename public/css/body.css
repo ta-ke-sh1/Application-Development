@@ -34,9 +34,8 @@ h1 {
 }
 
 .body {
-    position: absolute;
     width: 80%;
-    left: 10%;
+    margin-left: 10%;
 }
 
 .row {
