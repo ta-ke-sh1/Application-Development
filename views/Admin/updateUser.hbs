@@ -5,34 +5,27 @@
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Homepage</title>
+        <title>Update User</title>
     </head>
 
     <body>
         {{> header }}
         <br /><br />
         <div class="container-fluid" style="width: 700px;">
-            <form action="addUser" method="post" class="ui form" enctype="multipart/form-data">
+            <form action="updateUser" method="post" class="ui form" enctype="multipart/form-data">
                 <h3 class="ui dividing header">Add new User</h3>
                 <p style="color: red;">{{error}}</p>
                 <div class="field">
+                    <input type="hidden" name="txtID" value="{{ user._id }}">
                     <label>Username</label>
-                    <input type="text" name="txtName" class="inp" placeholder="Enter your username" required>
+                    <input type="text" name="txtName" class="inp" placeholder="Enter your username" value="{{ user.userName }}" required>
                 </div>
                 <div class="field">
                     <label>Password</label>
-                    <div class="two fields">
                         <div class="field">
                             <input type="password" name="txtPassword" placeholder="Enter password" class="inp"
                                    id="password"
                                    required>
-                        </div>
-                        <div class="field">
-                            <input type="password" name="txtConfirmPassword" placeholder="Re-enter your password"
-                                   class="inp"
-                                   required
-                                   id="cfpassword">
-                        </div>
                     </div>
                 </div>
                 <div class="inline field">
@@ -49,16 +42,16 @@
                     <label>Name</label>
                     <div class="two fields">
                         <div class="field">
-                            <input type="text" name="txtFirstName" class="inp" placeholder="First name">
+                            <input type="text" name="txtFirstName" class="inp" placeholder="First name" value="{{ user.firstName }}">
                         </div>
                         <div class="field">
-                            <input type="text" name="txtLastName" class="inp" placeholder="Last name">
+                            <input type="text" name="txtLastName" class="inp" placeholder="Last name" value="{{ user.lastName }}">
                         </div>
                     </div>
                 </div>
                 <div class="field">
                     <label>Email</label>
-                    <input type="email" name="txtEmail" class="inp" placeholder="Enter your email">
+                    <input type="email" name="txtEmail" class="inp" placeholder="Enter your email" value="{{ user.email }}">
                 </div>
                 <div class="field">
                     <label>Role</label>
@@ -79,12 +72,12 @@
                 <h3 class="ui dividing header">Billing address</h3>
                 <div class="field">
                     <label>Address</label>
-                    <input type="text" name="txtAddress" class="inp" placeholder="Enter your address">
+                    <input type="text" name="txtAddress" class="inp" placeholder="Enter your address" value="{{ user.address }}">
                 </div>
 
                 <div class="field">
                     <label>Telephone number</label>
-                    <input type="tel" name="telPhone" class="inp" placeholder="Enter phone number">
+                    <input type="tel" name="telPhone" class="inp" placeholder="Enter phone number" value="{{ user.phoneNumber }}">
                 </div>
                 <br>
                 <hr>

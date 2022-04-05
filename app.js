@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const crypto = require("crypto");
 const fs = require("fs");
 const hbs = require("hbs");
 const path = require("path");
@@ -16,10 +17,17 @@ const cookieParser = require("cookie-parser");
 var session = require("express-session");
 var uniqid = require("uniqid");
 const oneDay = 1000 * 60 * 60 * 24;
+const algorithm = "aes-256-cbc";
+const Securitykey = "trungha";
 
 hbs.handlebars.registerHelper("indexFix", function (value) {
     value += 1;
     return value;
+});
+
+hbs.handlebars.registerHelper("available", function (value) {
+    if (parseInt(value) > 0) return "Available";
+    else return "Out of stock";
 });
 
 app.use(express.static(__dirname + "/public"));
@@ -86,7 +94,7 @@ app.get("/login", (req, res) => {
 app.post("/login", async (req, res) => {
     const name = req.body.txtUsername;
     const password = req.body.txtPassword;
-    var user = await checkUser(name, password);
+    var user = await checkUser(name, encrypt(password));
     if (user == "-1") {
         console.log("Invalid User!");
         res.render("login", {
@@ -142,7 +150,7 @@ app.post("/register", async (req, res) => {
                 firstName: fname,
                 lastName: lname,
                 role: "Customer",
-                password: pass,
+                password: encrypt(pass),
                 email: email,
                 address: address,
                 phoneNumber: phone,
@@ -162,6 +170,13 @@ app.post("/register", async (req, res) => {
         });
     }
 });
+
+function encrypt(text) {
+    let encrypted = crypto.createCipher(algorithm, Securitykey);
+    let result = encrypted.update(text, "utf8", "hex");
+    result += encrypted.final("hex");
+    return result;
+}
 
 app.get("/logout", (req, res) => {
     req.session.destroy();
