@@ -52,7 +52,7 @@
     border: none;
     padding: 15px 0px;
     color: white;
-    margin-top: 10px;
+    margin-top: 5px;
     font-size: 24px;
     font-family: Maison-Medium;
     background: rgb(2, 0, 36);
@@ -68,8 +68,11 @@
 
 #btn_Cancel {
     border: none;
-    padding: 13.5px 0px;
+    padding: 15px 0px;
     color: white;
+    margin-top: 5px;
+    font-size: 24px;
+    font-family: Maison-Medium;
     background: rgb(2, 0, 36);
     background-size: 300% 100%;
     transition-duration: 0.6s;

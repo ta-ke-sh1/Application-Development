@@ -1,6 +1,9 @@
 const express = require("express");
 const router = express.Router();
 var uniqid = require("uniqid");
+const crypto = require("crypto");
+const algorithm = "aes-256-cbc";
+const Securitykey = "trungha";
 
 const {
     insertObject,
@@ -111,7 +114,7 @@ router.post("/addUser", requiresLogin, async (req, res) => {
                 firstName: fname,
                 lastName: lname,
                 role: role,
-                password: pass,
+                password: encrypt(pass),
                 email: email,
                 address: address,
                 phoneNumber: phone,
@@ -329,5 +332,12 @@ router.post("/search", requiresLogin, async (req, res) => {
         });
     }
 });
+
+function encrypt(text) {
+    let encrypted = crypto.createCipher(algorithm, Securitykey);
+    let result = encrypted.update(text, "utf8", "hex");
+    result += encrypted.final("hex");
+    return result;
+}
 
 module.exports = router;
