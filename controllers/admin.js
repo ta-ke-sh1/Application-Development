@@ -140,6 +140,97 @@ router.get("/users", requiresLogin, async (req, res) => {
     });
 });
 
+//Update user
+router.post("/updateUser", requiresLogin, async (req, res) => {
+    const id = req.body.txtID;
+    const name = req.body.txtName;
+    const fname = req.body.txtFirstName;
+    const lname = req.body.txtLastName;
+    const role = req.body.Role;
+    const pass = req.body.txtPassword;
+    const email = req.body.txtEmail;
+    const address = req.body.txtAddress;
+    const phone = req.body.telPhone;
+
+    const objectToUpdate = await getObject(id, "Users");
+    const oldPassword = objectToUpdate.password;
+    
+    var check = await getUser(name);
+    if (!check) {
+        if (req.files != null) {
+            const avatar = req.files.avatar;
+            avatar.name = fname + uniqid() + ".jpg";
+            const path = __dirname + "/../public/Avatars/" + avatar.name;
+            avatar.mv(path, (err) => {
+                if (err) throw err;
+            });
+            if (encrypt(pass) == oldPassword) {
+                var updateValues = {
+                    $set: {
+                    userName: name,
+                    firstName: fname,
+                    lastName: lname,
+                    role: role,
+                    email: email,
+                    address: address,
+                    phoneNumber: phone,
+                    avatar: avatar.name,
+                    }
+                }
+            }else 
+            var updateValues = {
+                $set: {
+                userName: name,
+                firstName: fname,
+                lastName: lname,
+                role: role,
+                password: encrypt(pass),
+                email: email,
+                address: address,
+                phoneNumber: phone,
+                avatar: avatar.name,
+                }
+            }
+        } else {
+            if (encrypt(pass) == oldPassword) {
+                var updateValues = {
+                    $set: {
+                    userName: name,
+                    firstName: fname,
+                    lastName: lname,
+                    role: role,
+                    email: email,
+                    address: address,
+                    phoneNumber: phone,
+                    }
+                }
+            } else
+            var updateValues = {
+                $set: {
+                userName: name,
+                firstName: fname,
+                lastName: lname,
+                role: role,
+                password: encrypt(pass),
+                email: email,
+                address: address,
+                phoneNumber: phone,
+                }
+            }
+        }
+    };
+    await updateObject("Users", objectToUpdate, updateValues)
+    res.redirect("/admin/users")
+})
+//Update user render
+router.get("/editUser", requiresLogin, async (req, res) => {
+    const idValue = req.query.id;
+    const objectToUpdate = await getObject(idValue, "Users")
+    res.render("Admin/updateUser", {
+        user: objectToUpdate,
+    })
+})
+
 //Delete user
 router.get("/deleteUser", requiresLogin, async (req, res) => {
     await deleteObject(req.query.id, "Users");
