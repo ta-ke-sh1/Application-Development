@@ -96,7 +96,7 @@ jQuery(document).ready(function () {
     });
 
     // Image
-    $(".students")
+    $("a")
         .mouseenter(function () {
             outer_cursor.css({
                 "mix-blend-mode": "difference",
@@ -110,16 +110,16 @@ jQuery(document).ready(function () {
                 "mix-blend-mode": "normal",
                 "background-color": "transparent",
                 transform: "scale(1)",
-                border: "solid 1px #2f1eb8",
+                border: "solid 1px black",
             });
             cursor.css({ visibility: "visible" });
         });
 
-    $(".students").hover(function () {
+    $("a").hover(function () {
         outer_cursor.css({ transform: "scale(2)" });
     });
 
-    $(".students").mouseleave(function () {
+    $("a").mouseleave(function () {
         outer_cursor.css({ transform: "scale(1)" });
     });
 });

@@ -13,7 +13,7 @@
                 -webkit-font-smoothing: antialiased;
             }
 
-            .banner{
+            .banner {
                 margin-top: 10px;
                 margin-left: 2%;
                 height: 790px;
@@ -21,8 +21,40 @@
                 background-color: crimson;
                 border-radius: 50px;
             }
+
+            .book-cards {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                grid-gap: 22px;
+            }
+
+            .items {}
+
+            .book-card {
+                align-items: center;
+                margin: 7px 0px;
+                border: 1px solid #ccc;
+                height: 500px;
+                width: 250px;
+                transition-duration: 0.3s;
+            }
+
+            .book-card:hover {
+                box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px,
+                    rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
+            }
+
+            .img-card {
+                height: 360px;
+                width: 250px;
+                background-size: cover;
+                background-repeat: no-repeat;
+                background-position: center;
+            }
+
         </style>
     </head>
+
     <body>
         {{> header }}
         <br /><br />
@@ -33,7 +65,7 @@
                 <h1 style="margin-top: 10px;">
                     Welcome to FBooks
                 </h1>
-                
+
                 <div>
                     <p>
                         "Books are the quietest and most constant of friends; they are the most accessible <br>
@@ -50,69 +82,55 @@
             <div class="row">
                 <h1>What's popular?</h1>
             </div>
-            <div class="ui special cards">
+            <div class="book-cards">
                 {{#each popular }}
-                    <a href="/book?id={{ _id }}">
-                        <div class="ui red card">
-                            <div class="blurring dimmable image">
-                                <div class="ui dimmer">
-                                    <div class="content">
-                                        <div class="center">
-                                            <div class="ui inverted button">
-                                                <a href="" id="addCart">Add to Cart</a>
-                                            </div>
-                                        </div>
-                                    </div>
+                    <div class="item">
+                        <a href="/book?id={{ _id }}">
+                            <div class="book-card">
+                                <div class="img-card" style="background-image: url('/Books/{{image}}');">
                                 </div>
-                                <img  src="/Books/{{image}}">
-                                </div>
-                                <div class="content">
-                                <a class="header">{{name}}</a>
-                                <div class="meta">
-                                    <span class="price">${{ price }} <br></span>
+                                <div class="book-info">
+                                    <h3>{{name}}</h3>
+                                    <h5>${{ price }}</h5>
+                                    <h5><a href="">Add to Cart</a></h5>
                                 </div>
                             </div>
-                        </div>
-                    </a>
+                        </a>
+                    </div>
                 {{/each}}
-                </div>   
+            </div>
             {{#each categories }}
                 <div class="row">
                     <h1>{{ name }}</h1>
                 </div>
                 <div class="ui special cards">
-                {{#each Books }}
-                    <a href="/book?id={{ _id }}">
-                        <div class="card">
-                            <div class="blurring dimmable image">
-                                <div class="ui dimmer">
-                                    <div class="content">
-                                        <div class="center">
-                                            <div class="ui inverted button">
-                                                <a href="" id="addCart">Add to Cart</a>
+                    {{#each Books }}
+                        <a href="/book?id={{ _id }}">
+                            <div class="card">
+                                <div class="blurring dimmable image">
+                                    <div class="ui dimmer">
+                                        <div class="content">
+                                            <div class="center">
+                                                <div class="ui inverted button">
+                                                    <a href="" id="addCart">Add to Cart</a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <img src="/Books/{{image}}">
+                                    <img src="/Books/{{image}}">
                                 </div>
                                 <div class="content">
-                                <a class="header">{{name}}</a>
-                                <div class="meta">
-                                    <span class="price">${{ price }} <br></span>
+                                    <a class="header">{{name}}</a>
+                                    <div class="meta">
+                                        <span class="price">${{ price }} <br></span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </a>
-                {{/each}}
-                </div>   
+                        </a>
+                    {{/each}}
+                </div>
                 <br>
             {{/each}}
         </div>
     </body>
-<script>
-    $('.special.cards .image').dimmer({
-        on: 'hover'
-        });
-</script>  
 </html>

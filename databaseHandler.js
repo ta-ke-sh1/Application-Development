@@ -37,7 +37,7 @@ async function searchBook(keyword) {
         .collection("Books")
         .find({ name: { $regex: new RegExp(keyword), $options: "-i" } })
         .sort({ popularity: -1 })
-        .limit(8)
+        .limit(12)
         .toArray();
 }
 
@@ -56,7 +56,7 @@ async function getAllPopularity() {
         .collection("Books")
         .find({})
         .sort({ popularity: -1 })
-        .limit(8)
+        .limit(12)
         .toArray();
 }
 
@@ -70,7 +70,7 @@ async function homepageCategorize() {
                     from: "Books",
                     localField: "name",
                     foreignField: "category",
-                    pipeline: [{ $sort: { popularity: -1 } }, { $limit: 8 }],
+                    pipeline: [{ $sort: { popularity: -1 } }, { $limit: 12 }],
                     as: "Books",
                 },
             },
@@ -78,7 +78,7 @@ async function homepageCategorize() {
                 $addFields: { bookCount: { $size: "$Books" } },
             },
             {
-                $match: { bookCount: { $gt: 0 } },
+                $match: { bookCount: { $gt: 11 } },
             },
         ])
         .toArray();

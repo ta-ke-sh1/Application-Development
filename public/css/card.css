@@ -1,9 +1,6 @@
-.card img {
-    width: auto;
-    max-height: 350px;
+/* .book-card img {
     object-fit: contain;
-    border-radius: 15px;
-}
+} */
 
 .card:hover {
     box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px,
