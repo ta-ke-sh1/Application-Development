@@ -6,10 +6,10 @@ const session = require("express-session");
 
 // access control
 function requiresLogin(req, res, next) {
-    if (req.session) {
+    if (req.session.role != null) {
         return next();
     } else {
-        var err = "You must be have logged in to view this page.";
+        var err = "You must log in to view this page.";
         res.render("login", {
             error: err,
         });
