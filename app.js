@@ -22,6 +22,11 @@ hbs.handlebars.registerHelper("indexFix", function (value) {
     return value;
 });
 
+hbs.handlebars.registerHelper("available", function (value) {
+    if (parseInt(value) > 0) return "Available";
+    else return "Out of stock";
+});
+
 app.use(express.static(__dirname + "/public"));
 
 // Setting up cookie

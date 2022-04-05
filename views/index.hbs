@@ -52,7 +52,7 @@
             </div>
             <div class="ui special cards">
                 {{#each popular }}
-                    <a href="/book?id={{ _id }}">
+                    
                         <div class="ui red card">
                             <div class="blurring dimmable image">
                                 <div class="ui dimmer">
@@ -60,6 +60,7 @@
                                         <div class="center">
                                             <div class="ui inverted button">
                                                 <a href="" id="addCart">Add to Cart</a>
+                                                <a href="/book?id={{ _id }}">View more</a>
                                             </div>
                                         </div>
                                     </div>
@@ -73,7 +74,6 @@
                                 </div>
                             </div>
                         </div>
-                    </a>
                 {{/each}}
                 </div>   
             {{#each categories }}
