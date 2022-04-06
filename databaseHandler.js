@@ -31,7 +31,6 @@ async function getAllCriterias(collectionName, type) {
 }
 
 async function searchBook(keyword) {
-    console.log("The keyword is: " + keyword);
     const dbo = await getDB();
     return await dbo
         .collection("Books")
@@ -72,7 +71,7 @@ async function getByCriteria(criteria) {
     else if (criteria == "date") {
         return await dbo.collection("Books")
             .find({})
-            .sort({ _id: 1 })
+            .sort({ _id: -1 })
             .limit(12)
             .toArray();
     }
@@ -115,8 +114,7 @@ async function insertObject(collectionName, objectToInsert) {
         .collection(collectionName)
         .insertOne(objectToInsert);
     console.log(
-        "Gia tri id moi duoc insert la: ",
-        newObject.insertedId.toHexString()
+        "New Object added"
     );
 }
 
@@ -128,7 +126,6 @@ async function getObject(id, collectionName) {
 async function updateObject(collectionName, objectToUpdate, values) {
     const dbo = await getDB();
     await dbo.collection(collectionName).updateOne(objectToUpdate, values);
-    console.log("Object updated!");
 }
 
 async function deleteObject(id, collectionName) {
@@ -156,17 +153,35 @@ async function getUser(username) {
     } else return false;
 }
 
-async function sortBook(priceLow, priceHigh, keyword) {
+async function advanceSearch(keyword, author, publisher, max, category) {
     const dbo = await getDB();
-    return await dbo
-        .collection("Books")
-        .find({
-            name: { $regex: new RegExp(keyword), $options: "-i" },
-            price: { $gt: parseFloat(priceLow), $lt: parseFloat(priceHigh) },
-        })
-        .sort({ popularity: -1 })
-        .limit(8)
-        .toArray();
+    if (category != "") {
+        return await dbo
+            .collection("Books")
+            .find({
+                name: { $regex: new RegExp(keyword), $options: "-i" },
+                category: category, 
+                author: { $regex: new RegExp(author), $options: "-i" },
+                publisher: { $regex: new RegExp(publisher), $options: "-i" },
+                price: { $lt: parseFloat(max) },
+            })
+            .sort({ popularity: -1 })
+            .limit(16)
+            .toArray();
+    }
+    else {
+        return await dbo
+            .collection("Books")
+            .find({
+                name: { $regex: new RegExp(keyword), $options: "-i" },
+                author: { $regex: new RegExp(author), $options: "-i" },
+                publisher: { $regex: new RegExp(publisher), $options: "-i" },
+                price: { $lt: parseFloat(max) },
+            })
+            .sort({ popularity: -1 })
+            .limit(16)
+            .toArray();
+    }
 }
 
 module.exports = {
@@ -178,7 +193,7 @@ module.exports = {
     checkUser,
     getUser,
     searchBook,
-    sortBook,
+    advanceSearch,
     getAllCriterias,
     homepageCategorize,
     getByCriteria,

@@ -1,0 +1,96 @@
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+
+    <body>
+        {{> header }}
+        <br><br><br><br>
+        <div class="block">
+            <form action="/book/advanceSearch" method="GET" class="ui form" style="padding: 0px 40px;">
+                <h4 class="ui dividing header">Advanced Search</h4>
+                <div class="fields">
+                    <div class="field">
+                        <label>Name</label>
+                        <input type="text" name="key" id="" style="width: 260px;" placeholder="Enter any keyword">
+                    </div>
+                    <div class="field">
+                        <label>Author</label>
+                        <input type="text" name="author" id="" style="width: 260px;" placeholder="Enter any Author">
+                    </div>
+                    <div class="field">
+                        <label>Publisher</label>
+                        <input type="text" name="publisher" id="" style="width: 260px;" placeholder="Enter any Publisher">
+                    </div>
+                    <div class="field" style="margin-top: 5px;">
+                        <label>Category</label>
+                        <select name="cat" id="multi-select" multiple="" class="ui dropdown search inp"
+                                style=" width: 300px;">
+                            <option value=" ">Select a Category</option>
+                            {{#each categories}}
+                                <option value="{{name}}" type="checkbox">{{name}}</option>
+                            {{/each}}
+                        </select>
+                        <script>
+                            $('#multi-select').dropdown(
+                                { maxSelections: 1 }
+                            );
+                        </script>
+                    </div>
+                    <div class="field">
+                        <label>Max Price</label>
+                        <input type="number" name="max" id="" style="width: 110px;">
+                    </div>
+                    <div class="field">
+                        <button class="ui button" type="submit" style="width: 260px; margin-top: 27px">Search</button>
+                    </div>
+                </div>
+            </form>
+            <script type="text/javascript">
+                function rangeSlide(value) {
+                    document.getElementById('rangeValue').innerHTML = value;
+                }
+            </script>
+        </div>
+        <br>
+        <div class="block" style="min-width: 80%">
+            <div class="row tags" style="display: inline;">
+                <span class="heading">Search results:</span>
+            </div>
+            {{#if error}}
+            <div class="row">
+                <div class="error" style="margin-left: 15px; margin-bottom: 15px">
+                    <center>
+                        {{error}}
+                    </center>
+                </div>
+            </div>
+            {{/if}}
+            <div class="book-cards">
+                {{#each books }}
+                    <div class="item">
+                        <a href="/book?id={{ _id }}">
+                            <div class="book-card">
+                                <div class="img-card" style="background-image: url('/Books/{{image}}');">
+                                </div>
+                                <div class="author">{{ author }}</div>
+                                <div class="name">{{name}}</div>
+                                <div class="btm-row">
+                                    <div class="price">$ {{ price }}</div>
+                                    <div class="sold">Left: {{ quantity }}</div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                {{/each}}
+            </div>
+        </div>
+        <br />
+        {{> footer }}
+    </body>
+
+</html>

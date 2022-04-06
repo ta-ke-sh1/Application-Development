@@ -1,11 +1,12 @@
 const express = require("express");
 const {
+    getAll,
     getObject,
     updateObject,
     homepageCategorize,
     getByCriteria,
     searchBook,
-    sortBook,
+    advanceSearch,
     getCategoryByName
 } = require("../databaseHandler");
 const router = express.Router();
@@ -22,32 +23,46 @@ router.get("/", async (req, res) => {
 });
 
 router.get("/search", async (req, res) => {
+    const categories = await getAll("Categories");
     const keyword = req.query.key;
     const books = await searchBook(keyword);
     if (books.length == 0) {
         res.render("Book/main.hbs", {
+            categories: categories,
             error: "No books found!",
         });
     } else {
         res.render("Book/main.hbs", {
+            categories: categories,
             books: books,
         });
     }
 });
 
-router.get("/sort", async (req, res) => {
+router.get("/advanceSearch", async (req, res) => {
+    const categories = await getAll("Categories");
     const keyword = req.query.key;
-    const low = req.query.low;
-    const high = req.query.high;
-    if (low == "") low = 0;
-    if (high == "") high = 1000;
-    const books = await sortBook(low, high, keyword);
+    const author = req.query.author;
+    const publisher = req.query.publisher;
+    var category = req.query.cat;
+    var max = req.query.max;
+    
+    if (max == "") {
+        max = 1000;
+    }
+    if (category == null) {
+        category = "";
+    }
+
+    const books = await advanceSearch(keyword, author, publisher, max, category);
     if (books.length == 0) {
         res.render("Book/main.hbs", {
+            categories: categories,
             error: "No books found!",
         });
     } else {
         res.render("Book/main.hbs", {
+            categories: categories,
             books: books,
         });
     }
@@ -74,7 +89,7 @@ router.get("/category", async (req, res) => {
     else {
         var books = await getCategoryByName(category);
     }
-    res.render("Book/category.hbs", {
+    res.render("Book/main.hbs", {
         books: books
     })
 })

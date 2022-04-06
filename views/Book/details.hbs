@@ -126,6 +126,11 @@
                             </div>
                         </div>
                         <br>
+                        {{#if session.isAdmin}}
+                        <a href="/admin/edit?id={{ book._id }}" id="btn_Save" style="width: 500px;" class="btn">Edit</a>
+                        <br>
+                        <a href="/admin/deleteBook?id={{ book._id }}" id="btn_Save" style="width: 500px;" class="btn">Delete</a>
+                        {{else}}
                         <div class="field">
                             <div class="quantity">
                                 <h2>Quantity: </h2>
@@ -149,6 +154,7 @@
                         <div class="field">
                             <input type="submit" value="Add to Cart" class="inp" id="btn_Save" style="width: 500px;">
                         </div>
+                        {{/if}}
                     </form>
                 </div>
             </div>

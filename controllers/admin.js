@@ -15,6 +15,7 @@ const {
     updateObject,
     searchBook,
 } = require("../databaseHandler");
+const e = require("express");
 
 // access control
 function requiresLogin(req, res, next) {
@@ -30,7 +31,7 @@ function requiresLogin(req, res, next) {
 
 //neu request la: /admin
 router.get("/", requiresLogin, async (req, res) => {
-    res.render("Admin/adminIndex", {
+    res.render("Admin/index", {
         books: await getAll("Books"),
         title: "Admin",
     });
@@ -302,9 +303,13 @@ router.post("/addNewBook", requiresLogin, (req, res) => {
     const publisher = req.body.txtPublisher;
     const price = parseFloat(req.body.numPrice);
     const quantity = parseInt(req.body.numQuantity);
-    const image = req.files.image;
+    var image; 
+    if (req.files != null) {
+        image = req.files.image;
+    }
+    else image = "anonymous.jpg"
     image.name = name + uniqid() + ".jpg";
-
+    
     const path = __dirname + "/../public/Books/" + image.name;
     image.mv(path, (err) => {
         if (err) throw err;

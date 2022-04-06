@@ -84,10 +84,12 @@ app.use("/user", userController);
 
 // Homepage
 app.get("/", async (req, res) => {
+    const categories = await getAll("Categories");
     let popular = await getByCriteria("popularity");
     let newlyAdded = await getByCriteria("date");
     let editorChoice = await getCategoryByName("Editor's Choice");
     res.render("index", {
+        categories: categories,
         popular: popular,
         userInfo: req.session.User,
         editorChoice: editorChoice,
@@ -119,10 +121,11 @@ app.post("/login", async (req, res) => {
 
         if (user.role == "Admin") {
             session.isAdmin = true;
+            res.redirect("/admin");
         }
-
-        console.log(session);
-        res.redirect("/");
+        else {
+            res.redirect("/");
+        }
     }
 });
 
