@@ -13,100 +13,85 @@
                 -webkit-font-smoothing: antialiased;
             }
 
-            .banner {
-                margin-top: 10px;
-                margin-left: 2%;
-                height: 790px;
-                width: 96%;
-                background-color: crimson;
-                border-radius: 50px;
-            }
-
-            .book-cards {
-                margin: 17px 0px;
-                display: grid;
-                grid-template-columns: repeat(6, 1fr);
-            }
-
-            .book-info h3,
-            h5 {
-                margin: 0;
-            }
-
-            .book-card {
-                position: relative;
-                margin: 7px 0px;
-                border: 1px solid #ccc;
-                height: 490px;
-                width: 240px;
-                transition-duration: 0.3s;
-            }
-
-            .book-card:hover {
-                border: 1px solid crimson;
-                box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px,
-                    rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
-                
-            }
-
-            .book-card .img-card :hover {
-                background-size: 130% 150%;
-            }
-
-            .img-card {
-                height: 350px;
-                width: 240px;
-                background-size: cover;
-                background-repeat: no-repeat;
-                background-position: center;
-            }
-
-            .heading {
-                font-size: 22px;
-                font-family: Maison-Medium;
+            @media screen and (max-width: 992px) {
+                .book-cards {
+                    grid-template-columns: repeat(4, 1fr);
+                }
             }
 
             .head-link {
+                margin-left: auto;
                 font-size: 18px;
                 font-family: Maison-Medium;
+                padding: 5px 17px;
+                border: 1px solid crimson;
+                border-radius: 20px;
+                color: crimson;
+                transition-duration: 0.3s;
+                margin-top: -10px;
             }
 
-            .tags {
-                margin-top: 60px;
-                margin-bottom: 30px;
-            }
-
-            .book-card button {
-                position: absolute;
-                border: none;
-                outline: 0;
-                padding: 12px;
-                color: white;
-                background-color: #282828;
-                text-align: center;
-                cursor: pointer;
-                width: 100%;
-                font-size: 18px;
-                transition-duration: 0.6s;
-                transition: all 0.6s ease-in-out;
-                left: 0;
-                bottom: 0;
-            }
-
-            .book-card h3 {
-                padding: 10px;
-                height: 60px;
-                word-wrap: break-word;
-                overflow: hidden;
-            }
-
-            .book-card button:hover {
+            .head-link:hover {
                 background-color: crimson;
+                color: white;
             }
 
-            .price {
-                color: grey;
-                font-size: 18px;
+            .banner {
+                height: 100%;
+                width: 100%;
+                margin-top: -20px;
+                margin-bottom: 50px;
+                display: flex;
+                position: relative;
+            }
+
+            .banner .left-col {
+                width: 40%;
+                height: 100%;
+            }
+
+            .banner .right-col {
+                width: 60%;
+                height: 100%;
+            }
+
+            .banner .right-col img {
+                margin-top: 14%;
+                margin-left: 125px;
+            }
+
+            .intro-paragraph {
+                margin-top: 43%;
+                margin-left: 24%;
+            }
+
+            .intro-paragraph p {
+                font-family: Editor-Light;
+                font-size: 80px;
+                line-height: 95px;
+            }
+
+            .shop-btn {
+                margin-top: 10px;
+                font-family: FoundersGrotesk;
+                font-size: 36px;
+                padding: 20px 25px 15px 25px;
+                border: 1.5px solid crimson;
+                border-radius: 30px;
+                margin-left: 25%;
+                width: fit-content;
+                transition-duration: 0.4s;
+                color: black;
+            }
+
+            .shop-btn:hover {
+                background-color: crimson;
+                color: white;
+            }
+
+            .shop-btn img {
+                margin-left: 10px;
+                margin-top: -5px;
             }
 
         </style>
@@ -114,30 +99,34 @@
 
     <body>
         {{> header }}
-        <br /><br />
-        <div class="banner"></div>
-        <div class="body">
-            <center>
-                <br>
-                <h1 style="margin-top: 10px;">
-                    Welcome to FBooks
-                </h1>
-
-                <div>
+        <div class="banner">
+            <div class="left-col">
+                <div class="intro-paragraph">
                     <p>
-                        "Books are the quietest and most constant of friends; they are the most accessible <br>
-                        and wisest of counselors, and the most patient of teachers."
-                    </p>
-                    <p style="margin-top: -12px; margin-left:400px">
-                        - Charles W. Eliot
+                        Hello, <br>
+                        FPT <span style="color: crimson;">Bookstore</span><br>
+                        welcomes you
                     </p>
                 </div>
-                <img src="/Page/banner.png" alt="" height="550px" width="auto">
-                <br>
-            </center>
+                <a href="/book/category?cat=all">
+                    <div class="shop-btn">
+                        Shop now
+                        <img src="/Logo/arrow.png" alt="" height="30px" class="arrow">
+                    </div>
+                </a>
+            </div>
+            <div class="right-col">
+                <img src="/Logo/people.png" width="auto" height="664px" alt="">
+            </div>
+        </div>
+        <div class="block">
             <div class="row tags" style="display: inline;">
                 <span class="heading">What's popular</span>
-                <span class="head-link" style="float: right;"> <a href="">See more</a></span>
+                <a href="/book/category?cat=popular">
+                    <span class="head-link" style="float: right;">
+                        See more
+                    </span>
+                </a>
             </div>
             <br>
             <div class="book-cards">
@@ -147,22 +136,27 @@
                             <div class="book-card">
                                 <div class="img-card" style="background-image: url('/Books/{{image}}');">
                                 </div>
-                                <center>
-                                    <div class="book-info">
-                                        <h3>{{name}}</h3>
-                                        <p class="price">${{ price }}</p>
-                                        <p><a href=""><button>Add to Cart</button></a></p>
-                                    </div>
-                                </center>
+                                <div class="author">{{ author }}</div>
+                                <div class="name">{{name}}</div>
+                                <div class="btm-row">
+                                    <div class="price">$ {{ price }}</div>
+                                    <div class="sold">Left: {{ quantity }}</div>
+                                </div>
                             </div>
                         </a>
                     </div>
                 {{/each}}
             </div>
-            <br>
+        </div>
+        <br>
+        <div class="block">
             <div class="row tags" style="display: inline;">
                 <span class="heading">Editor's Choice</span>
-                <span class="head-link" style="float: right;"> <a href="">See more</a></span>
+                <a href="/book/category?cat=editorChoice">
+                    <span class="head-link" style="float: right;">
+                        See more
+                    </span>
+                </a>
             </div>
             <br>
             <div class="book-cards">
@@ -172,22 +166,28 @@
                             <div class="book-card">
                                 <div class="img-card" style="background-image: url('/Books/{{image}}');">
                                 </div>
-                                <center>
-                                    <div class="book-info">
-                                        <h3>{{name}}</h3>
-                                        <p class="price">${{ price }}</p>
-                                        <p><a href=""><button>Add to Cart</button></a></p>
-                                    </div>
-                                </center>
+                                <div class="author">{{ author }}</div>
+                                <div class="name">{{name}}</div>
+                                <div class="btm-row">
+                                    <div class="price">$ {{ price }}</div>
+                                    <div class="sold">Left: {{ quantity }}</div>
+                                </div>
                             </div>
                         </a>
                     </div>
                 {{/each}}
             </div>
-            <br>
+        </div>
+
+        <br>
+        <div class="block">
             <div class="row tags" style="display: inline;">
                 <span class="heading">Newly Added</span>
-                <span class="head-link" style="float: right;"><a href="">See more</a></span>
+                <a href="/book/category?cat=newlyAdded">
+                    <span class="head-link" style="float: right;">
+                        See more
+                    </span>
+                </a>
             </div>
             <br>
             <div class="book-cards">
@@ -197,13 +197,12 @@
                             <div class="book-card">
                                 <div class="img-card" style="background-image: url('/Books/{{image}}');">
                                 </div>
-                                <center>
-                                    <div class="book-info">
-                                        <h3>{{name}}</h3>
-                                        <p class="price">${{ price }}</p>
-                                        <p><a href=""><button>Add to Cart</button></a></p>
-                                    </div>
-                                </center>
+                                <div class="author">{{ author }}</div>
+                                <div class="name">{{name}}</div>
+                                <div class="btm-row">
+                                    <div class="price">$ {{ price }}</div>
+                                    <div class="sold">Left: {{ quantity }}</div>
+                                </div>
                             </div>
                         </a>
                     </div>

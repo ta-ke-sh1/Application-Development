@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+
+    <body>
+        {{> header }}
+        <div class="block">
+            <div class="row tags" style="display: inline;">
+                <span class="heading">What's popular</span>
+                <a href="/book/category?cat=popular">
+                    <span class="head-link" style="float: right;">
+                        See more
+                    </span>
+                </a>
+            </div>
+            <br>
+            <div class="book-cards">
+                {{#each popular }}
+                    <div class="item">
+                        <a href="/book?id={{ _id }}">
+                            <div class="book-card">
+                                <div class="img-card" style="background-image: url('/Books/{{image}}');">
+                                </div>
+                                <div class="name">{{name}}</div>
+                                <div class="btm-row">
+                                    <div class="price">$ {{ price }}</div>
+                                    <div class="sold">Left: {{ quantity }}</div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                {{/each}}
+            </div>
+        </div>
+        {{> footer }}
+    </body>
+
+</html>

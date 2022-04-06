@@ -2,9 +2,11 @@ const express = require("express");
 const {
     getObject,
     updateObject,
-    getAll,
+    homepageCategorize,
+    getByCriteria,
     searchBook,
     sortBook,
+    getCategoryByName
 } = require("../databaseHandler");
 const router = express.Router();
 
@@ -50,5 +52,31 @@ router.get("/sort", async (req, res) => {
         });
     }
 });
+
+router.get("/category", async (req, res) => {
+    const category = req.query.cat;
+    if (category == "all") {
+        var books = await homepageCategorize();
+        res.render("Book/allCategories.hbs", {
+            books: books
+        });
+    }
+
+    if (category == "popular") {
+        var books = await getByCriteria("popularity");
+    }
+    else if (category == "editorChoice") {
+        var books = await getCategoryByName("Editor's Choice");
+    }
+    else if (category == "newlyAdded") {
+        var books = await getByCriteria("date");
+    }
+    else {
+        var books = await getCategoryByName(category);
+    }
+    res.render("Book/category.hbs", {
+        books: books
+    })
+})
 
 module.exports = router;

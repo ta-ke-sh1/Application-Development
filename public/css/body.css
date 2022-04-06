@@ -4,28 +4,35 @@
 }
 
 @font-face {
-    font-family: Maison-Book;
-    src: url("../Fonts/MaisonNeue-Book.otf");
+    font-family: FoundersGrotesk;
+    src: url("../Fonts/Founders\ Grotesk\ -\ Medium.otf");
 }
 
 @font-face {
     font-family: Maison-Demi;
-    src: url("../Fonts/MaisonNeue-Demi.otf");
+    src: url("../Fonts/EditorialNew-Medium.otf");
 }
 
 @font-face {
-    font-family: Maison-Thin;
-    src: url("../Fonts/MaisonNeue-Thin.otf");
+    font-family: Editor;
+    src: url("../Fonts/EditorialNew-Medium.otf");
+}
+
+
+@font-face {
+    font-family: Editor-Light;
+    src: url("../Fonts/EditorialNew-Light.otf");
 }
 
 @font-face {
     font-family: Maison-Light;
-    src: url("../Fonts/MaisonNeue-Light.otf");
+    src: url("../Fonts/FoundersGrotesk-Light.otf");
 }
 
 body {
     font-family: Maison-Light;
     background-color: #f6f6f6;
+    font-size: 16px;
 }
 
 h1 {
@@ -33,9 +40,13 @@ h1 {
     font-family: 30px;
 }
 
-.body {
-    width: 80%;
-    margin-left: 10%;
+.block {
+    background-color: white;
+    width: fit-content;
+    margin: 0 auto;
+    margin-top: 30px;
+    padding: 35px 30px 15px 30px;
+    border-radius: 30px;
 }
 
 .row {

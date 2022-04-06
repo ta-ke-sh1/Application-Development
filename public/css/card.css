@@ -1,8 +1,83 @@
-/* .book-card img {
-    object-fit: contain;
-} */
+/* Container */
+.book-cards {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 25px 35px;
+    margin: 20px 0px;
+}
 
-.card:hover {
+.btm-row {
+    margin-top: 15px;
+    width: 100%;
+    display: flex;
+}
+
+.book-card {
+    margin: 5px 0px 0px 0px;
+    border-radius: 15px;
+    position: relative;
+    height: 460px;
+    width: 220px;
+    transition-duration: 0.3s;
+    box-shadow: rgba(0, 0, 0, 0.1) -4px 9px 25px -6px;
+}
+
+.book-card:hover {
     box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px,
         rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
+}
+
+.book-card .img-card :hover {
+    background-size: 130% 150%;
+}
+
+.book-card .name {
+    margin-left: 15px;
+    height: 45px;
+    width: 200px;
+    word-wrap: break-word;
+    overflow: hidden;
+    font-size: 18px;
+    color: black;
+    font-family: FoundersGrotesk;
+}
+
+.book-card .author {
+    margin: 10px 0px 0px 15px;
+    color: black;
+}
+
+.book-card .price {
+    color: white;
+    background-color: crimson;
+    border-radius: 13px;
+    font-family: Maison-Medium;
+    font-size: 15px;
+    margin-left: 15px;
+    padding: 5px 12px;
+    margin-top: -10px;
+}
+
+.book-card .sold {
+    color: black;
+    margin-left: auto;
+    font-size: 17px;
+    margin-right: 15px;
+}
+
+.img-card {
+    height: 330px;
+    width: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-top-right-radius: 15px;
+    border-top-left-radius: 15px;
+}
+
+.heading {
+    margin-left: 15px;
+    font-size: 28px;
+    font-family: Editor;
 }

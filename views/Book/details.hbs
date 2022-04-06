@@ -7,24 +7,26 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>FPT Bookstore</title>
         <style>
-            h1{
+            h1 {
                 font-size: 30px;
             }
-            br{
+
+            br {
                 margin-top: -20px;
             }
-            p{
+
+            p {
                 font-size: 18px;
             }
 
-            .description{
+            .description {
                 width: 500px;
                 text-align: justify;
                 max-height: 350px;
                 overflow: auto;
             }
 
-            .value-button{
+            .value-button {
                 align-items: center;
                 background-color: white;
                 border: 1px solid #CDCDCE;
@@ -48,7 +50,7 @@
                 border-radius: 0 8px 8px 0;
             }
 
-            .quantity{
+            .quantity {
                 display: flex;
             }
 
@@ -61,28 +63,29 @@
                 border-top: 1px solid #CDCDCE;
                 border-bottom: 1px solid #CDCDCE;
             }
+
         </style>
     </head>
 
     <body>
         {{> header }}
+        <br>
+        <div class="container" style="margin-top: 20px">
             <br>
-            <div class="container" style="margin-top: 20px">
-                <br>
-                <div class="row">
-                    <div class="col">
-                        <img src="/Books/{{ book.image }}" height="750px" style="margin-right: -100px;">
-                    </div>
-                    <div class="col" style="width: 500px;">
-                        <form action="addToCart" method="POST" class="ui form" enctype="multipart/form-data">
-                            <div class="field">
-                                <h1>{{ book.name }}</h1>
-                            </div>
-                            <br>
-                            <div class="field">
-                                <h2>Categories</h2>
-                                <p>
-                                    {{#each book.category}}
+            <div class="row">
+                <div class="col">
+                    <img src="/Books/{{ book.image }}" height="750px" style="margin-right: -100px;">
+                </div>
+                <div class="col" style="width: 500px;">
+                    <form action="addToCart" method="POST" class="ui form" enctype="multipart/form-data">
+                        <div class="field">
+                            <h1>{{ book.name }}</h1>
+                        </div>
+                        <br>
+                        <div class="field">
+                            <h2>Categories</h2>
+                            <p>
+                                {{#each book.category}}
                                     <span style="padding: 4px 8px;
                                                 background-color: #E9E8E8;
                                                 margin: 10px 0px;
@@ -92,62 +95,64 @@
                                                 border: 1px solid #CDCDCE;">
                                         {{this}}
                                     </span>
-                                    {{/each}}
-                                </p>
-                            </div>
-                            <br>
-                            <div class="two fields">
-                                <div class="field">
-                                    <h2>Author</h2>
-                                    <p>{{book.author}}</p>
-                                </div>
-                                <div class="field">
-                                    <h2>Publisher</h2>
-                                    <p>{{book.publisher}}</p>
-                                </div>
-                            </div>
-                            <br>
+                                {{/each}}
+                            </p>
+                        </div>
+                        <br>
+                        <div class="two fields">
                             <div class="field">
-                                <h2>Description</h2>
-                                <p class="description">{{ book.description }}</h1>
+                                <h2>Author</h2>
+                                <p>{{book.author}}</p>
                             </div>
-                            <br>
-                            <div class="two fields">
-                                <div class="field">
-                                    <h2>Price</h2>
-                                    <p> ${{ book.price}}</p>
-                                </div>
-                                <div class="field">
-                                    <h2>Status</h2>
-                                     <p> {{available book.quantity}} </p>
-                                </div>
-                            </div>
-                            <br>
                             <div class="field">
-                                <div class="quantity">
-                                    <h2>Quantity: </h2>
-                                    <div class="value-button" id="decrease" onclick="decreaseValue()" value="Decrease Value">
-                                        <center>
-                                            -
-                                        </center>
-                                    </div>
+                                <h2>Publisher</h2>
+                                <p>{{book.publisher}}</p>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="field">
+                            <h2>Description</h2>
+                            <p class="description">{{ book.description }}</h1>
+                        </div>
+                        <br>
+                        <div class="two fields">
+                            <div class="field">
+                                <h2>Price</h2>
+                                <p> ${{ book.price}}</p>
+                            </div>
+                            <div class="field">
+                                <h2>Status</h2>
+                                <p> {{available book.quantity}} </p>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="field">
+                            <div class="quantity">
+                                <h2>Quantity: </h2>
+                                <div class="value-button" id="decrease" onclick="decreaseValue()"
+                                     value="Decrease Value">
                                     <center>
-                                        <input type="number" name="numQuantity" id="number" class="inp">
+                                        -
                                     </center>
-                                    <div class="value-button" id="increase" onclick="increaseValue()" value="Increase Value">
-                                        <center>
-                                            +
-                                        </center>
-                                    </div>
+                                </div>
+                                <center>
+                                    <input type="number" name="numQuantity" id="number" class="inp">
+                                </center>
+                                <div class="value-button" id="increase" onclick="increaseValue()"
+                                     value="Increase Value">
+                                    <center>
+                                        +
+                                    </center>
                                 </div>
                             </div>
-                            <div class="field">
-                                <input type="submit" value="Add to Cart" class="inp" id="btn_Save" style="width: 500px;">
-                            </div>
-                        </form>
-                    </div>
+                        </div>
+                        <div class="field">
+                            <input type="submit" value="Add to Cart" class="inp" id="btn_Save" style="width: 500px;">
+                        </div>
+                    </form>
                 </div>
             </div>
+        </div>
     </body>
     <script>
         function increaseValue() {
@@ -165,4 +170,5 @@
             document.getElementById('number').value = value;
         }
     </script>
+
 </html>

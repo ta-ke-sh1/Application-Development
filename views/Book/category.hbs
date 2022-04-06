@@ -1,0 +1,47 @@
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+
+    <body>
+        {{> header }}
+        <form action="/book/sort" method="GET">
+            <input type="number" name="low" id="">
+            <br>
+            <input type="number" name="high" id="">
+            <br>
+            <input type="text" name="key" id="">
+            <br>
+            <input type="submit" value="sort">
+        </form>
+        <br>
+        <div class="block">
+            <div class="book-cards">
+                {{#each books }}
+                    <div class="item">
+                        <a href="/book?id={{ _id }}">
+                            <div class="book-card">
+                                <div class="img-card" style="background-image: url('/Books/{{image}}');">
+                                </div>
+                                <div class="name">{{name}}</div>
+                                <div class="btm-row">
+                                    <div class="price">$ {{ price }}</div>
+                                    <div class="sold">Left: {{ quantity }}</div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                {{/each}}
+            </div>
+        </div>
+        <div class="row">
+            {{error}}
+        </div>
+        <br />
+        {{> footer }}
+    </body>
+</html>

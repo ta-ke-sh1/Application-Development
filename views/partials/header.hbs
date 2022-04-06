@@ -65,6 +65,10 @@
                 position: fixed;
                 width: 100%;
                 z-index: 1000;
+                background-color: #f6f6f6;
+            }
+
+            .navbar.scrolled {
                 background-color: white;
             }
 
@@ -122,10 +126,18 @@
                                 <span class="text">Books</span>
                                 <i class="dropdown icon"></i>
                                 <div class="menu">
-                                    <div class="item">What's Popular</div>
-                                    <div class="item">Bestsellers</div>
-                                    <div class="item">Newly Added</div>
-                                    <div class="item">Staff Picks</div>
+                                    <div class="item">
+                                        <a href="/book/category?cat=popular">What's Popular</a>
+                                    </div>
+                                    <div class="item">
+                                        <a href="/book/category?cat=editorChoice">Editor's Choice</a>
+                                    </div>
+                                    <div class="item">
+                                        <a href="/book/category?cat=newlyAdded">Newly Added</a>
+                                    </div>
+                                    <div class="item">
+                                        <a href="/book/category?cat=all">All Categories</a>
+                                    </div>
                                 </div>
                             </div>
                         </li>
@@ -141,7 +153,7 @@
             <div class="mx-auto order-0">
                 <img src="/Logo/fpt.png" height="40px" alt="" />
             </div>
-            <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+            <div class="navbar-collapse collapse w-100 order-3 dual-collapse2" style="margin-top: 2px">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
                         <form action="/book/search" method="GET">
@@ -199,5 +211,13 @@
         <span id="outer-circle" class="outer-circle"></span>
         <span id="circle" class="circle"></span>
     </body>
+    <script>
+        $(function () {
+            $(document).scroll(function () {
+                var $nav = $(".navbar");
+                $nav.toggleClass('scrolled', $(this).scrollTop() > $nav.height());
+            });
+        });
+    </script>
 
 </html>
