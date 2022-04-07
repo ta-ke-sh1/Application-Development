@@ -16,10 +16,13 @@
             <br>
             <form action="updateCategory" method="POST" class="input-form" enctype="multipart/form-data">
                 <input type="hidden" name="txtID" value="{{category._id}}">
+                Category<br>
                 <input type="text" name="txtName" id="" placeholder="{{ category.name }}" value="{{ category.name }}" class="inp">
                 <br>
+                Quote<br>
                 <input type="text" name="txtQuote" id="" placeholder="{{ category.quote}}" value="{{ category.quote}}" class="inp">
                 <br>
+                Author<br>
                 <input type="text" name="txtAuthor" id="" placeholder="{{ category.author }}" value="{{ category.author }}" class="inp">
                 <br>
                 <input type="submit" value="Update book" id="btn_Save" class="inp">
