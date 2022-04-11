@@ -19,6 +19,32 @@ function requiresLogin(req, res, next) {
 router.get("/edit", requiresLogin, (req, res) => {
     res.render("User/edit", {});
 });
+router.get("/add-to-cart", requiresLogin, (req, res) => {
+    const id = req.query.id
+        //lay gia tri bien cart trong session [ co the chua co hoac da co gia tri]
+    let myCart = req.session["cart"]
+    if (myCart == null) {
+        var dict = {}
+        dict[id] = 1
+        console.log('Ban da mua sp dau tien: ' + id)
+        req.session["cart"] = dict
+    } else { // da mua it nhat 1 sp
+        var dict = req.session["cart"]
+        var oldProduct = dict[id]
+        if (oldProduct == null)
+            dict[id] = 1
+        else {
+            const oldQuantity = parseInt(oldProduct) + 1
+        }
+        req.session["cart"] = dict
+    }
+    let boughtProduct = []
+    const dict2 = req.session["cart"]
+    for (var key in dict2) {
+        boughtProduct.push({ Productname: key, Quantity: dict[key] })
+    }
+    res.render('User/cart', { 'cart': boughtProduct })
+})
 
 router.get("/cart", requiresLogin, (req, res) => {
     console.log(req.session);
@@ -48,8 +74,7 @@ router.get("/feedback", requiresLogin, (req, res) => {
 router.post("/edit", requiresLogin, (req, res) => {
     const pass = txt.body.txtPassword;
     const user = getUser(req.session["User"]);
-    if (user.password != pass) {
-    }
+    if (user.password != pass) {}
 });
 
 router.get("/buy", (req, res) => {
