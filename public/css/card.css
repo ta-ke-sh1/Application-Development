@@ -81,3 +81,43 @@
     font-size: 28px;
     font-family: Editor;
 }
+
+.shop-btn {
+    margin-top: 10px;
+    font-family: FoundersGrotesk;
+    font-size: 36px;
+    padding: 20px 25px 15px 25px;
+    border: 1.5px solid crimson;
+    border-radius: 30px;
+    margin-left: 25%;
+    width: fit-content;
+    transition-duration: 0.4s;
+    color: black;
+}
+
+.shop-btn:hover {
+    background-color: crimson;
+    color: white;
+}
+
+.shop-btn img {
+    margin-left: 10px;
+    margin-top: -5px;
+}
+
+.head-link {
+    margin-left: auto;
+    font-size: 18px;
+    font-family: Maison-Medium;
+    padding: 5px 17px;
+    border: 1px solid crimson;
+    border-radius: 20px;
+    color: crimson;
+    transition-duration: 0.3s;
+    margin-top: -10px;
+}
+
+.head-link:hover {
+    background-color: crimson;
+    color: white;
+}

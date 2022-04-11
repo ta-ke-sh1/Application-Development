@@ -7,7 +7,7 @@ const {
     getByCriteria,
     searchBook,
     advanceSearch,
-    getCategoryByName
+    getCategoryByName,
 } = require("../databaseHandler");
 const router = express.Router();
 
@@ -46,7 +46,7 @@ router.get("/advanceSearch", async (req, res) => {
     const publisher = req.query.publisher;
     var category = req.query.cat;
     var max = req.query.max;
-    
+
     if (max == "") {
         max = 1000;
     }
@@ -54,7 +54,13 @@ router.get("/advanceSearch", async (req, res) => {
         category = "";
     }
 
-    const books = await advanceSearch(keyword, author, publisher, max, category);
+    const books = await advanceSearch(
+        keyword,
+        author,
+        publisher,
+        max,
+        category
+    );
     if (books.length == 0) {
         res.render("Book/main.hbs", {
             categories: categories,
@@ -71,27 +77,31 @@ router.get("/advanceSearch", async (req, res) => {
 router.get("/category", async (req, res) => {
     const category = req.query.cat;
     if (category == "all") {
-        var books = await homepageCategorize();
-        res.render("Book/allCategories.hbs", {
-            books: books
+        var categories = await homepageCategorize();
+        res.render("Book/categories.hbs", {
+            categories: categories,
+        });
+    } else {
+        if (category == "popular") {
+            var books = await getByCriteria("popularity", 36);
+        } else if (category == "editorChoice") {
+            var books = await getCategoryByName("Editor's Choice");
+        } else if (category == "newlyAdded") {
+            var books = await getByCriteria("date", 20);
+        } else {
+            var books = await getCategoryByName(category);
+        }
+        res.render("Book/main.hbs", {
+            books: books,
         });
     }
+});
 
-    if (category == "popular") {
-        var books = await getByCriteria("popularity");
-    }
-    else if (category == "editorChoice") {
-        var books = await getCategoryByName("Editor's Choice");
-    }
-    else if (category == "newlyAdded") {
-        var books = await getByCriteria("date");
-    }
-    else {
-        var books = await getCategoryByName(category);
-    }
-    res.render("Book/main.hbs", {
-        books: books
-    })
-})
+router.get("/all", async (req, res) => {
+    var categories = await homepageCategorize();
+    res.render("Book/categories.hbs", {
+        categories: categories,
+    });
+});
 
 module.exports = router;

@@ -11,7 +11,7 @@ const {
     getUser,
     checkUser,
     getByCriteria,
-    getCategoryByName
+    getCategoryByName,
 } = require("./databaseHandler");
 const cookieParser = require("cookie-parser");
 var session = require("express-session");
@@ -69,7 +69,6 @@ hbs.registerPartial(
     fs.readFileSync(__dirname + "/views/partials/footer.hbs", "utf8")
 );
 
-
 // tat ca cac dia chi co chua admin se goi den controller admin
 const adminController = require("./controllers/admin");
 app.use("/admin", adminController);
@@ -85,15 +84,15 @@ app.use("/user", userController);
 // Homepage
 app.get("/", async (req, res) => {
     const categories = await getAll("Categories");
-    let popular = await getByCriteria("popularity");
-    let newlyAdded = await getByCriteria("date");
+    let popular = await getByCriteria("popularity", 12);
+    let newlyAdded = await getByCriteria("date", 12);
     let editorChoice = await getCategoryByName("Editor's Choice");
     res.render("index", {
         categories: categories,
         popular: popular,
         userInfo: req.session.User,
         editorChoice: editorChoice,
-        newlyAdded: newlyAdded
+        newlyAdded: newlyAdded,
     });
 });
 
@@ -122,8 +121,7 @@ app.post("/login", async (req, res) => {
         if (user.role == "Admin") {
             session.isAdmin = true;
             res.redirect("/admin");
-        }
-        else {
+        } else {
             res.redirect("/");
         }
     }

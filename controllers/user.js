@@ -52,4 +52,44 @@ router.post("/edit", requiresLogin, (req, res) => {
     }
 });
 
+router.get("/buy", (req, res) => {
+    var products = [];
+    products.push({ id: 1, name: "laptop" });
+    products.push({ id: 2, name: "book" });
+    products.push({ id: 3, name: "phone" });
+    res.render("buy.hbs", {
+        products: products,
+    });
+});
+
+router.get("/addCart", (req, res) => {
+    const id = req.query.id;
+    // Lay gia tri cart trong session[]
+    let myCart = req.session["cart"];
+    if (myCart == null) {
+        var dict = {};
+        dict[id] = 1; // da mua 1 lan
+        req.session["cart"] = dict;
+    } else {
+        dict = req.session["cart"];
+        var oldProduct = dict[id];
+        if (oldProduct == null) {
+            // Chua co sp nay trong cart
+            dict[id] = 1;
+        } else {
+            dict[id] = parseInt(oldProduct) + 1; // Da co sp trong cart
+        }
+        req.session["cart"] = dict;
+    }
+    let spDaMua = [];
+    const dict2 = req.session["cart"];
+    for (var key in dict2) {
+        const productName = products.find((p) => p.id == key).name;
+        spDaMua.push({ tensp: key, name: productName, soLuong: dict2[key] });
+    }
+    res.render("myCart.hbs", {
+        cart: spDaMua,
+    });
+});
+
 module.exports = router;

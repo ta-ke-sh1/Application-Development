@@ -53,30 +53,30 @@ async function getCategoryByName(name) {
     const dbo = await getDB();
     return await dbo
         .collection("Books")
-        .find({ "category": name })
+        .find({ category: name })
         .sort({ popularity: -1 })
         .toArray();
 }
 
-async function getByCriteria(criteria) {
+async function getByCriteria(criteria, limit) {
     const dbo = await getDB();
     if (criteria == "popularity") {
         return await dbo
             .collection("Books")
             .find({})
             .sort({ popularity: -1 })
-            .limit(12)
+            .limit(limit)
             .toArray();
-    }
-    else if (criteria == "date") {
-        return await dbo.collection("Books")
+    } else if (criteria == "date") {
+        return await dbo
+            .collection("Books")
             .find({})
             .sort({ _id: -1 })
-            .limit(12)
+            .limit(limit)
             .toArray();
-    }
-    else {
-        return await dbo.collection("Books")
+    } else {
+        return await dbo
+            .collection("Books")
             .find({})
             .sort({ quantity: -1 })
             .limit(12)
@@ -101,10 +101,8 @@ async function homepageCategorize() {
             {
                 $addFields: { bookCount: { $size: "$Books" } },
             },
-            {
-                $match: { bookCount: { $gt: 11 } },
-            },
         ])
+        .sort({ name: 1 })
         .toArray();
 }
 
@@ -113,9 +111,7 @@ async function insertObject(collectionName, objectToInsert) {
     const newObject = await dbo
         .collection(collectionName)
         .insertOne(objectToInsert);
-    console.log(
-        "New Object added"
-    );
+    console.log("New Object added");
 }
 
 async function getObject(id, collectionName) {
@@ -160,7 +156,7 @@ async function advanceSearch(keyword, author, publisher, max, category) {
             .collection("Books")
             .find({
                 name: { $regex: new RegExp(keyword), $options: "-i" },
-                category: category, 
+                category: category,
                 author: { $regex: new RegExp(author), $options: "-i" },
                 publisher: { $regex: new RegExp(publisher), $options: "-i" },
                 price: { $lt: parseFloat(max) },
@@ -168,8 +164,7 @@ async function advanceSearch(keyword, author, publisher, max, category) {
             .sort({ popularity: -1 })
             .limit(16)
             .toArray();
-    }
-    else {
+    } else {
         return await dbo
             .collection("Books")
             .find({
@@ -197,5 +192,5 @@ module.exports = {
     getAllCriterias,
     homepageCategorize,
     getByCriteria,
-    getCategoryByName
+    getCategoryByName,
 };

@@ -1,0 +1,32 @@
+.nav-item {
+    padding: 6px;
+    transition-duration: 0.3s;
+}
+
+hr {
+    margin-top: 0px;
+}
+
+.navbar {
+    transition-duration: 0.3s;
+}
+
+.navbar:hover {
+    box-shadow: rgba(0, 0, 0, 0.01) 0px 20px 25px -5px,
+        rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
+}
+
+#dropdown {
+    margin-top: 7px;
+}
+
+.navbar {
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+    background-color: #f6f6f6;
+}
+
+.navbar.scrolled {
+    background-color: white;
+}
