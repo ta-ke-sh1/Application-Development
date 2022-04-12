@@ -48,6 +48,52 @@
                 </div>
                 <div class="row"></div>
             </div>
+            <div class="block">
+            <form action="/book/advanceSearch" method="GET" class="ui form">
+                <h4 class="ui dividing header">Advanced Search</h4>
+                <div class="fields">
+                    <div class="field">
+                        <label>Name</label>
+                        <input type="text" name="key" id="" style="width: 280px;" placeholder="Enter any keyword">
+                    </div>
+                    <div class="field">
+                        <label>Author</label>
+                        <input type="text" name="key" id="" style="width: 280px;" placeholder="Enter any Author">
+                    </div>
+                    <div class="field">
+                        <label>Publisher</label>
+                        <input type="text" name="key" id="" style="width: 280px;" placeholder="Enter any Publisher">
+                    </div>
+                    <div class="field">
+                        <label>Category</label>
+                        <select name="txtCategory" id="multi-select" multiple="" class="ui dropdown search inp"
+                                style=" width: 300px;">
+                            <option value="">Select one</option>
+                            {{#each categories}}
+                                <option value="{{name}}" type="checkbox">{{name}}</option>
+                            {{/each}}
+                        </select>
+                        <script>
+                            $('#multi-select').dropdown(
+                                { maxSelections: 1 }
+                            );
+                        </script>
+                    </div>
+                    <div class="field">
+                        <label>Max Price</label>
+                        <input type="number" name="key" id="" style="width: 110px;">
+                    </div>
+                    <div class="field">
+                        <button class="ui button" type="submit" style="width: 280px; margin-top: 27px">Search</button>
+                    </div>
+                </div>
+            </form>
+            <script type="text/javascript">
+                function rangeSlide(value) {
+                    document.getElementById('rangeValue').innerHTML = value;
+                }
+            </script>
+        </div>
             <div class="widget">
                 <table class="ui padded selectable fixed table tbl">
                     <tr>
