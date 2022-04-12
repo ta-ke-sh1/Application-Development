@@ -19,7 +19,7 @@ function requiresLogin(req, res, next) {
 router.get("/edit", requiresLogin, (req, res) => {
     res.render("User/edit", {});
 });
-router.get("/add-to-cart", requiresLogin, (req, res) => {
+router.get("/add-to-cart/:id", requiresLogin, (req, res) => {
     const id = req.query.id
         //lay gia tri bien cart trong session [ co the chua co hoac da co gia tri]
     let myCart = req.session["cart"]
