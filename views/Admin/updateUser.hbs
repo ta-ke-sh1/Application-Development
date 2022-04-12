@@ -21,7 +21,15 @@
                     <input type="text" name="txtName" class="inp" placeholder="Enter your username" value="{{ user.userName }}" required>
                 </div>
                 <div class="field">
-                    <label>Password</label>
+                    <label>Enter Old Password</label>
+                        <div class="field">
+                            <input type="password" name="txtOldPassword" placeholder="Enter password" class="inp"
+                                   id="password"
+                                   required>
+                    </div>
+                </div>
+                <div class="field">
+                    <label>Enter New Password</label>
                         <div class="field">
                             <input type="password" name="txtPassword" placeholder="Enter password" class="inp"
                                    id="password"
@@ -111,6 +119,6 @@
                 }
             }
         </script>
+        {{>footer}}
     </body>
-
 </html>

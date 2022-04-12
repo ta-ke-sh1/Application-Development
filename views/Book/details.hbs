@@ -23,6 +23,7 @@
                 width: 500px;
                 text-align: justify;
                 max-height: 350px;
+                min-height: 150px;
                 overflow: auto;
             }
 
@@ -64,6 +65,14 @@
                 border-bottom: 1px solid #CDCDCE;
             }
 
+            .img{
+                background-size: cover;
+                background-repeat: no-repeat;
+                background-position: center;
+                height: 750px;
+                width: 500px;
+                margin-left: -50px;
+            }
         </style>
     </head>
 
@@ -74,7 +83,8 @@
             <br>
             <div class="row">
                 <div class="col">
-                    <img src="/Books/{{ book.image }}" height="750px" style="margin-right: -100px;">
+                    <div class="img" style="background-image: url('/Books/{{ book.image }}');">
+                    </div>
                 </div>
                 <div class="col" style="width: 500px;">
                     <form action="user/addCart" method="POST" class="ui form" enctype="multipart/form-data">
@@ -160,6 +170,14 @@
                 </div>
             </div>
         </div>
+        <br>
+        <div class="block" style="height: 300px; width: 80%">
+             <div class="row tags" style="display: inline;">
+                <span class="heading">Feedbacks</span>
+            </div>
+        </div>
+        <br>
+        {{>footer}}
     </body>
     <script>
         function increaseValue() {
@@ -175,6 +193,22 @@
             value < 1 ? value = 1 : '';
             value--;
             document.getElementById('number').value = value;
+        }
+
+        function expand() {
+            var dots = document.getElementById("dots");
+            var moreText = document.getElementById("more");
+            var btnText = document.getElementById("myBtn");
+
+            if (dots.style.display === "none") {
+                dots.style.display = "inline";
+                btnText.innerHTML = "Read more";
+                moreText.style.display = "none";
+            } else {
+                dots.style.display = "none";
+                btnText.innerHTML = "Read less";
+                moreText.style.display = "inline";
+            }
         }
     </script>
 

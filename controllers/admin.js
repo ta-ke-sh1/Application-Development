@@ -149,15 +149,14 @@ router.post("/updateUser", requiresLogin, async (req, res) => {
     const lname = req.body.txtLastName;
     const role = req.body.Role;
     const pass = req.body.txtPassword;
+    const oldPass = req.body.txtOldPassword;
     const email = req.body.txtEmail;
     const address = req.body.txtAddress;
     const phone = req.body.telPhone;
 
     const objectToUpdate = await getObject(id, "Users");
-    const oldPassword = objectToUpdate.password;
 
-    var check = await getUser(name);
-    if (!check) {
+    if (encrypt(oldPass) == objectToUpdate.password) {
         if (req.files != null) {
             const avatar = req.files.avatar;
             avatar.name = fname + uniqid() + ".jpg";
@@ -165,60 +164,38 @@ router.post("/updateUser", requiresLogin, async (req, res) => {
             avatar.mv(path, (err) => {
                 if (err) throw err;
             });
-            if (encrypt(pass) == oldPassword) {
-                var updateValues = {
-                    $set: {
-                        userName: name,
-                        firstName: fname,
-                        lastName: lname,
-                        role: role,
-                        email: email,
-                        address: address,
-                        phoneNumber: phone,
-                        avatar: avatar.name,
-                    },
-                };
-            } else
-                var updateValues = {
-                    $set: {
-                        userName: name,
-                        firstName: fname,
-                        lastName: lname,
-                        role: role,
-                        password: encrypt(pass),
-                        email: email,
-                        address: address,
-                        phoneNumber: phone,
-                        avatar: avatar.name,
-                    },
-                };
+
+            var updateValues = {
+                $set: {
+                    userName: name,
+                    firstName: fname,
+                    lastName: lname,
+                    role: role,
+                    email: email,
+                    address: address,
+                    phoneNumber: phone,
+                    avatar: avatar.name,
+                    password: encrypt(pass),
+                },
+            };
         } else {
-            if (encrypt(pass) == oldPassword) {
-                var updateValues = {
-                    $set: {
-                        userName: name,
-                        firstName: fname,
-                        lastName: lname,
-                        role: role,
-                        email: email,
-                        address: address,
-                        phoneNumber: phone,
-                    },
-                };
-            } else
-                var updateValues = {
-                    $set: {
-                        userName: name,
-                        firstName: fname,
-                        lastName: lname,
-                        role: role,
-                        password: encrypt(pass),
-                        email: email,
-                        address: address,
-                        phoneNumber: phone,
-                    },
-                };
+            var updateValues = {
+                $set: {
+                    userName: name,
+                    firstName: fname,
+                    lastName: lname,
+                    role: role,
+                    email: email,
+                    address: address,
+                    phoneNumber: phone,
+                    password: encrypt(pass),
+                },
+            };
         }
+    } else {
+        res.render("Admin/editUser", {
+            error: "Incorrect old password",
+        });
     }
     await updateObject("Users", objectToUpdate, updateValues);
     res.redirect("/admin/users");
