@@ -1,7 +1,7 @@
 const express = require("express");
 const { route } = require("./admin");
 const router = express.Router();
-const { getUser } = require("../databaseHandler");
+const { getUser, getObject } = require("../databaseHandler");
 const session = require("express-session");
 
 // access control
@@ -16,35 +16,39 @@ function requiresLogin(req, res, next) {
     }
 }
 
-router.get("/edit", requiresLogin, (req, res) => {
+router.get("/edit", (req, res) => {
     res.render("User/edit", {});
 });
-router.get("/add-to-cart/:id", requiresLogin, (req, res) => {
-    const id = req.query.id
-        //lay gia tri bien cart trong session [ co the chua co hoac da co gia tri]
-    let myCart = req.session["cart"]
+
+router.post("/addCart", async (req, res) => {
+    const id = req.body.txtID;
+    const quantity = req.body.numQuantity;
+    console.log(id);
+    //lay gia tri bien cart trong session [ co the chua co hoac da co gia tri]
+    let myCart = req.session["cart"];
     if (myCart == null) {
-        var dict = {}
-        dict[id] = 1
-        console.log('Ban da mua sp dau tien: ' + id)
-        req.session["cart"] = dict
-    } else { // da mua it nhat 1 sp
-        var dict = req.session["cart"]
-        var oldProduct = dict[id]
-        if (oldProduct == null)
-            dict[id] = 1
+        var dict = {};
+        dict[id] = quantity;
+        console.log("Ban da mua sp dau tien: " + id);
+        req.session["cart"] = dict;
+    } else {
+        // da mua it nhat 1 sp
+        var dict = req.session["cart"];
+        var current = dict[id];
+        if (current == null) dict[id] = parseInt(quantity);
         else {
-            const oldQuantity = parseInt(oldProduct) + 1
+            dict[id] = parseInt(current) + parseInt(quantity);
         }
-        req.session["cart"] = dict
+        req.session["cart"] = dict;
     }
-    let boughtProduct = []
-    const dict2 = req.session["cart"]
+    let cart = [];
+    const dict2 = req.session["cart"];
     for (var key in dict2) {
-        boughtProduct.push({ Productname: key, Quantity: dict[key] })
+        book = await getObject(key, "Books");
+        cart.push({ Book: book, Quantity: dict[key] });
     }
-    res.render('User/cart', { 'cart': boughtProduct })
-})
+    res.render("User/cart", { cart: cart });
+});
 
 router.get("/cart", requiresLogin, (req, res) => {
     console.log(req.session);
@@ -74,7 +78,8 @@ router.get("/feedback", requiresLogin, (req, res) => {
 router.post("/edit", requiresLogin, (req, res) => {
     const pass = txt.body.txtPassword;
     const user = getUser(req.session["User"]);
-    if (user.password != pass) {}
+    if (user.password != pass) {
+    }
 });
 
 router.get("/buy", (req, res) => {
@@ -87,7 +92,7 @@ router.get("/buy", (req, res) => {
     });
 });
 
-router.get("/addCart", (req, res) => {
+router.get("/addCart", async (req, res) => {
     const id = req.query.id;
     // Lay gia tri cart trong session[]
     let myCart = req.session["cart"];
@@ -106,11 +111,11 @@ router.get("/addCart", (req, res) => {
         }
         req.session["cart"] = dict;
     }
-    let spDaMua = [];
+    let cart = [];
     const dict2 = req.session["cart"];
     for (var key in dict2) {
-        const productName = products.find((p) => p.id == key).name;
-        spDaMua.push({ tensp: key, name: productName, soLuong: dict2[key] });
+        let product = await getObject(id, "Books");
+        cart.push({ product: product, soLuong: dict2[key] });
     }
     res.render("myCart.hbs", {
         cart: spDaMua,

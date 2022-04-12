@@ -77,7 +77,8 @@
                     <img src="/Books/{{ book.image }}" height="750px" style="margin-right: -100px;">
                 </div>
                 <div class="col" style="width: 500px;">
-                    <form action="addToCart" method="POST" class="ui form" enctype="multipart/form-data">
+                    <form action="user/addCart" method="POST" class="ui form" enctype="multipart/form-data">
+                        <input type="hidden" name="txtID" value="{{book._id}}">
                         <div class="field">
                             <h1>{{ book.name }}</h1>
                         </div>
