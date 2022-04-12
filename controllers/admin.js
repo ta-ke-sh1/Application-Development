@@ -193,7 +193,8 @@ router.post("/updateUser", requiresLogin, async (req, res) => {
             };
         }
     } else {
-        res.render("Admin/editUser", {
+        res.render("Admin/updateUser", {
+            user: objectToUpdate,
             error: "Incorrect old password",
         });
     }
