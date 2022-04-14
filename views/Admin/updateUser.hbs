@@ -20,20 +20,22 @@
                     <label>Username</label>
                     <input type="text" name="txtName" class="inp" placeholder="Enter your username" value="{{ user.userName }}" required>
                 </div>
-                <div class="field">
-                    <label>Enter Old Password</label>
-                        <div class="field">
-                            <input type="password" name="txtOldPassword" placeholder="Enter password" class="inp"
-                                   id="password"
-                                   required>
+                <div class="two fields">
+                    <div class="field">
+                        <label>Enter Old Password</label>
+                            <div class="field">
+                                <input type="password" name="txtOldPassword" placeholder="Enter password" class="inp"
+                                    id="password"
+                                    required>
+                            </div>
                     </div>
-                </div>
-                <div class="field">
-                    <label>Enter New Password</label>
-                        <div class="field">
-                            <input type="password" name="txtPassword" placeholder="Enter password" class="inp"
-                                   id="password"
-                                   required>
+                    <div class="field">
+                        <label>Enter New Password</label>
+                            <div class="field">
+                                <input type="password" name="txtPassword" placeholder="Enter password" class="inp"
+                                    id="newpassword"
+                                    required>
+                            </div>
                     </div>
                 </div>
                 <div class="inline field">
@@ -109,7 +111,7 @@
         <script>
             function toggleVisibility() {
                 var x = document.getElementById("password");
-                var y = document.getElementById("cfpassword");
+                var y = document.getElementById("newpassword");
                 if (x.type === "password") {
                     x.type = "text";
                     y.type = "text"
