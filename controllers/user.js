@@ -8,6 +8,7 @@ const {
     getAllObject,
 } = require("../databaseHandler");
 const session = require("express-session");
+const async = require("hbs/lib/async");
 
 function requiresLogin(req, res, next) {
     if (req.session) {
@@ -24,7 +25,7 @@ router.get("/edit", (req, res) => {
     res.render("User/edit", {});
 });
 
-router.post("/addCart", async (req, res) => {
+router.post("/addCart", async(req, res) => {
     const id = req.body.txtID;
     const quantity = req.body.numQuantity;
     console.log(id);
@@ -51,11 +52,17 @@ router.post("/addCart", async (req, res) => {
         book = await getObject(key, "Books");
         cart.push({ Book: book, Quantity: dict[key] });
     }
-    res.render("User/cart", { cart: cart });
+    res.redirect("/user/cart");
 });
 
-router.get("/cart", requiresLogin, (req, res) => {
-    res.render("User/cart", {});
+router.get("/cart", requiresLogin, async(req, res) => {
+    let cart = [];
+    const dict2 = req.session["cart"];
+    for (var key in dict2) {
+        book = await getObject(key, "Books");
+        cart.push({ Book: book, Quantity: dict2[key] });
+    }
+    res.render("User/cart", { cart: cart });
 });
 
 router.get("/checkout", requiresLogin, (req, res) => {
@@ -81,12 +88,10 @@ router.get("/feedback", requiresLogin, (req, res) => {
 router.post("/edit", requiresLogin, (req, res) => {
     const oldPassword = txt.body.txtOldPassword;
     const user = checkUser(req.session["User"], oldPassword);
-    if (user != "-1") {
-    } else {
-    }
+    if (user != "-1") {} else {}
 });
 
-router.get("/orders", async (req, res) => {
+router.get("/orders", async(req, res) => {
     const orders = await getAllObject(req.session.userID, "Orders");
     console.log(orders);
     res.render("User/order", {
@@ -94,13 +99,13 @@ router.get("/orders", async (req, res) => {
     });
 });
 
-router.get("/feedback", async (req, res) => {
+router.get("/feedback", async(req, res) => {
     const book = getObject(req.query.bookID, "Books");
     const user = getObject(req.session.userID, "Users");
     const order = getObject(req.query.orderID, "Orders");
 });
 
-router.post("/addFeedback", async (req, res) => {
+router.post("/addFeedback", async(req, res) => {
     const Feedback = {
         user: req.session.username,
         product: req.body.bookID,

@@ -164,13 +164,20 @@ button:focus {
     .pad-left {
         padding-left: 20px
     }
+    .img{
+                background-size: cover;
+                background-repeat: no-repeat;
+                background-position: center;
+                height: 150px;
+                width: 100px;
+            }
 }
         </style>
        {{>header}}
        <div class="container px-4 py-5 mx-auto">
     <div class="row d-flex justify-content-center">
         <div class="col-5">
-            <h4 class="heading">Shopping Bag</h4>
+            <h4 class="heading">Shopping Cart</h4>
         </div>
         <div class="col-7">
             <div class="row text-right">
@@ -187,8 +194,10 @@ button:focus {
     <div class="row d-flex justify-content-center border-top">
         <div class="col-5">
             <div class="row d-flex">
+                <div class="img"> <img src="/Books/{{ Book.image }}" class="book-img"> </div>
                 <div class="my-auto flex-column d-flex pad-left">
-                    <h6 class="mob-text">{{Book.name}}</h6>
+                    <h5 class="mob-text"><strong>{{Book.name}}</strong></h5>
+                    <p class="mob-text">{{Book.author}}</p>
                 </div>
             </div>
         </div>
@@ -249,7 +258,7 @@ button:focus {
                         <div class="row d-flex justify-content-between px-4" id="tax">
                             <p class="mb-1 text-left">Total (tax included)</p>
                             <h6 class="mb-1 text-right">$26.48</h6>
-                        </div> <button class="btn-block btn-blue"> <span> <span id="checkout">Checkout</span> <span id="check-amt">$26.48</span> </span> </button>
+                        </div> <button class="btn-block btn-blue" > <span> <span id="checkout">Checkout</span> <span id="check-amt">$26.48</span> </span> </button>
                     </div>
                 </div>
             </div>
