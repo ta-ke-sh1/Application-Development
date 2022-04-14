@@ -122,7 +122,7 @@ router.post("/addUser", requiresLogin, async (req, res) => {
                 avatar: avatar.name,
             };
             insertObject("Users", objectToInsert);
-            res.render("home");
+            res.redirect("/admin/users");
         } else {
             res.render("Admin/addUser", {
                 error: "Please add an image!",

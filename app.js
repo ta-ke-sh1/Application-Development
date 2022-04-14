@@ -112,6 +112,7 @@ app.post("/login", async (req, res) => {
     } else {
         console.log(user.role);
         session = req.session;
+        session.userID = user._id;
         session.userName = user.userName;
         session.firstName = user.firstName;
         session.role = user.role;
@@ -165,8 +166,10 @@ app.post("/register", async (req, res) => {
                 phoneNumber: phone,
                 avatar: avatar.name,
             };
-            insertObject("Users", objectToInsert);
-            res.redirect("/login");
+            await insertObject("Users", objectToInsert);
+            res.render("login", {
+                succeed: "Register successfully, please log-in!",
+            });
         } else {
             console.log(getUser(name));
             res.render("Admin/register", {
