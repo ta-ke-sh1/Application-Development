@@ -21,22 +21,20 @@
           <br>
           <form action="/login" method="post">
             {{#if error}}
-              <div class="ui error message transition" style="margin-bottom: 25px; margin-top:-20px">
+              <div class="ui error message transition" style="margin-bottom: 25px; margin-top:-20px; width: 450px;">
                 <i class="close icon"></i>
                 <div class="header">
                   {{ error }}
                 </div>
               </div>
-              <script>
-                $('.message .close')
-                  .on('click', function () {
-                    $(this)
-                      .closest('.message')
-                      .transition('fade')
-                      ;
-                  })
-                  ;
-              </script>
+            {{/if}}
+            {{#if succeed}}
+              <div class="ui positive message transition" style="margin-bottom: 25px; margin-top:-20px; width: 450px;">
+                <i class="close icon"></i>
+                <div class="header">
+                  {{ succeed }}
+                </div>
+              </div>
             {{/if}}
             <input type="text" name="txtUsername" id="" placeholder="Enter user name" class="inp">
             <br>

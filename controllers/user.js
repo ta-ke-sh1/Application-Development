@@ -1,20 +1,14 @@
 const express = require("express");
 const { route } = require("./admin");
 const router = express.Router();
-const { getUser, getObject } = require("../databaseHandler");
+const {
+    getUser,
+    getObject,
+    insertObject,
+    getAllObject,
+    requiresLogin,
+} = require("../databaseHandler");
 const session = require("express-session");
-
-// access control
-function requiresLogin(req, res, next) {
-    if (req.session.role != null) {
-        return next();
-    } else {
-        var err = "You must log in to view this page.";
-        res.render("login", {
-            error: err,
-        });
-    }
-}
 
 router.get("/edit", (req, res) => {
     res.render("User/edit", {});
@@ -76,50 +70,36 @@ router.get("/feedback", requiresLogin, (req, res) => {
 });
 
 router.post("/edit", requiresLogin, (req, res) => {
-    const pass = txt.body.txtPassword;
-    const user = getUser(req.session["User"]);
-    if (user.password != pass) {
-    }
-});
-
-router.get("/buy", (req, res) => {
-    var products = [];
-    products.push({ id: 1, name: "laptop" });
-    products.push({ id: 2, name: "book" });
-    products.push({ id: 3, name: "phone" });
-    res.render("buy.hbs", {
-        products: products,
-    });
-});
-
-router.get("/addCart", async (req, res) => {
-    const id = req.query.id;
-    // Lay gia tri cart trong session[]
-    let myCart = req.session["cart"];
-    if (myCart == null) {
-        var dict = {};
-        dict[id] = 1; // da mua 1 lan
-        req.session["cart"] = dict;
+    const oldPassword = txt.body.txtOldPassword;
+    const user = checkUser(req.session["User"], oldPassword);
+    if (user != "-1") {
     } else {
-        dict = req.session["cart"];
-        var oldProduct = dict[id];
-        if (oldProduct == null) {
-            // Chua co sp nay trong cart
-            dict[id] = 1;
-        } else {
-            dict[id] = parseInt(oldProduct) + 1; // Da co sp trong cart
-        }
-        req.session["cart"] = dict;
     }
-    let cart = [];
-    const dict2 = req.session["cart"];
-    for (var key in dict2) {
-        let product = await getObject(id, "Books");
-        cart.push({ product: product, soLuong: dict2[key] });
-    }
-    res.render("myCart.hbs", {
-        cart: spDaMua,
+});
+
+router.get("/orders", async (req, res) => {
+    const orders = await getAllObject(req.session.userID, "Orders");
+    res.render("User/order", {
+        orders: orders,
     });
+});
+
+router.get("/feedback", async (req, res) => {
+    const book = getObject(req.query.bookID, "Books");
+    const user = getObject(req.session.userID, "Users");
+    const order = getObject(req.query.orderID, "Orders");
+});
+
+router.post("/addFeedback", async (req, res) => {
+    const Feedback = {
+        user: req.session.username,
+        product: req.body.bookID,
+        content: req.body.txtContent,
+        rating: req.body.numRating,
+        date: Date.now(),
+    };
+    await insertObject("Feedbacks", Feedback);
+    res.redirect("/orders");
 });
 
 module.exports = router;
