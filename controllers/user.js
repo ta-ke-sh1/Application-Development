@@ -6,9 +6,19 @@ const {
     getObject,
     insertObject,
     getAllObject,
-    requiresLogin,
 } = require("../databaseHandler");
 const session = require("express-session");
+
+function requiresLogin(req, res, next) {
+    if (req.session) {
+        return next();
+    } else {
+        var err = "You are not authorized, please login!";
+        res.render("login", {
+            error: err,
+        });
+    }
+}
 
 router.get("/edit", (req, res) => {
     res.render("User/edit", {});
@@ -45,27 +55,26 @@ router.post("/addCart", async (req, res) => {
 });
 
 router.get("/cart", requiresLogin, (req, res) => {
-    console.log(req.session);
     res.render("User/cart", {});
 });
 
 router.get("/checkout", requiresLogin, (req, res) => {
-    console.log(req.session);
+    res.render("User/checkout", {});
+});
+
+router.post("/checkout", requiresLogin, (req, res) => {
     res.render("User/checkout", {});
 });
 
 router.get("/edit", requiresLogin, (req, res) => {
-    console.log(req.session);
     res.render("User/edit", {});
 });
 
 router.get("/profile", requiresLogin, (req, res) => {
-    console.log(req.session);
     res.render("User/profile", {});
 });
 
 router.get("/feedback", requiresLogin, (req, res) => {
-    console.log(req.session);
     res.render("User/edit", {});
 });
 
@@ -79,6 +88,7 @@ router.post("/edit", requiresLogin, (req, res) => {
 
 router.get("/orders", async (req, res) => {
     const orders = await getAllObject(req.session.userID, "Orders");
+    console.log(orders);
     res.render("User/order", {
         orders: orders,
     });

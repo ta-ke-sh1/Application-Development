@@ -8,7 +8,7 @@ function requiresLogin(req, res, next) {
     if (req.session && req.session.isAdmin) {
         return next();
     } else {
-        var err = "You must be the admin to view this page.";
+        var err = "You are not authorized, please login!";
         res.render("login", {
             error: err,
         });
