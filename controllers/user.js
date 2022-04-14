@@ -20,7 +20,7 @@ router.get("/edit", (req, res) => {
     res.render("User/edit", {});
 });
 
-router.post("/addCart", async (req, res) => {
+router.post("/addCart", async(req, res) => {
     const id = req.body.txtID;
     const quantity = req.body.numQuantity;
     console.log(id);
@@ -78,8 +78,7 @@ router.get("/feedback", requiresLogin, (req, res) => {
 router.post("/edit", requiresLogin, (req, res) => {
     const pass = txt.body.txtPassword;
     const user = getUser(req.session["User"]);
-    if (user.password != pass) {
-    }
+    if (user.password != pass) {}
 });
 
 router.get("/buy", (req, res) => {
@@ -89,36 +88,6 @@ router.get("/buy", (req, res) => {
     products.push({ id: 3, name: "phone" });
     res.render("buy.hbs", {
         products: products,
-    });
-});
-
-router.get("/addCart", async (req, res) => {
-    const id = req.query.id;
-    // Lay gia tri cart trong session[]
-    let myCart = req.session["cart"];
-    if (myCart == null) {
-        var dict = {};
-        dict[id] = 1; // da mua 1 lan
-        req.session["cart"] = dict;
-    } else {
-        dict = req.session["cart"];
-        var oldProduct = dict[id];
-        if (oldProduct == null) {
-            // Chua co sp nay trong cart
-            dict[id] = 1;
-        } else {
-            dict[id] = parseInt(oldProduct) + 1; // Da co sp trong cart
-        }
-        req.session["cart"] = dict;
-    }
-    let cart = [];
-    const dict2 = req.session["cart"];
-    for (var key in dict2) {
-        let product = await getObject(id, "Books");
-        cart.push({ product: product, soLuong: dict2[key] });
-    }
-    res.render("myCart.hbs", {
-        cart: spDaMua,
     });
 });
 
