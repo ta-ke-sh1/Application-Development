@@ -7,12 +7,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>FPT Bookstore</title>
         <style>
-            h1 {
-                font-size: 30px;
-            }
-
-            br {
-                margin-top: -20px;
+            .book-name {
+                font-family: Editor;
+                font-size: 40px;
             }
 
             p {
@@ -69,9 +66,14 @@
                 background-size: cover;
                 background-repeat: no-repeat;
                 background-position: center;
-                height: 750px;
-                width: 500px;
+                height: 780px;
+                width: 540px;
                 margin-left: -50px;
+                margin-top: 10px;
+            }
+
+            h2{
+                font-size: 20px;
             }
         </style>
     </head>
@@ -79,7 +81,7 @@
     <body>
         {{> header }}
         <br>
-        <div class="container" style="margin-top: 20px">
+        <div class="container">
             <br>
             <div class="row">
                 <div class="col">
@@ -90,22 +92,24 @@
                     <form action="user/addCart" method="POST" class="ui form" enctype="multipart/form-data">
                         <input type="hidden" name="txtID" value="{{book._id}}">
                         <div class="field">
-                            <h1>{{ book.name }}</h1>
+                            <p class="book-name">{{ book.name }}</p>
                         </div>
-                        <br>
+                        <hr>
                         <div class="field">
                             <h2>Categories</h2>
                             <p>
                                 {{#each book.category}}
-                                    <span style="padding: 4px 8px;
-                                                background-color: #E9E8E8;
-                                                margin: 10px 0px;
-                                                margin-right: 6px; 
-                                                border-radius: 6px;
-                                                font-weight: bold;
-                                                border: 1px solid #CDCDCE;">
-                                        {{this}}
-                                    </span>
+                                    <a href="/book/category?cat={{this}}">
+                                        <span style="padding: 4px 8px;
+                                                                                        background-color: #E9E8E8;
+                                                                                        margin: 10px 0px;
+                                                                                        margin-right: 6px; 
+                                                                                        border-radius: 6px;
+                                                                                        font-weight: bold;
+                                                                                        border: 1px solid #CDCDCE;">
+                                            {{this}}
+                                        </span>
+                                    </a>
                                 {{/each}}
                             </p>
                         </div>
@@ -119,11 +123,6 @@
                                 <h2>Publisher</h2>
                                 <p>{{book.publisher}}</p>
                             </div>
-                        </div>
-                        <br>
-                        <div class="field">
-                            <h2>Description</h2>
-                            <p class="description">{{ book.description }}</h1>
                         </div>
                         <br>
                         <div class="two fields">
@@ -140,7 +139,7 @@
                         {{#if session.isAdmin}}
                         <a href="/admin/edit?id={{ book._id }}" id="btn_Save" style="width: 500px;" class="btn">Edit</a>
                         <br>
-                        <a href="/admin/deleteBook?id={{ book._id }}" id="btn_Save" style="width: 500px;" class="btn">Delete</a>
+                        <a href="/admin/deleteBook?id={{ book._id }}" id="btn_Save" style="width: 500px; margin-bottom: 30px" class="btn">Delete</a>
                         {{else}}
                         <div class="field">
                             <div class="quantity">
@@ -166,6 +165,11 @@
                             <input type="submit" value="Add to Cart" class="inp" id="btn_Save" style="width: 500px;">
                         </div>
                         {{/if}}
+                        <div class="field">
+                            <h2>Description</h2>
+                            <p class="description">{{ book.description }}</h1>
+                        </div>
+                        <br>
                     </form>
                 </div>
             </div>

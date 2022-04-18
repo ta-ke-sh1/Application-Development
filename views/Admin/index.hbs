@@ -27,14 +27,13 @@
             .widget::-webkit-scrollbar {
                 display: none;
             }
-
         </style>
     </head>
 
     <body>
         {{> header }}
         <center>
-            <div class="block" style="width: 80%;">
+            <div class="block" style="width: 80%; margin-top: 100px">
                 <div class="widget">
                     <table class="ui padded selectable fixed table tbl">
                         <tr>
@@ -71,7 +70,7 @@
                                     </a>
                                     <br>
                                     <a href="/admin/deleteBook?id={{ _id }}" class="btn"
-                                    onclick="return confirm('Do you want to delete this book ?' {{name}});">Delete</a>
+                                       onclick="return confirm('Do you want to delete this book ?' {{name}});">Delete</a>
                                 </td>
                             </tr>
                         {{/each}}
@@ -82,4 +81,5 @@
         </center>
         {{>footer}}
     </body>
+
 </html>

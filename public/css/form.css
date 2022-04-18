@@ -50,10 +50,10 @@
 
 #btn_Save {
     border: none;
-    padding: 15px 0px;
+    padding: 16px 0px;
     color: white;
     margin-top: 5px;
-    font-size: 24px;
+    font-size: 16px;
     font-family: Maison-Medium;
     background: rgb(2, 0, 36);
     background-size: 300% 100%;
@@ -71,7 +71,7 @@
     padding: 15px 0px;
     color: white;
     margin-top: 5px;
-    font-size: 24px;
+    font-size: 16px;
     font-family: Maison-Medium;
     background: rgb(2, 0, 36);
     background-size: 300% 100%;

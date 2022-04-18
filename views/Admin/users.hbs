@@ -49,10 +49,10 @@
                             <td>{{role}}</td>
                             <td><img src="/Avatars/{{avatar}}" height="100px">
                             <td>
-                                <a href="/admin/editUser?id={{ _id }}">
+                                <a href="/admin/editUser?id={{ _id }}" class="btn" id="btn_Save">
                                     Edit
                                 </a><br>
-                                <a href="/admin/deleteUser?id={{ _id }}">Delete</a>
+                                <a href="/admin/deleteUser?id={{ _id }}" class="btn" id="btn_Cancel">Delete</a>
                             </td>
                         </tr>
                     {{/each}}

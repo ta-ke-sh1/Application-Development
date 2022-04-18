@@ -10,7 +10,6 @@ const {
     getAll,
     deleteObject,
     getObject,
-    checkUser,
     getUser,
     updateObject,
     searchBook,
@@ -33,6 +32,9 @@ function requiresLogin(req, res, next) {
 router.get("/", requiresLogin, async (req, res) => {
     res.render("Admin/index", {
         books: await getAll("Books"),
+        users: await getAll("Users"),
+        orders: await getAll("Orders"),
+        categories: await getAll("Categories"),
         title: "Admin",
     });
 });
