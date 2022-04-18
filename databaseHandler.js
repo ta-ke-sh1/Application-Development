@@ -4,6 +4,17 @@ const URL =
     "mongodb+srv://apple-user23:applesensei23@cluster0.1keu9.mongodb.net/Demo-1670?retryWrites=true&w=majority";
 const DATABASE_NAME = "Demo-1670";
 
+function requiresLogin(req, res, next) {
+    if (req.session && req.session.isAdmin) {
+        return next();
+    } else {
+        var err = "You are not authorized, please login!";
+        res.render("login", {
+            error: err,
+        });
+    }
+}
+
 async function getDB() {
     const client = await MongoClient.connect(URL);
     const dbo = client.db(DATABASE_NAME);
@@ -119,6 +130,11 @@ async function getObject(id, collectionName) {
     return await dbo.collection(collectionName).findOne({ _id: ObjectId(id) });
 }
 
+async function getAllObject(id, collectionName) {
+    const dbo = await getDB();
+    return await dbo.collection(collectionName).find({ _id: ObjectId(id) });
+}
+
 async function updateObject(collectionName, objectToUpdate, values) {
     const dbo = await getDB();
     await dbo.collection(collectionName).updateOne(objectToUpdate, values);
@@ -180,11 +196,13 @@ async function advanceSearch(keyword, author, publisher, max, category) {
 }
 
 module.exports = {
+    requiresLogin,
     insertObject,
     updateObject,
     deleteObject,
     getAll,
     getObject,
+    getAllObject,
     checkUser,
     getUser,
     searchBook,
