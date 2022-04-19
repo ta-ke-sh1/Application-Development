@@ -5,7 +5,7 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Add book</title>
+        <title>FPT Bookstore</title>
         <link rel="shortcut icon" href="/Logo/favicon.ico" type="image/x-icon">
     </head>
 
@@ -87,6 +87,19 @@
                 </div>
             </form>
         </div>
+        <script>
+            $(document).ready(function(){ $('.ui.form').form({
+                    on: 'blur',
+                    inline : true,
+                    fields: {
+                        txtName     : 'empty',
+                        txtCategory    : 'minCount[1]',
+                        txtAuthor: 'empty',
+                        txtPublisher: 'empty',
+                    }
+                })
+            ;});
+        </script>
         {{>footer}}
     </body>
 </html>
