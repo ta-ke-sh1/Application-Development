@@ -14,11 +14,13 @@ const router = express.Router();
 router.get("/", async (req, res) => {
     const idVal = req.query.id;
     const book = await getObject(idVal, "Books");
+    const books = await advanceSearch('', book.author, book.publisher, 1000, '');
     upd = parseInt(book.popularity) + 1;
     updateValue = { $set: { popularity: upd } };
     await updateObject("Books", book, updateValue);
     res.render("Book/details", {
         book: book,
+        books: books
     });
 });
 

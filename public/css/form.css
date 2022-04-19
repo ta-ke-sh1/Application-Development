@@ -87,3 +87,7 @@
 .toggle {
     margin-top: -10px;
 }
+
+.ui.form a{
+    color: black;
+}
