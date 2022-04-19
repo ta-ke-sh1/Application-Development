@@ -11,10 +11,10 @@
    <body>
       {{> header }}
       <div class="container-fluid" style="width: 700px;">
-         {{!-- register --}}
-         <form action="" method="post" class="ui form" enctype="multipart/form-data">
+         <form action="register" method="post" class="ui form" enctype="multipart/form-data">
             <h3 class="ui dividing header">Register new User</h3>
-            <p style="color: red;">{{error}}</p>
+            <center><p class="error-msg">{{error}}</p></center>
+            <br>
             <div class="field">
                <label>Username</label>
                <input type="text" name="txtName" class="inp" placeholder="Enter your username">

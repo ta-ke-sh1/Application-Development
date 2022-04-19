@@ -86,7 +86,7 @@ router.post("/register", requiresLogin, async (req, res) => {
         res.redirect("/login");
     } else {
         res.render("/Admin/register", {
-            error: "Existing user!",
+            error: "User existed! Please re-try",
         });
     }
 });

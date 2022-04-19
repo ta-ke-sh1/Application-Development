@@ -16,7 +16,6 @@ const crypto = require("crypto");
 const algorithm = "aes-256-cbc";
 const Securitykey = "trungha";
 
-
 function requiresLogin(req, res, next) {
     if (req.session) {
         return next();
@@ -32,7 +31,7 @@ router.get("/edit", (req, res) => {
     res.render("User/edit", {});
 });
 
-router.post("/addCart", async(req, res) => {
+router.post("/addCart", async (req, res) => {
     const id = req.body.txtID;
     const quantity = req.body.numQuantity;
     console.log(id);
@@ -62,7 +61,7 @@ router.post("/addCart", async(req, res) => {
     res.redirect("/user/cart");
 });
 
-router.get("/cart", requiresLogin, async(req, res) => {
+router.get("/cart", requiresLogin, async (req, res) => {
     let cart = [];
     const dict2 = req.session["cart"];
     for (var key in dict2) {
@@ -92,7 +91,7 @@ router.get("/profile", requiresLogin, (req, res) => {
 });
 
 router.get("/feedback", requiresLogin, (req, res) => {
-    res.render("User/edit", {});
+    res.render("User/feedback", {});
 });
 
 router.post("/edit", requiresLogin, async (req, res) => {
@@ -123,7 +122,6 @@ router.post("/edit", requiresLogin, async (req, res) => {
                     password: encrypt(pass),
                 },
             };
-            
         } else {
             var updateValues = {
                 $set: {
@@ -134,19 +132,18 @@ router.post("/edit", requiresLogin, async (req, res) => {
                     password: encrypt(pass),
                 },
             };
-            
         }
         await updateObject("Users", objectToUpdate, updateValues);
         res.redirect("/user/profile");
     } else {
         res.render("User/edit", {
             user: objectToUpdate,
-            error: "Incorrect old password"
-        })
+            error: "Incorrect old password",
+        });
     }
 });
 
-router.get("/orders", async(req, res) => {
+router.get("/orders", async (req, res) => {
     const orders = await getAllObject(req.session.userID, "Orders");
     console.log(orders);
     res.render("User/order", {
@@ -154,13 +151,13 @@ router.get("/orders", async(req, res) => {
     });
 });
 
-router.get("/feedback", async(req, res) => {
+router.get("/feedback", async (req, res) => {
     const book = getObject(req.query.bookID, "Books");
     const user = getObject(req.session.userID, "Users");
     const order = getObject(req.query.orderID, "Orders");
 });
 
-router.post("/addFeedback", async(req, res) => {
+router.post("/addFeedback", async (req, res) => {
     const Feedback = {
         user: req.session.username,
         product: req.body.bookID,
