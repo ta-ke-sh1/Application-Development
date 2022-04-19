@@ -5,27 +5,28 @@
       <meta charset="UTF-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Document</title>
+      <title>FPT Bookstore</title>
    </head>
 
    <body>
       {{> header }}
       <div class="container-fluid" style="width: 700px;">
-         <form action="register" method="post" class="ui form" enctype="multipart/form-data">
+         {{!-- register --}}
+         <form action="" method="post" class="ui form" enctype="multipart/form-data">
             <h3 class="ui dividing header">Register new User</h3>
             <p style="color: red;">{{error}}</p>
             <div class="field">
                <label>Username</label>
-               <input type="text" name="txtName" class="inp" placeholder="Enter your username" required>
+               <input type="text" name="txtName" class="inp" placeholder="Enter your username">
             </div>
             <div class="field">
                <label>Password</label>
                <div class="two fields">
                   <div class="field">
-                     <input type="password" name="txtPassword" placeholder="Enter password" class="inp" id="password" required>
+                     <input type="password" name="txtPassword" placeholder="Enter password" class="inp" id="password">
                   </div>
                   <div class="field">
-                     <input type="password" name="txtConfirmPassword" placeholder="Re-enter your password" class="inp" required
+                     <input type="password" name="txtConfirmPassword" placeholder="Re-enter your password" class="inp"
                             id="cfpassword">
                   </div>
                </div>
@@ -97,6 +98,20 @@
                y.type = "password"
             }
          }
+         $(document).ready(function(){ $('.ui.form').form({
+               on: 'blur',
+               inline : true,
+               fields: {
+                  txtName     : 'empty',
+                  txtEmail    : 'email',
+                  txtFirstName: 'empty',
+                  txtLastName: 'empty',
+                  Role: 'minCount[1]',
+                  txtPassword : ['minLength[6]', 'empty'],
+                  txtConfirmPassword : ['minLength[6]', 'empty'],
+               }
+            })
+         ;});
       </script>
       {{>footer}}
    </body>

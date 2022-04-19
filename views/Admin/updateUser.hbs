@@ -5,7 +5,7 @@
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Update User</title>
+        <title>FPT Bookstore</title>
     </head>
 
     <body>
@@ -120,6 +120,16 @@
                     y.type = "password"
                 }
             }
+            $(document).ready(function(){ $('.ui.form').form({
+                    on: 'blur',
+                    inline : true,
+                    fields: {
+                        Role: 'minCount[1]',
+                        txtPassword : ['minLength[6]', 'empty'],
+                        txtOldPassword : ['minLength[6]', 'empty'],
+                    }
+                })
+            ;});
         </script>
         {{>footer}}
     </body>
