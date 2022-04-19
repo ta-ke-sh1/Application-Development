@@ -62,7 +62,7 @@
                 border-bottom: 1px solid #CDCDCE;
             }
 
-            .img{
+            .img {
                 background-size: cover;
                 background-repeat: no-repeat;
                 background-position: center;
@@ -72,9 +72,10 @@
                 margin-top: 10px;
             }
 
-            h2{
+            h2 {
                 font-size: 20px;
             }
+
         </style>
     </head>
 
@@ -96,17 +97,20 @@
                         </div>
                         <hr>
                         <div class="field">
-                            <h2>Categories</h2>
+                            <h1>${{ book.price}}</h1>
+                        </div>
+                        <div class="field">
+                            <h3>Categories</h3>
                             <p>
                                 {{#each book.category}}
                                     <a href="/book/category?cat={{this}}">
                                         <span style="padding: 4px 8px;
-                                                                                        background-color: #E9E8E8;
-                                                                                        margin: 10px 0px;
-                                                                                        margin-right: 6px; 
-                                                                                        border-radius: 6px;
-                                                                                        font-weight: bold;
-                                                                                        border: 1px solid #CDCDCE;">
+                                            background-color: #E9E8E8;
+                                            margin: 10px 0px;
+                                            margin-right: 6px; 
+                                            border-radius: 6px;
+                                            font-weight: bold;
+                                            border: 1px solid #CDCDCE;">
                                             {{this}}
                                         </span>
                                     </a>
@@ -114,59 +118,55 @@
                             </p>
                         </div>
                         <br>
-                        <div class="two fields">
+                        <div class="three fields">
                             <div class="field">
-                                <h2>Author</h2>
+                                <h3>Author</h3>
                                 <p>{{book.author}}</p>
                             </div>
                             <div class="field">
-                                <h2>Publisher</h2>
+                                <h3>Publisher</h3>
                                 <p>{{book.publisher}}</p>
                             </div>
-                        </div>
-                        <br>
-                        <div class="two fields">
                             <div class="field">
-                                <h2>Price</h2>
-                                <p> ${{ book.price}}</p>
-                            </div>
-                            <div class="field">
-                                <h2>Status</h2>
+                                <h3>Status</h3>
                                 <p> {{available book.quantity}} </p>
                             </div>
                         </div>
                         <br>
                         {{#if session.isAdmin}}
-                        <a href="/admin/edit?id={{ book._id }}" id="btn_Save" style="width: 500px;" class="btn">Edit</a>
-                        <br>
-                        <a href="/admin/deleteBook?id={{ book._id }}" id="btn_Save" style="width: 500px; margin-bottom: 30px" class="btn">Delete</a>
+                            <a href="/admin/edit?id={{ book._id }}" id="btn_Save" style="width: 500px;"
+                               class="btn">Edit</a>
+                            <br>
+                            <a href="/admin/deleteBook?id={{ book._id }}" id="btn_Save"
+                               style="width: 500px; margin-bottom: 30px" class="btn">Delete</a>
                         {{else}}
-                        <div class="field">
-                            <div class="quantity">
-                                <h2>Quantity: </h2>
-                                <div class="value-button" id="decrease" onclick="decreaseValue()"
-                                     value="Decrease Value">
+                            <div class="field">
+                                <div class="quantity">
+                                    <h3 style="margin-top: 7px;">Add to Cart: </h3>
+                                    <div class="value-button" id="decrease" onclick="decreaseValue()"
+                                         value="Decrease Value">
+                                        <center>
+                                            -
+                                        </center>
+                                    </div>
                                     <center>
-                                        -
+                                        <input type="number" name="numQuantity" id="number" class="inp">
                                     </center>
-                                </div>
-                                <center>
-                                    <input type="number" name="numQuantity" id="number" class="inp">
-                                </center>
-                                <div class="value-button" id="increase" onclick="increaseValue()"
-                                     value="Increase Value">
-                                    <center>
-                                        +
-                                    </center>
+                                    <div class="value-button" id="increase" onclick="increaseValue()"
+                                         value="Increase Value">
+                                        <center>
+                                            +
+                                        </center>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="field">
-                            <input type="submit" value="Add to Cart" class="inp" id="btn_Save" style="width: 500px;">
-                        </div>
+                            <div class="field">
+                                <input type="submit" value="Add to Cart" class="inp" id="btn_Save"
+                                       style="width: 500px;">
+                            </div>
                         {{/if}}
                         <div class="field">
-                            <h2>Description</h2>
+                            <h3>Description</h3>
                             <p class="description">{{ book.description }}</h1>
                         </div>
                         <br>
@@ -176,11 +176,37 @@
         </div>
         <br>
         <div class="block" style="height: 300px; width: 80%">
-             <div class="row tags" style="display: inline;">
+            <div class="row tags" style="display: inline;">
                 <span class="heading">Feedbacks</span>
             </div>
         </div>
         <br>
+        {{#if session.isAdmin}}
+        {{else}}
+        <div class="block" style="min-width: 80%">
+            <div class="row tags" style="display: inline;">
+                <span class="heading">Other books you may like:</span>
+            </div>
+            <div class="book-cards">
+                {{#each books }}
+                    <div class="item">
+                        <a href="/book?id={{ _id }}">
+                            <div class="book-card">
+                                <div class="img-card" style="background-image: url('/Books/{{image}}');">
+                                </div>
+                                <div class="author">{{ author }}</div>
+                                <div class="name">{{name}}</div>
+                                <div class="btm-row">
+                                    <div class="price">$ {{ price }}</div>
+                                    <div class="sold">Left: {{ quantity }}</div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                {{/each}}
+            </div>
+        </div>
+        {{/if}}
         {{>footer}}
     </body>
     <script>
