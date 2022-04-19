@@ -5,15 +5,17 @@
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Update User</title>
+
+        <title>Update Profile</title>
+
     </head>
 
     <body>
         {{> header }}
         <br /><br />
         <div class="container-fluid" style="width: 700px;">
-            <form action="updateUser" method="post" class="ui form" enctype="multipart/form-data">
-                <h3 class="ui dividing header">Update User</h3>
+            <form action="edit" method="post" class="ui form" enctype="multipart/form-data">
+                <h3 class="ui dividing header">Update Profile</h3>
                 <p style="color: red;">{{error}}</p>
                 <div class="field">
                     <label>Enter Old Password</label>
@@ -27,7 +29,7 @@
                     <label>Enter New Password</label>
                         <div class="field">
                             <input type="password" name="txtPassword" placeholder="Enter password" class="inp"
-                                   id="password"
+                                   id="newPassword"
                                    required>
                     </div>
                 </div>
@@ -85,7 +87,7 @@
         <script>
             function toggleVisibility() {
                 var x = document.getElementById("password");
-                var y = document.getElementById("cfpassword");
+                var y = document.getElementById("newPassword");
                 if (x.type === "password") {
                     x.type = "text";
                     y.type = "text"

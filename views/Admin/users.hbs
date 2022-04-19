@@ -5,7 +5,7 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Users</title>
+        <title>FPT Bookstore</title>
         <style>
             .widget {
                 width: 90%;
@@ -49,10 +49,10 @@
                             <td>{{role}}</td>
                             <td><img src="/Avatars/{{avatar}}" height="100px">
                             <td>
-                                <a href="/admin/editUser?id={{ _id }}">
+                                <a href="/admin/editUser?id={{ _id }}" class="btn" id="btn_Save">
                                     Edit
                                 </a><br>
-                                <a href="/admin/deleteUser?id={{ _id }}">Delete</a>
+                                <a href="/admin/deleteUser?id={{ _id }}" class="btn" id="btn_Cancel">Delete</a>
                             </td>
                         </tr>
                     {{/each}}
