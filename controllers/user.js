@@ -83,7 +83,7 @@ router.post("/checkout", requiresLogin, (req, res) => {
 router.get("/edit", requiresLogin, async (req, res) => {
     const objectToUpdate = await getObject(req.session.userID, "Users");
     res.render("User/edit", {
-        userProf: objectToUpdate,
+        user: objectToUpdate,
     });
 });
 
@@ -140,7 +140,7 @@ router.post("/edit", requiresLogin, async (req, res) => {
         res.redirect("/user/profile");
     } else {
         res.render("User/edit", {
-            userProf: objectToUpdate,
+            user: objectToUpdate,
             error: "Incorrect old password"
         })
     }
