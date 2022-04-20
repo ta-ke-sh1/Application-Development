@@ -29,7 +29,7 @@ function requiresLogin(req, res, next) {
 }
 
 //neu request la: /admin
-router.get("/", requiresLogin, async (req, res) => {
+router.get("/", requiresLogin, async(req, res) => {
     res.render("Admin/index", {
         books: await getAll("Books"),
         users: await getAll("Users"),
@@ -39,7 +39,7 @@ router.get("/", requiresLogin, async (req, res) => {
     });
 });
 
-router.get("/book", requiresLogin, async (req, res) => {
+router.get("/book", requiresLogin, async(req, res) => {
     res.render("Admin/book", {
         books: await getAll("Books"),
         title: "Admin",
@@ -55,7 +55,7 @@ router.get("/register", requiresLogin, (req, res) => {
     res.render("Admin/register");
 });
 
-router.post("/register", requiresLogin, async (req, res) => {
+router.post("/register", requiresLogin, async(req, res) => {
     const name = req.body.txtName;
     const fname = req.body.txtFirstName;
     const lname = req.body.txtLastName;
@@ -108,7 +108,7 @@ router.post("/register", requiresLogin, async (req, res) => {
 });
 
 //Submit add User
-router.post("/addUser", requiresLogin, async (req, res) => {
+router.post("/addUser", requiresLogin, async(req, res) => {
     const name = req.body.txtName;
     const fname = req.body.txtFirstName;
     const lname = req.body.txtLastName;
@@ -163,14 +163,14 @@ router.post("/addUser", requiresLogin, async (req, res) => {
     }
 });
 //User index
-router.get("/users", requiresLogin, async (req, res) => {
+router.get("/users", requiresLogin, async(req, res) => {
     res.render("Admin/users", {
         users: await getAll("Users"),
     });
 });
 
 //Update user
-router.post("/updateUser", requiresLogin, async (req, res) => {
+router.post("/updateUser", requiresLogin, async(req, res) => {
     const id = req.body.txtID;
     const name = req.body.txtName;
     const fname = req.body.txtFirstName;
@@ -230,7 +230,7 @@ router.post("/updateUser", requiresLogin, async (req, res) => {
     res.redirect("/admin/users");
 });
 //Update user render
-router.get("/editUser", requiresLogin, async (req, res) => {
+router.get("/editUser", requiresLogin, async(req, res) => {
     const idValue = req.query.id;
     const objectToUpdate = await getObject(idValue, "Users");
     res.render("Admin/updateUser", {
@@ -239,20 +239,20 @@ router.get("/editUser", requiresLogin, async (req, res) => {
 });
 
 //Delete user
-router.get("/deleteUser", requiresLogin, async (req, res) => {
+router.get("/deleteUser", requiresLogin, async(req, res) => {
     await deleteObject(req.query.id, "Users");
     res.redirect("/admin/users");
 });
 
 //Category index
-router.get("/category", requiresLogin, async (req, res) => {
+router.get("/category", requiresLogin, async(req, res) => {
     res.render("Admin/category", {
         categories: await getAll("Categories"),
     });
 });
 
 //Add category
-router.post("/addNewCategory", requiresLogin, async (req, res) => {
+router.post("/addNewCategory", requiresLogin, async(req, res) => {
     const name = req.body.txtName;
     const quote = req.body.txtQuote;
     const author = req.body.txtAuthor;
@@ -270,7 +270,7 @@ router.get("/addCategory", requiresLogin, (req, res) => {
 });
 
 //Update category
-router.post("/updateCategory", requiresLogin, async (req, res) => {
+router.post("/updateCategory", requiresLogin, async(req, res) => {
     const id = req.body.txtID;
     const name = req.body.txtName;
     const quote = req.body.txtQuote;
@@ -288,14 +288,14 @@ router.post("/updateCategory", requiresLogin, async (req, res) => {
 });
 
 //Update category render
-router.get("/editCategory", requiresLogin, async (req, res) => {
+router.get("/editCategory", requiresLogin, async(req, res) => {
     const idValue = req.query.id;
     const objectToUpdate = await getObject(idValue, "Categories");
     res.render("Admin/updateCategory", { category: objectToUpdate });
 });
 
 //Delete category
-router.get("/deleteCategory/:id", requiresLogin, async (req, res) => {
+router.get("/deleteCategory/:id", requiresLogin, async(req, res) => {
     await deleteObject("Categories", getObject(req.params.id, "Categories"));
     res.redirect("/admin/category/");
 });
@@ -314,7 +314,7 @@ router.post("/addNewBook", requiresLogin, (req, res) => {
         image = req.files.image;
         image.name = name.replace(/[~`!@#$%^&*()+={}\[\];:\'\"<>.,\/\\\?-_]/g, '') + uniqid() + ".jpg";
     } else image = "anonymous.jpg";
-    
+
     const path = __dirname + "/../public/Books/" + image.name;
     image.mv(path, (err) => {
         if (err) throw err;
@@ -335,7 +335,7 @@ router.post("/addNewBook", requiresLogin, (req, res) => {
     res.redirect("/admin/");
 });
 // Add Book Render
-router.get("/addBook", requiresLogin, async (req, res) => {
+router.get("/addBook", requiresLogin, async(req, res) => {
     const categories = await getAll("Categories");
     res.render("Admin/addBook", {
         categories: categories,
@@ -343,7 +343,7 @@ router.get("/addBook", requiresLogin, async (req, res) => {
 });
 
 //Update Book
-router.post("/updateBook", requiresLogin, async (req, res) => {
+router.post("/updateBook", requiresLogin, async(req, res) => {
     const id = req.body.txtID;
     const name = req.body.txtName;
     const category = req.body.txtCategory;
@@ -400,7 +400,7 @@ router.post("/updateBook", requiresLogin, async (req, res) => {
     res.redirect("/admin/");
 });
 //Update Book Render
-router.get("/edit", requiresLogin, async (req, res) => {
+router.get("/edit", requiresLogin, async(req, res) => {
     const idValue = req.query.id;
     const categories = await getAll("Categories");
     const objectToUpdate = await getObject(idValue, "Books");
@@ -413,14 +413,14 @@ router.get("/edit", requiresLogin, async (req, res) => {
 });
 
 //Delete book
-router.get("/deleteBook", requiresLogin, async (req, res) => {
+router.get("/deleteBook", requiresLogin, async(req, res) => {
     await deleteObject(req.query.id, "Books");
     res.redirect("/admin/book");
 });
 
 // Search Book
 
-router.post("/search", requiresLogin, async (req, res) => {
+router.post("/search", requiresLogin, async(req, res) => {
     const keyword = req.body.txtKeyword;
     const books = await searchBook(keyword);
     if (books.length == 0) {
@@ -433,6 +433,25 @@ router.post("/search", requiresLogin, async (req, res) => {
         });
     }
 });
+
+//Update Order Status
+
+router.get("/orderupdate", requiresLogin, async(req, res) => {
+    const orderid = req.query.id;
+    const address = req.body.txtAddress;
+    const phoneNumber = req.body.txtPhoneNum;
+    const status = req.body.txtStatus;
+    var updateValues = {
+        $set: {
+            address: address,
+            phoneNumber: phoneNumber,
+            status: status,
+        },
+    };
+    const objectToUpdate = await getObject(id, "Orders");
+    await updateObject("Orders", objectToUpdate, updateValues);
+    res.redirect("/admin/Order/");
+})
 
 function encrypt(text) {
     let encrypted = crypto.createCipher(algorithm, Securitykey);

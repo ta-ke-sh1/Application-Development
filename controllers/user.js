@@ -80,6 +80,7 @@ router.post("/checkout", requiresLogin, async(req, res) => {
     const address = req.body.txtAddress;
     const phoneNumber = req.body.txtPhoneNum;
     const Total = 0;
+    const status = "Ongoing"
 
     for (Book in cart) {
         const subTotal = Quantity * Book.price
@@ -89,6 +90,7 @@ router.post("/checkout", requiresLogin, async(req, res) => {
         address: address,
         phoneNumber: phoneNumber,
         Total: Total,
+        status: status,
     };
     await insertObject("order", objectToInsert);
     res.redirect("User/order")
