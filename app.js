@@ -157,12 +157,12 @@ app.post("/register", async (req, res) => {
     const email = req.body.txtEmail;
     const address = req.body.txtAddress;
     const phone = req.body.telPhone;
+    const pass = req.body.txtPassword;
 
     if (req.files != null) {
         const avatar = req.files.avatar;
         avatar.name = fname + uniqid() + ".jpg";
         const path = __dirname + "/public/Avatars/" + avatar.name;
-        const pass = req.body.txtPassword;
         avatar.mv(path, (err) => {
             if (err) throw err;
         });
@@ -190,9 +190,30 @@ app.post("/register", async (req, res) => {
             });
         }
     } else {
-        res.render("Admin/addUser", {
-            error: "Please add an image!",
+
+        var check = await getUser(name);
+        if (check == false) {
+        const objectToInsert = {
+            userName: name,
+            firstName: fname,
+            lastName: lname,
+            role: "Customer",
+            password: encrypt(pass),
+            email: email,
+            address: address,
+            phoneNumber: phone,
+            avatar: "stock.jpg",
+        };
+        await insertObject("Users", objectToInsert);
+        res.render("login", {
+            succeed: "Register successfully, please log-in!",
         });
+    } else {
+        console.log(getUser(name));
+        res.render("Admin/register", {
+            error: "Existing user!",
+        });
+    }
     }
 });
 
