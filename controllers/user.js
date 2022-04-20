@@ -27,9 +27,6 @@ function requiresLogin(req, res, next) {
     }
 }
 
-router.get("/edit", (req, res) => {
-    res.render("User/edit", {});
-});
 
 router.post("/addCart", async (req, res) => {
     const id = req.body.txtID;

@@ -62,26 +62,42 @@ router.post("/register", requiresLogin, async (req, res) => {
     const email = req.body.txtEmail;
     const address = req.body.txtAddress;
     const phone = req.body.telPhone;
-    const avatar = req.files.avatar;
-    avatar.name = fname + ".jpg";
-    const path = __dirname + "/../public/Avatars/" + avatar.name;
     const pass = req.body.txtPassword;
-    avatar.mv(path, (err) => {
-        if (err) throw err;
-    });
 
     if (!getUser(name)) {
-        const objectToInsert = {
-            userName: name,
-            firstName: fname,
-            lastName: lname,
-            role: "Customer",
-            password: pass,
-            email: email,
-            address: address,
-            phoneNumber: phone,
-            avatar: avatar.name,
-        };
+        if (req.files != null) {
+            const avatar = req.files.avatar;
+            avatar.name = fname + ".jpg";
+            const path = __dirname + "/../public/Avatars/" + avatar.name;
+            avatar.mv(path, (err) => {
+                if (err) throw err;
+            });
+
+            const objectToInsert = {
+                userName: name,
+                firstName: fname,
+                lastName: lname,
+                role: "Customer",
+                password: pass,
+                email: email,
+                address: address,
+                phoneNumber: phone,
+                avatar: avatar.name,
+            };
+
+        } else {
+            const objectToInsert = {
+                userName: name,
+                firstName: fname,
+                lastName: lname,
+                role: "Customer",
+                password: pass,
+                email: email,
+                address: address,
+                phoneNumber: phone,
+                avatar: "stock.jpg",
+            };
+        }
         insertObject("Users", objectToInsert);
         res.redirect("/login");
     } else {
@@ -123,13 +139,23 @@ router.post("/addUser", requiresLogin, async (req, res) => {
                 phoneNumber: phone,
                 avatar: avatar.name,
             };
-            insertObject("Users", objectToInsert);
-            res.redirect("/admin/users");
+
         } else {
-            res.render("Admin/addUser", {
-                error: "Please add an image!",
-            });
+            const objectToInsert = {
+                userName: name,
+                firstName: fname,
+                lastName: lname,
+                role: role,
+                password: encrypt(pass),
+                email: email,
+                address: address,
+                phoneNumber: phone,
+                avatar: "stock.jpg",
+            };
+
         }
+        insertObject("Users", objectToInsert);
+        res.redirect("/admin/users");
     } else {
         res.render("Admin/addUser", {
             error: "Existing user!",
