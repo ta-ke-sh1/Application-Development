@@ -312,9 +312,9 @@ router.post("/addNewBook", requiresLogin, (req, res) => {
     var image;
     if (req.files != null) {
         image = req.files.image;
+        image.name = name.replace(/[~`!@#$%^&*()+={}\[\];:\'\"<>.,\/\\\?-_]/g, '') + uniqid() + ".jpg";
     } else image = "anonymous.jpg";
-    image.name = name + uniqid() + ".jpg";
-
+    
     const path = __dirname + "/../public/Books/" + image.name;
     image.mv(path, (err) => {
         if (err) throw err;
@@ -354,7 +354,7 @@ router.post("/updateBook", requiresLogin, async (req, res) => {
     const quantity = parseInt(req.body.numQuantity);
     if (req.files != null) {
         const image = req.files.image;
-        image.name = name + uniqid() + ".jpg";
+        image.name = name.replace(/[~`!@#$%^&*()+={}\[\];:\'\"<>.,\/\\\?-_]/g, '') + uniqid() + ".jpg";
         const path = __dirname + "/../public/Books/" + image.name;
         image.mv(path, (err) => {
             if (err) throw err;
