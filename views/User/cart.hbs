@@ -195,7 +195,7 @@
                 </div>
             </div>
             {{#each cart}}
-                <div class="block" style="width: 200%; margin-top: 100px; justify-content-center; background-color: rgba(255, 255, 255, 0.8)">
+                <div class="row d-flex justify-content-center border-top">
                     <div class="col-5">
                         <div class="row d-flex">
                             <div class="img"> <img src="/Books/{{ Book.image }}" class="book-img"> </div>
@@ -221,15 +221,8 @@
                     </div>
                 </div>
             {{/each}}
-            <div class="row justify-content-left">
-                <div class="card" style="width: 30cm;">
-                    <div class="form-group col-md-50"> <label class="form-control-label">Address</label> <input
-                               type="text" id="addr" name="addr" placeholder="Address"> </div>
-                </div>
-            </div>
            
-             </div> <button class="btn-block btn-blue"> <span> <span id="checkout">Checkout</span>
-                                        <span id="check-amt">$26.48</span> </span> </button>
+             </div> <button class="btn-block btn-blue"> <span> <span id="checkout">Checkout</span></button>
         </div>
     </body>
 
