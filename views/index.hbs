@@ -53,7 +53,24 @@
                 font-size: 80px;
                 line-height: 95px;
             }
+
+            .rating {
+                position: absolute;
+                background-color: white;
+                border-radius: 12px;
+                top: 10px;
+                right: 10px;
+                padding: 6px 10px 0px 10px;
+                scale: 0.8;
+            }
+
         </style>
+
+        <script>
+            function rangeSlide(value) {
+                document.getElementById('rangeValue').innerHTML = value;
+            }
+        </script>
     </head>
 
     <body>
@@ -95,11 +112,21 @@
                             <div class="book-card">
                                 <div class="img-card" style="background-image: url('/Books/{{image}}');">
                                 </div>
+                                <div class="rating">
+                                    <span class="stars" data-rating={{rating}}
+                                          data-num-stars="5"></span>
+                                </div>
+                                <script>
+                                    $(function () {
+                                        $('.stars').stars();
+                                    });
+                                </script>
                                 <div class="author">{{ author }}</div>
                                 <div class="name">{{name}}</div>
                                 <div class="btm-row">
                                     <div class="price">$ {{ price }}</div>
-                                    <div class="sold">Left: {{ quantity }}</div>
+                                    <div class="sold">Sold: {{ sold }}
+                                    </div>
                                 </div>
                             </div>
                         </a>
@@ -125,11 +152,21 @@
                             <div class="book-card">
                                 <div class="img-card" style="background-image: url('/Books/{{image}}');">
                                 </div>
+                                <div class="rating">
+                                    <span class="stars" data-rating={{rating}}
+                                          data-num-stars="5"></span>
+                                </div>
                                 <div class="author">{{ author }}</div>
                                 <div class="name">{{name}}</div>
                                 <div class="btm-row">
                                     <div class="price">$ {{ price }}</div>
-                                    <div class="sold">Left: {{ quantity }}</div>
+                                    <div class="sold">Sold: {{ sold }}
+                                    </div>
+                                    <script>
+                                        $(function () {
+                                            $('.stars').stars();
+                                        });
+                                    </script>
                                 </div>
                             </div>
                         </a>
@@ -155,11 +192,21 @@
                             <div class="book-card">
                                 <div class="img-card" style="background-image: url('/Books/{{image}}');">
                                 </div>
+                                <div class="rating">
+                                    <span class="stars" data-rating={{rating}}
+                                          data-num-stars="5"></span>
+                                </div>
                                 <div class="author">{{ author }}</div>
                                 <div class="name">{{name}}</div>
                                 <div class="btm-row">
                                     <div class="price">$ {{ price }}</div>
-                                    <div class="sold">Left: {{ quantity }}</div>
+                                    <div class="sold">Sold: {{ sold }}
+                                    </div>
+                                    <script>
+                                        $(function () {
+                                            $('.stars').stars();
+                                        });
+                                    </script>
                                 </div>
                             </div>
                         </a>
@@ -212,11 +259,6 @@
                     </div>
                 </div>
             </form>
-            <script type="text/javascript">
-                function rangeSlide(value) {
-                    document.getElementById('rangeValue').innerHTML = value;
-                }
-            </script>
         </div>
     </body>
     {{> footer }}

@@ -60,12 +60,13 @@ async function getAll(collectionName) {
         .toArray();
 }
 
-async function getCategoryByName(name) {
+async function getCategoryByName(name, limit) {
     const dbo = await getDB();
     return await dbo
         .collection("Books")
         .find({ category: name })
         .sort({ popularity: -1 })
+        .limit(limit)
         .toArray();
 }
 

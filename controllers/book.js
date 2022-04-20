@@ -14,7 +14,7 @@ const router = express.Router();
 router.get("/", async (req, res) => {
     const idVal = req.query.id;
     const book = await getObject(idVal, "Books");
-    const books = await advanceSearch('', book.author, book.publisher, 1000, '');
+    var books = await advanceSearch('', book.author, book.publisher, 1000, '');
     upd = parseInt(book.popularity) + 1;
     updateValue = { $set: { popularity: upd } };
     await updateObject("Books", book, updateValue);
@@ -87,11 +87,11 @@ router.get("/category", async (req, res) => {
         if (category == "popular") {
             var books = await getByCriteria("popularity", 36);
         } else if (category == "editorChoice") {
-            var books = await getCategoryByName("Editor's Choice");
+            var books = await getCategoryByName("Editor's Choice", 36);
         } else if (category == "newlyAdded") {
-            var books = await getByCriteria("date", 20);
+            var books = await getByCriteria("date", 36);
         } else {
-            var books = await getCategoryByName(category);
+            var books = await getCategoryByName(category, 36);
         }
         res.render("Book/main.hbs", {
             books: books,

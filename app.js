@@ -30,6 +30,15 @@ hbs.handlebars.registerHelper("available", function (value) {
     else return "Out of stock";
 });
 
+hbs.handlebars.registerHelper("showRating", function (value) {
+    if (typeof document !== 'undefined') {
+        // will run in client's browser only
+        document.getElementsByClassName("rating")[0].innerHTML = 1;
+    }
+    // var div = document.createElement("span");
+    // div.classList.add("fa", "fa-star", "checked");
+});
+
 app.use(express.static(__dirname + "/public"));
 
 // Setting up cookie
@@ -86,7 +95,7 @@ app.get("/", async (req, res) => {
     const categories = await getAll("Categories");
     let popular = await getByCriteria("popularity", 12);
     let newlyAdded = await getByCriteria("date", 12);
-    let editorChoice = await getCategoryByName("Editor's Choice");
+    let editorChoice = await getCategoryByName("Editor's Choice", 12);
     res.render("index", {
         categories: categories,
         popular: popular,
@@ -99,6 +108,10 @@ app.get("/", async (req, res) => {
 app.get("/login", (req, res) => {
     res.render("login");
 });
+
+app.get("/test", (req, res) => {
+    res.render('test', { rating: 4 })
+})
 
 app.post("/login", async (req, res) => {
     const name = req.body.txtUsername;

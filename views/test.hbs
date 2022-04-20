@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <link rel="stylesheet"
+              href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <style>
+            .checked {
+                color: orange;
+            }
+
+            span.stars,
+            span.stars span {
+                display: block;
+                background: url(stars.png) 0 -16px repeat-x;
+                width: 80px;
+                height: 16px;
+            }
+
+            span.stars span {
+                background-position: 0 0;
+            }
+
+        </style>
+        <script>
+            $.fn.stars = function () {
+                return $(this).each(function () {
+                    const rating = $(this).data("rating");
+                    const numStars = $(this).data("numStars");
+                    const fullStar = '<i class="fa fa-star checked"></i>'.repeat(Math.floor(rating));
+                    const halfStar = (rating % 1 !== 0) ? '<i class="fa fa-star-half-alt"></i>' : '';
+                    const noStar = '<i class="fa fa-star"></i>'.repeat(Math.floor(numStars - rating));
+                    $(this).html(`${fullStar}${halfStar}${noStar}`);
+                });
+            }
+
+            $(function () {
+                $('.stars').stars();
+            });
+        </script>
+        <script>
+
+        </script>
+    </head>
+
+    <body>
+        <h1>{{rating}}</h1>
+        <span class="stars" data-rating="4" data-num-stars="5"></span>
+        <span class="stars" data-rating={{rating}} data-num-stars="5"></span>
+        <span class="stars" data-rating={{rating}} data-num-stars="5"></span>
+        <span class="stars" data-rating={{rating}} data-num-stars="5"></span>
+        <span class="stars" data-rating={{rating}} data-num-stars="5"></span>
+    </body>
+
+</html>

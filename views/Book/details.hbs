@@ -17,7 +17,7 @@
             }
 
             .description {
-                width: 500px;
+                width: 100%;
                 text-align: justify;
                 max-height: 350px;
                 min-height: 150px;
@@ -76,6 +76,25 @@
                 font-size: 20px;
             }
 
+            .rating-books {
+                position: absolute;
+                background-color: white;
+                border-radius: 12px;
+                top: 10px;
+                right: 10px;
+                padding: 6px 10px 0px 10px;
+                scale: 0.8;
+            }
+
+            #middle{
+                border-left: 1px solid #CDCDCE;;
+                border-right: 1px solid #CDCDCE;;
+                padding: 0px 20px;
+                margin: 0px 16px;
+            }
+            #info p{
+                padding-top: 4px;
+            }
         </style>
     </head>
 
@@ -84,18 +103,39 @@
         <br>
         <div class="container">
             <br>
-            <div class="row">
+            <div class="row" >
                 <div class="col">
                     <div class="img" style="background-image: url('/Books/{{ book.image }}');">
                     </div>
                 </div>
-                <div class="col" style="width: 500px;">
+                <div class="col" style="width: 500px; margin-top: 15px">
                     <form action="user/addCart" method="POST" class="ui form" enctype="multipart/form-data">
                         <input type="hidden" name="txtID" value="{{book._id}}">
                         <div class="field">
                             <p class="book-name">{{ book.name }}</p>
                         </div>
                         <hr>
+                        <div class="fields" id="info">
+                            <div class="field">
+                                <div class="rating">
+                                    <p>Rating: {{ book.rating }}/5 -
+                                        <span class="stars" data-rating={{ book.rating}}
+                                              data-num-stars="5"></span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="field" id="middle">
+                                <p>Sold: {{ book.sold }}</p>
+                            </div>
+                            <div class="field">
+                                <p>Feedback: {{ book.quantity }}</p>
+                            </div>
+                        </div>
+                        <script>
+                            $(function () {
+                                $('.stars').stars();
+                            });
+                        </script>
                         <div class="field">
                             <h1>${{ book.price}}</h1>
                         </div>
@@ -142,7 +182,7 @@
                         {{else}}
                             <div class="field">
                                 <div class="quantity">
-                                    <h3 style="margin-top: 7px;">Add to Cart: </h3>
+                                    <h3 style="margin-top: 7px;">Quantity: </h3>
                                     <div class="value-button" id="decrease" onclick="decreaseValue()"
                                          value="Decrease Value">
                                         <center>
@@ -158,11 +198,14 @@
                                             +
                                         </center>
                                     </div>
+                                    <span style="font-size: 18px; margin: 12px 0px 0px 22px">
+                                        In stock: {{book.quantity}}
+                                    </span>
                                 </div>
                             </div>
                             <div class="field">
                                 <input type="submit" value="Add to Cart" class="inp" id="btn_Save"
-                                       style="width: 500px;">
+                                       style="width: 275px;">
                             </div>
                         {{/if}}
                         <div class="field">
@@ -183,29 +226,39 @@
         <br>
         {{#if session.isAdmin}}
         {{else}}
-        <div class="block" style="min-width: 80%">
-            <div class="row tags" style="display: inline;">
-                <span class="heading">Other books you may like:</span>
-            </div>
-            <div class="book-cards">
-                {{#each books }}
-                    <div class="item">
-                        <a href="/book?id={{ _id }}">
-                            <div class="book-card">
-                                <div class="img-card" style="background-image: url('/Books/{{image}}');">
+            <div class="block" style="width: 80%">
+                <div class="row tags" style="display: inline;">
+                    <span class="heading">Books from this author:</span>
+                </div>
+                <div class="book-cards">
+                    {{#each books }}
+                        <div class="item">
+                            <a href="/book?id={{ _id }}">
+                                <div class="book-card">
+                                    <div class="img-card" style="background-image: url('/Books/{{image}}');">
+                                    </div>
+                                    <div class="rating-books">
+                                        <span class="stars" data-rating={{rating}}
+                                              data-num-stars="5"></span>
+                                    </div>
+                                    <script>
+                                        $(function () {
+                                            $('.stars').stars();
+                                        });
+                                    </script>
+                                    <div class="author">{{ author }}</div>
+                                    <div class="name">{{name}}</div>
+                                    <div class="btm-row">
+                                        <div class="price">$ {{ price }}</div>
+                                        <div class="sold">Sold: {{ sold }}
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="author">{{ author }}</div>
-                                <div class="name">{{name}}</div>
-                                <div class="btm-row">
-                                    <div class="price">$ {{ price }}</div>
-                                    <div class="sold">Left: {{ quantity }}</div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                {{/each}}
+                            </a>
+                        </div>
+                    {{/each}}
+                </div>
             </div>
-        </div>
         {{/if}}
         {{>footer}}
     </body>

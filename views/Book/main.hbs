@@ -77,11 +77,21 @@
                             <div class="book-card">
                                 <div class="img-card" style="background-image: url('/Books/{{image}}');">
                                 </div>
+                                <div class="rating">
+                                    <span class="stars" data-rating={{rating}}
+                                          data-num-stars="5"></span>
+                                </div>
+                                <script>
+                                    $(function () {
+                                        $('.stars').stars();
+                                    });
+                                </script>
                                 <div class="author">{{ author }}</div>
                                 <div class="name">{{name}}</div>
                                 <div class="btm-row">
                                     <div class="price">$ {{ price }}</div>
-                                    <div class="sold">Left: {{ quantity }}</div>
+                                    <div class="sold">Sold: {{ sold }}
+                                    </div>
                                 </div>
                             </div>
                         </a>
