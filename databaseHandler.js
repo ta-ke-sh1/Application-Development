@@ -100,7 +100,8 @@ async function homepageCategorize() {
     const dbo = await getDB();
     return await dbo
         .collection("Categories")
-        .aggregate([{
+        .aggregate([
+            {
                 $lookup: {
                     from: "Books",
                     localField: "name",
@@ -130,9 +131,9 @@ async function getObject(id, collectionName) {
     return await dbo.collection(collectionName).findOne({ _id: ObjectId(id) });
 }
 
-async function getAllObject(username) {
+async function getOrders(username) {
     const dbo = await getDB();
-    return await dbo.collection("Orders").find({ 'user': username });
+    return await dbo.collection("Orders").find({ user: username }).toArray();
 }
 
 async function updateObject(collectionName, objectToUpdate, values) {
@@ -202,7 +203,7 @@ module.exports = {
     deleteObject,
     getAll,
     getObject,
-    getAllObject,
+    getOrders,
     checkUser,
     getUser,
     searchBook,

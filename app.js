@@ -10,6 +10,7 @@ const {
     insertObject,
     getUser,
     checkUser,
+    getOrders,
     getByCriteria,
     getCategoryByName,
 } = require("./databaseHandler");
@@ -31,7 +32,7 @@ hbs.handlebars.registerHelper("available", function (value) {
 });
 
 hbs.handlebars.registerHelper("showRating", function (value) {
-    if (typeof document !== 'undefined') {
+    if (typeof document !== "undefined") {
         // will run in client's browser only
         document.getElementsByClassName("rating")[0].innerHTML = 1;
     }
@@ -109,9 +110,11 @@ app.get("/login", (req, res) => {
     res.render("login");
 });
 
-app.get("/test", (req, res) => {
-    res.render('test', { rating: 4 })
-})
+app.get("/test", async (req, res) => {
+    var orders = await getOrders("trunghathe");
+    console.log(orders);
+    res.render("test", { orders: orders });
+});
 
 app.post("/login", async (req, res) => {
     const name = req.body.txtUsername;
@@ -190,30 +193,29 @@ app.post("/register", async (req, res) => {
             });
         }
     } else {
-
         var check = await getUser(name);
         if (check == false) {
-        const objectToInsert = {
-            userName: name,
-            firstName: fname,
-            lastName: lname,
-            role: "Customer",
-            password: encrypt(pass),
-            email: email,
-            address: address,
-            phoneNumber: phone,
-            avatar: "stock.jpg",
-        };
-        await insertObject("Users", objectToInsert);
-        res.render("login", {
-            succeed: "Register successfully, please log-in!",
-        });
-    } else {
-        console.log(getUser(name));
-        res.render("Admin/register", {
-            error: "Existing user!",
-        });
-    }
+            const objectToInsert = {
+                userName: name,
+                firstName: fname,
+                lastName: lname,
+                role: "Customer",
+                password: encrypt(pass),
+                email: email,
+                address: address,
+                phoneNumber: phone,
+                avatar: "stock.jpg",
+            };
+            await insertObject("Users", objectToInsert);
+            res.render("login", {
+                succeed: "Register successfully, please log-in!",
+            });
+        } else {
+            console.log(getUser(name));
+            res.render("Admin/register", {
+                error: "Existing user!",
+            });
+        }
     }
 });
 

@@ -64,14 +64,7 @@
                 padding: 6px 10px 0px 10px;
                 scale: 0.8;
             }
-
         </style>
-
-        <script>
-            function rangeSlide(value) {
-                document.getElementById('rangeValue').innerHTML = value;
-            }
-        </script>
     </head>
 
     <body>
@@ -117,11 +110,7 @@
                                     <span class="stars" data-rating={{rating}}
                                           data-num-stars="5"></span>
                                 </div>
-                                <script>
-                                    $(function () {
-                                        $('.stars').stars();
-                                    });
-                                </script>
+                                
                                 <div class="author">{{ author }}</div>
                                 <div class="name">{{name}}</div>
                                 <div class="btm-row">
@@ -163,11 +152,6 @@
                                     <div class="price">$ {{ price }}</div>
                                     <div class="sold">Sold: {{ sold }}
                                     </div>
-                                    <script>
-                                        $(function () {
-                                            $('.stars').stars();
-                                        });
-                                    </script>
                                 </div>
                             </div>
                         </a>
@@ -203,11 +187,6 @@
                                     <div class="price">$ {{ price }}</div>
                                     <div class="sold">Sold: {{ sold }}
                                     </div>
-                                    <script>
-                                        $(function () {
-                                            $('.stars').stars();
-                                        });
-                                    </script>
                                 </div>
                             </div>
                         </a>
@@ -263,5 +242,9 @@
         </div>
     </body>
     {{> footer }}
-
+    <script>
+        $(function () {
+            $('.stars').stars();
+        });
+    </script>
 </html>

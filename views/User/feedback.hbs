@@ -11,19 +11,23 @@
     <div class="block" style="width: 80%; margin-top: 100px; background-color: rgba(255, 255, 255, 0.8)">
             <div class="row tags" style="display: inline; margin-left: 2px">
                 <span class="heading">Feedback:</span>
+                
             </div>
-            <br><br>
-            <div class="grid-container">
-                <div class="grid-item">New Orders:
-                    <p>10</p>
+            <form action="feedback" method="POST" class="ui form" style="padding: 15px;">
+                <div class="field">
+                    <hr>
+                    <label>Rate the book</label>
+                    <input type="number" name="numRating" id="">
                 </div>
-                <div class="grid-item" id="middle">Delivering Orders:
-                    <p>12</p>
+                <div class="field">
+                    <label>Thoughts on the book</label>
+                    <textarea spellcheck="false" name="txtContent"
+                              value="" id="description"></textarea>
                 </div>
-                <div class="grid-item">Finished Orders:
-                    <p>14</p>
+                <div class="field">
+                    <input type="submit" value="Send Feedback" id="btn_Save" class="inp" style="width: 100%;">
                 </div>
-            </div>
+            </form>
         </div>
     {{>footer}}
 </body>
