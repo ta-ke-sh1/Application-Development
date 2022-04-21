@@ -72,28 +72,39 @@ router.get("/cart", requiresLogin, async(req, res) => {
     res.render("User/cart", { cart: cart });
 });
 
-router.get("/checkout", requiresLogin, (req, res) => {
-    res.render("User/checkout", { cart: req.session["cart"] });
+router.get("/checkout", requiresLogin, async(req, res) => {
+    var books = [];
+    var total = 0;
+    const dict2 = req.session["cart"];
+    for (var key in dict2) {
+        book = await getObject(key, "Books");
+        total += (dict2[key] * book.price);
+        books.push({ Book: book, Quantity: dict2[key], Subtotal: dict2[key] * book.price });
+    }
+    res.render("User/checkout", { cart: req.session["cart"], Book: books, total: total });
 });
 
 router.post("/checkout", requiresLogin, async(req, res) => {
-    const address = req.body.txtAddress;
-    const phoneNumber = req.body.txtPhoneNum;
-    const Total = 0;
-    const status = "Ongoing"
+    let books = []
+    const dict2 = req.session["cart"];
 
-    for (Book in cart) {
-        const subTotal = Quantity * Book.price
-        Total = Total + subTotal
+    for (var key in dict2) {
+        book = await getObject(key, "Books");
+        books.push({ Book: book, Quantity: dict2[key], Subtotal: dict2[key] * book.price });
     }
+
     const objectToInsert = {
-        address: address,
-        phoneNumber: phoneNumber,
-        Total: Total,
-        status: status,
+        user: req.session["userName"],
+        date: Date.now(),
+        books: books,
+        address: req.body.txtAddress,
+        phoneNumber: req.body.txtPhoneNum,
+        total: parseFloat(req.body.numTotal),
+        status: "Ongoing",
     };
-    await insertObject("order", objectToInsert);
-    res.redirect("User/order")
+    await insertObject("Orders", objectToInsert);
+    console.log("Dat hang thanh cong")
+    res.redirect("/User/orders")
 });
 
 router.get("/edit", requiresLogin, async(req, res) => {
@@ -163,8 +174,8 @@ router.post("/edit", requiresLogin, async(req, res) => {
 });
 
 router.get("/orders", async(req, res) => {
-    const orders = await getAllObject(req.session.userID, "Orders");
-    console.log(orders);
+    const orders = await getAllObject(req.session['userName']);
+    console.log(req.session['userName']);
     res.render("User/order"), {
         orders: orders,
     };
