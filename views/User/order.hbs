@@ -8,34 +8,31 @@
 </head>
 <body>
    {{>header}}
-   <div class="block" style="min-width: 80%;">
-      <table>
-         <tr>
+   <div style="margin-top: 100px;"></div>
+   {{#each orders}}
+   <div class="block" style="min-width: 80%; margin-top: 30px">
             <div class="ui form">
                <h4 class="ui dividing header">Order: {{ _id }}</h4>
-               <div class="fields">
-                  <div class="field">
-                     <label>Book</label>
-                     <p>Harry Potter</p>
+               {{#each books}}
+               <div class="field">
+                  <p>{{Book.name}}</p>
                   </div>
+               {{/each}}
+               <div class="fields">
                   <div class="field">
                      <img src="" alt="">
                   </div>
                   <div class="field">
-                     <label>Price</label>
-                     <p>14$</p>
+                     <label>Total Price {{total}}</label>
                   </div>
                   <div class="field">
-                     <label>Shipping address</label>
-                     <p>Linh Dam</p>
+                     <label>Shipping address{{address}}</label>
                   </div>
                   <div class="field">
-                     <label>Status</label>
-                     <p>Delivered</p>
+                     <label>Status {{status}}</label>
                   </div>
                   <div class="field">
-                     <label>Date</label>
-                     <p>21/04/2022</p>
+                     <label>Date {{date}}</label>
                   </div>
                   <div class="field">
                      <a href="">Feedback</a>
@@ -43,39 +40,8 @@
                </div>
             </div>
          </tr>
-         {{#each orders}}
-         <tr>
-            <div class="ui form">
-               <h4 class="ui dividing header">Order: {{ orders._id }}</h4>
-               <div class="fields">
-                  <div class="field">
-                     <label>Book {{orders.books.name}}</label>
-                     <p></p>
-                  </div>
-                  <div class="field">
-                     <img src="" alt="">
-                  </div>
-                  <div class="field">
-                     <label>Total Price {{orders.total}}</label>
-                  </div>
-                  <div class="field">
-                     <label>Shipping address{{orders.address}}</label>
-                  </div>
-                  <div class="field">
-                     <label>Status {{orders.status}}</label>
-                  </div>
-                  <div class="field">
-                     <label>Date {{orders.date}}</label>
-                  </div>
-                  <div class="field">
-                     <a href="">Feedback</a>
-                  </div>
-               </div>
-            </div>
-         </tr>
-         {{/each}}
-      </table>
    </div>
+   {{/each}}
    {{>footer}}
 </body>
 </html>

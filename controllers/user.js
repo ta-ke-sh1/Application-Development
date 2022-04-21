@@ -31,7 +31,7 @@ router.get("/edit", (req, res) => {
     res.render("User/edit", {});
 });
 
-router.post("/addCart", async (req, res) => {
+router.post("/addCart", async(req, res) => {
     const id = req.body.txtID;
     const quantity = req.body.numQuantity;
     console.log(id);
@@ -61,7 +61,7 @@ router.post("/addCart", async (req, res) => {
     res.redirect("/user/cart");
 });
 
-router.get("/cart", requiresLogin, async (req, res) => {
+router.get("/cart", requiresLogin, async(req, res) => {
     let cart = [];
     const dict2 = req.session["cart"];
     for (var key in dict2) {
@@ -71,7 +71,7 @@ router.get("/cart", requiresLogin, async (req, res) => {
     res.render("User/cart", { cart: cart });
 });
 
-router.get("/checkout", requiresLogin, async (req, res) => {
+router.get("/checkout", requiresLogin, async(req, res) => {
     var books = [];
     var total = 0;
     const dict2 = req.session["cart"];
@@ -91,7 +91,7 @@ router.get("/checkout", requiresLogin, async (req, res) => {
     });
 });
 
-router.post("/checkout", requiresLogin, async (req, res) => {
+router.post("/checkout", requiresLogin, async(req, res) => {
     let books = [];
     const dict2 = req.session["cart"];
 
@@ -118,7 +118,7 @@ router.post("/checkout", requiresLogin, async (req, res) => {
     res.redirect("/User/orders");
 });
 
-router.get("/edit", requiresLogin, async (req, res) => {
+router.get("/edit", requiresLogin, async(req, res) => {
     const objectToUpdate = await getObject(req.session.userID, "Users");
     res.render("User/edit", {
         user: objectToUpdate,
@@ -129,7 +129,7 @@ router.get("/profile", requiresLogin, (req, res) => {
     res.render("User/profile", {});
 });
 
-router.post("/edit", requiresLogin, async (req, res) => {
+router.post("/edit", requiresLogin, async(req, res) => {
     const fname = req.body.txtFirstName;
     const lname = req.body.txtLastName;
     const address = req.body.txtAddress;
@@ -178,15 +178,16 @@ router.post("/edit", requiresLogin, async (req, res) => {
     }
 });
 
-router.get("/orders", async (req, res) => {
+router.get("/orders", async(req, res) => {
     const orders = await getOrders(req.session["userName"]);
     console.log(req.session["userName"]);
+    console.log(orders)
     res.render("User/order", {
         orders: orders,
     });
 });
 
-router.get("/feedback", requiresLogin, async (req, res) => {
+router.get("/feedback", requiresLogin, async(req, res) => {
     const user = getObject(req.session["userID"], "Users");
     const orders = getOrders(req.session["userName"]);
     res.render("User/feedback", {
@@ -195,7 +196,7 @@ router.get("/feedback", requiresLogin, async (req, res) => {
     });
 });
 
-router.post("/feedback", requiresLogin, async (req, res) => {
+router.post("/feedback", requiresLogin, async(req, res) => {
     const Feedback = {
         user: req.session.username,
         product: req.body.bookID,
