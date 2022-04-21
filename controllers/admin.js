@@ -8,6 +8,7 @@ const Securitykey = "trungha";
 const {
     insertObject,
     getAll,
+    getOrders,
     deleteObject,
     getObject,
     getUser,
@@ -15,6 +16,7 @@ const {
     searchBook,
 } = require("../databaseHandler");
 const e = require("express");
+const async = require("hbs/lib/async");
 
 // access control
 function requiresLogin(req, res, next) {
@@ -436,7 +438,7 @@ router.post("/search", requiresLogin, async(req, res) => {
 
 //Update Order Status
 
-router.get("/orderupdate", requiresLogin, async(req, res) => {
+router.post("/orderupdate", requiresLogin, async(req, res) => {
     const orderid = req.query.id;
     const status = req.body.txtstatus;
     var updateValues = {
@@ -446,7 +448,15 @@ router.get("/orderupdate", requiresLogin, async(req, res) => {
     };
     const objectToUpdate = await getObject(orderid, "orders");
     await updateObject("orders", objectToUpdate, updateValues);
-    res.redirect("/admin/order/");
+    res.redirect("/admin/order");
+})
+
+router.get("/orderupdate", requiresLogin, async(req, res) => {
+    const orders = await getAll("Orders");
+    res.render("admin/order", {
+        orders: orders,
+    });
+    res.render("Admin/order")
 })
 
 function encrypt(text) {
