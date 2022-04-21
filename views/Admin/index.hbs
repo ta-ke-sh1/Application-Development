@@ -34,7 +34,7 @@
 
             .grid-container {
                 display: grid;
-                grid-template-columns: auto auto auto;
+                grid-template-columns: auto auto auto auto;
                 padding: 10px;
             }
 
@@ -44,9 +44,13 @@
                 text-align: left;
             }
 
-            #middle{
+            #middle-left{
                 border-right: 1px solid rgba(0, 0, 0, 0.8);
                 border-left: 1px solid rgba(0, 0, 0, 0.8);
+            }
+
+            #middle-right{
+                border-right: 1px solid rgba(0, 0, 0, 0.8);
             }
 
         </style>
@@ -66,13 +70,16 @@
             <br><br>
             <div class="grid-container">
                 <div class="grid-item">New Orders:
-                    <p>10</p>
+                    <p>{{ongoing}}</p>
                 </div>
-                <div class="grid-item" id="middle">Delivering Orders:
-                    <p>12</p>
+                <div class="grid-item" id="middle-left">Delivering Orders:
+                    <p>{{delivering}}</p>
+                </div>
+                <div class="grid-item" id="middle-right">Returned Orders:
+                    <p>{{returned}}</p>
                 </div>
                 <div class="grid-item">Finished Orders:
-                    <p>14</p>
+                    <p>{{finished}}</p>
                 </div>
             </div>
         </div>

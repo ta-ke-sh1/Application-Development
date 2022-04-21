@@ -1,36 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Feedback</title>
-</head>
-<body>
-    {{>header}}
-    <div class="block" style="width: 80%; margin-top: 100px; background-color: rgba(255, 255, 255, 0.8)">
-        <div class="row tags" style="display: inline; margin-left: 2px">
-            <span class="heading">Feedback:</span>
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Feedback</title>
+        <style>
+            #middle {
+                padding: 15px 0px 15px 25px;
+            }
+
+            .img {
+                background-size: cover;
+                background-repeat: no-repeat;
+                background-position: 0px -140px;
+                height: 150px;
+                width: 100%;
+                border-top-left-radius: 15px;
+                border-bottom-left-radius: 15px;
+                transition-duration: 0.7s;
+            }
+
+            .img:hover {
+                background-position: 0px -200px;
+            }
+
+            #order {
+                padding: 0;
+            }
+
+            .txt {
+                font-size: 22px;
+                margin-bottom: 0;
+            }
+
+            .book-name {
+                font-family: Editor;
+                font-size: 40px;
+                margin-bottom: 0;
+            }
+
+        </style>
+    </head>
+
+    <body>
+        {{>header}}
+        <div class="block" style="width: 70%; margin-top: 100px;" id="order">
+            <div class="ui form">
+                <div class="fields">
+                    <div class="six wide field">
+                        <div class="img" style="background-image: url('/Books/{{ book.image }}');">
+                        </div>
+                    </div>
+                    <div class="ten wide field" id="middle">
+                        <p class="book-name">{{ book.name }}</p>
+                        <p class="txt">${{ order.total}}</p>
+                        <p class="txt">Delivered date: {{ order.date }}</p>
+                    </div>
+                </div>
+            </div>
         </div>
-            <p>
-                {{book.name}}
-            </p>
-        <form action="feedback" method="POST" class="ui form" style="padding: 15px;">
-            <div class="field">
-                <hr>
-                <label>Rate the book</label>
-                <input type="number" name="numRating" id="">
+        <div class="block" style="width: 70%; margin-top: 40px;">
+            <div class="row tags" style="display: inline; margin-left: 2px">
+                <span class="heading">Feedback:</span>
             </div>
-            <div class="field">
-                <label>Thoughts on the book</label>
-                <textarea spellcheck="false" name="txtContent"
-                            value="" id="description"></textarea>
-            </div>
-            <div class="field">
-                <input type="submit" value="Send Feedback" id="btn_Save" class="inp" style="width: 100%;">
-            </div>
-        </form>
-    </div>
-    {{>footer}}
-</body>
+            <form action="feedback" method="POST" class="ui form" style="padding: 15px;">
+                <input type="hidden" name="orderID" value="{{orderID}}">
+                <input type="hidden" name="bookID" value="{{bookID}}">
+                <div class="field">
+                    <hr>
+                    <label>Rate the book</label>
+                    <div class="ui rating" data-rating="3" data-max-rating="5" name="numRating" onclick="updateValue()"></div>
+                    <input type="hidden" name="numRating" id="numRating">
+                    <script>
+                        $(document).ready(function () {
+                            $('.ui.rating')
+                            .rating()
+                            ;
+                        });
+
+                        function updateValue(number){
+                            document.getElementById('numRating').value = $('.ui.rating').rating('get rating');
+                            console.log(document.getElementById('numRating').value)
+                        }
+                    </script>
+                </div>
+                <div class="field">
+                    <textarea spellcheck="false" name="txtContent"
+                              value="" id="description" placeholder="Share your thoughts"></textarea>
+                </div>
+                <div class="field">
+                    <input type="submit" value="Send Feedback" id="btn_Save" class="inp" style="width: 100%;">
+                </div>
+            </form>
+        </div>
+        {{>footer}}
+    </body>
+
 </html>

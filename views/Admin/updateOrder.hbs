@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+    <body>
+        <div class="block" style="min-width: 80%; margin-top: 30px">
+            <form action="orderUpdate" class="ui form">
+                <h4 class="ui dividing header">Order: {{ order._id }}</h4>
+                {{#each order.books}}
+                    <div class="field">
+                        <p>{{Book.name}}</p>
+                    </div>
+                {{/each}}
+                <div class="fields">
+                    <div class="field">
+                        <img src="" alt="">
+                    </div>
+                    <div class="field">
+                        <label>Total Price {{order.total}}</label>
+                    </div>
+                    <div class="field">
+                        <label>Shipping address{{order.address}}</label>
+                    </div>
+                        <div class="form-group col-md-50">
+                            <label class="form-control-label">Status</label>
+                            <input type="hidden" name="orderID" value="{{ order._id }}">
+                            <select name="txtStatus" id="">
+                                <option value="Ongoing">Ongoing</option>
+                                <option value="Ongoing">Delivering</option>
+                                <option value="Ongoing">Returned</option>
+                                <option value="Ongoing">Finished</option>
+                            </select>
+                        </div>
+                    <div class="field">
+                        <label>Date {{order.date}}</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <input type="submit" value="Update Order">
+                </div>
+            </form>
+            </tr>
+        </div>
+    </body>
+
+</html>

@@ -6,6 +6,24 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>FPT Bookstore</title>
     </head>
+    <style>
+        .order-1 {
+            padding: 0px;
+            transition-duration: 0.3s;
+        }
+
+        .rating {
+            position: absolute;
+            background-color: white;
+            border: 1px solid #CDCDCE;
+            border-radius: 12px;
+            top: 10px;
+            right: 10px;
+            padding: 6px 10px 0px 10px;
+            scale: 0.8;
+        }
+
+    </style>
 
     <body>
         {{> header }}
@@ -24,7 +42,8 @@
                     </div>
                     <div class="field">
                         <label>Publisher</label>
-                        <input type="text" name="publisher" id="" style="width: 260px;" placeholder="Enter any Publisher">
+                        <input type="text" name="publisher" id="" style="width: 260px;"
+                               placeholder="Enter any Publisher">
                     </div>
                     <div class="field" style="margin-top: 5px;">
                         <label>Category</label>
@@ -62,13 +81,13 @@
                 <span class="heading">Search results:</span>
             </div>
             {{#if error}}
-            <div class="row">
-                <div class="error" style="margin-left: 15px; margin-bottom: 15px">
-                    <center>
-                        {{error}}
-                    </center>
+                <div class="row">
+                    <div class="error" style="margin-left: 15px; margin-bottom: 15px">
+                        <center>
+                            {{error}}
+                        </center>
+                    </div>
                 </div>
-            </div>
             {{/if}}
             <div class="book-cards">
                 {{#each books }}
@@ -81,11 +100,6 @@
                                     <span class="stars" data-rating={{rating}}
                                           data-num-stars="5"></span>
                                 </div>
-                                <script>
-                                    $(function () {
-                                        $('.stars').stars();
-                                    });
-                                </script>
                                 <div class="author">{{ author }}</div>
                                 <div class="name">{{name}}</div>
                                 <div class="btm-row">
@@ -100,6 +114,11 @@
             </div>
         </div>
         <br />
+        <script>
+            $(function () {
+                $('.stars').stars();
+            });
+        </script>
         {{> footer }}
     </body>
 

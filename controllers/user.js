@@ -79,6 +79,7 @@ router.get("/checkout", requiresLogin, async (req, res) => {
         book = await getObject(key, "Books");
         total += dict2[key] * book.price;
         books.push({
+            _id: book._id,
             Book: book,
             Quantity: dict2[key],
             Subtotal: dict2[key] * book.price,
@@ -98,9 +99,11 @@ router.post("/checkout", requiresLogin, async (req, res) => {
     for (var key in dict2) {
         book = await getObject(key, "Books");
         books.push({
+            _id: book._id,
             Book: book,
             Quantity: dict2[key],
             Subtotal: dict2[key] * book.price,
+            feedback: false,
         });
     }
 
@@ -112,7 +115,6 @@ router.post("/checkout", requiresLogin, async (req, res) => {
         phoneNumber: req.body.txtPhoneNum,
         total: parseFloat(req.body.numTotal),
         status: "Ongoing",
-        feedback: true,
     };
     await insertObject("Orders", objectToInsert);
     console.log("Dat hang thanh cong");
@@ -181,35 +183,37 @@ router.post("/edit", requiresLogin, async (req, res) => {
 
 router.get("/orders", requiresLogin, async (req, res) => {
     const orders = await getOrders(req.session["userName"]);
-    console.log(req.session["userName"]);
-    console.log(orders);
     res.render("User/order", {
         orders: orders,
     });
 });
 
-router.get("/feedback", requiresLogin, async (req, res) => {
+router.get("/feedback", async (req, res) => {
     const user = await getObject(req.session["userID"], "Users");
     const book = await getObject(req.query.bookID, "Books");
-    const order = await getObject(req.query.orderID, "Books");
+    const order = await getObject(req.query.orderID, "Orders");
     res.render("User/feedback", {
         user: user,
         book: book,
         order: order,
+        bookID: req.query.bookID,
+        orderID: req.query.orderID
     });
 });
 
-router.post("/feedback", requiresLogin, async (req, res) => {
+router.post("/feedback", async (req, res) => {
+    console.log(req.body.numRating);
     const Feedback = {
-        user: req.session.username,
+        user: req.session['userName'],
         product: req.body.bookID,
+        order: req.body.orderID,
         content: req.body.txtContent,
-        rating: req.body.numRating,
+        rating: parseInt(req.body.numRating),
         date: new Date(),
     };
     await insertObject("Feedbacks", Feedback);
-    await statusUpdate(req.body.orderID, req.body.bookID);
-    res.redirect("/orders");
+    await statusUpdate(req.body.orderID, req.body.bookID, req.body.numRating);
+    res.redirect("/user/orders");
 });
 
 function encrypt(text) {

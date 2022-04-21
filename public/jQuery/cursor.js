@@ -13,24 +13,6 @@ jQuery(document).ready(function () {
         });
     });
 
-    setInterval(function () {
-        xp += (mouseX - xp) / 6;
-        yp += (mouseY - yp) / 6;
-        $("#outer-circle").css({
-            left: xp + "px",
-            top: yp + "px",
-        });
-    }, 3000);
-
-    setInterval(function () {
-        xp += (mouseX - xp) / 6;
-        yp += (mouseY - yp) / 6;
-        $("#circle").css({
-            left: xp + "px",
-            top: yp + "px",
-        });
-    }, 20);
-
     var cursor = $(".circle");
     var outer_cursor = $(".outer-circle");
 

@@ -1,27 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-   <meta charset="UTF-8">
-   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Orders</title>
-</head>
-<body>
-   {{>header}}
-   <div style="margin-top: 100px;"></div>
-   {{#each orders}}
-   <div class="block" style="min-width: 80%; margin-top: 30px">
+
+   <head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Orders</title>
+   </head>
+
+   <body>
+      {{>header}}
+      <br><br><br>
+      {{#each orders}}
+         <div class="block" style="min-width: 80%; margin-top: 30px">
+            <h4 class="ui dividing header">Order: {{ _id }}</h4>
             <div class="ui form">
                <h4 class="ui dividing header">Order: {{ _id }}</h4>
                {{#each books}}
-               <div class="field">
-                  <p>{{Book.name}} 
-                  {{#if feedback}}
-                  <span>Feedback given</span>
-                  {{else}}
-                  <a href="/user/feedback?bookID={{ Book._id }}&orderID={{../_id}}">Give Feedback</a></p>
-                  {{/if}}
-               </div>
+                  <div class="field">
+                     <p>{{Book.name}}
+                        {{#if feedback}}
+                           <span>Feedback given</span>
+                        {{else}}
+                           <a href="/user/feedback?bookID={{ Book._id }}&orderID={{../_id}}">Give Feedback</a>
+                     </p>
+                     {{/if}}
+                  </div>
                {{/each}}
                <div class="fields">
                   <div class="field">
@@ -41,9 +45,10 @@
                   </div>
                </div>
             </div>
-         </tr>
-   </div>
-   {{/each}}
-   {{>footer}}
-</body>
+            </tr>
+         </div>
+      {{/each}}
+      {{>footer}}
+   </body>
+
 </html>

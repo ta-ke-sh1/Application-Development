@@ -196,17 +196,56 @@ async function advanceSearch(keyword, author, publisher, max, category) {
     }
 }
 
-async function statusUpdate(orderID, bookID) {
+async function getFeedback(bookID) {
     const dbo = await getDB();
-    return await dbo.collection("Order").updateOne(
+    return await dbo.collection('Feedbacks').find({ _id: ObjectId(bookID) });
+}
+
+async function orderCounting() {
+    const dbo = await getDB();
+    var res = [];
+    res.push(await dbo.collection('Orders').countDocuments({ 'status': 'Ongoing' }));
+    res.push(await dbo.collection('Orders').countDocuments({ 'status': 'Delivering' }));
+    res.push(await dbo.collection('Orders').countDocuments({ 'status': 'Returned' }));
+    res.push(await dbo.collection('Orders').countDocuments({ 'status': 'Finished' }));
+    return res;
+}
+
+async function statusUpdate(orderID, bookID, rating) {
+    const dbo = await getDB();
+    await updateRating(bookID, rating);
+    console.log('Rating updated!');
+    return await dbo.collection("Orders").updateOne(
         {
-            $elemMatch: {
-                _id: orderID,
-                "books._id": bookID,
-            },
+            _id: ObjectId(orderID),
+            'books': { $elemMatch: { _id: ObjectId(bookID) } }
         },
-        { $set: { "books.feedback": false } }
+        { $set: { "books.$.feedback": true } }
     );
+}
+
+async function updateRating(bookID, rating) {
+    const dbo = await getDB();
+    var count = await dbo.collection('Orders').countDocuments({ 'books': { $elemMatch: { _id: ObjectId(bookID) } } });
+    var feedbacks = await dbo.collection('Feedbacks').aggregate([
+        { $match: { product: bookID } },
+        { $group: { _id: '$product', total: { $sum: '$rating' } } }
+    ]).toArray();
+    var newRating = rating;
+
+    if (parseFloat(count) > 0) newRating = (parseFloat(feedbacks[0].total) / parseFloat(count));
+
+    console.log(count)
+    console.log(feedbacks[0].total)
+    console.log(newRating);
+
+    return await updateObject("Books", await getObject(bookID, "Books"), {
+        $set: {
+            rating: parseInt(newRating),
+            floatRating: parseFloat(newRating),
+            feedbackCount: parseInt(count)
+        }
+    })
 }
 
 module.exports = {
@@ -226,4 +265,6 @@ module.exports = {
     getByCriteria,
     getCategoryByName,
     statusUpdate,
+    getFeedback,
+    orderCounting
 };

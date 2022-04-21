@@ -2,6 +2,7 @@ const express = require("express");
 const {
     getAll,
     getObject,
+    getFeedback,
     updateObject,
     homepageCategorize,
     getByCriteria,
@@ -15,7 +16,7 @@ router.get("/", async (req, res) => {
     const idVal = req.query.id;
     const book = await getObject(idVal, "Books");
     var books = await advanceSearch("", book.author, book.publisher, 1000, "");
-    const feedbacks = await getObject(idVal, "Orders");
+    const feedbacks = await getFeedback(idVal, "Feedbacks");
     upd = parseInt(book.popularity) + 1;
     updateValue = { $set: { popularity: upd } };
     await updateObject("Books", book, updateValue);
