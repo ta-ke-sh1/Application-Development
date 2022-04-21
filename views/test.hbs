@@ -39,11 +39,24 @@
 
     <body>
         <h1>{{rating}}</h1>
-        {{#each orders}}
-            <p>{{@index}}</p>
-            <p>{{user}}</p>
-            <p>{{user}}</p>
+        {{#each orders}}      
+            {{#each books}}
+            <p>{{../_id}}- {{@index}}</p>
+            <form action="feedback" method="GET">
+            <input type="hidden" name="orderID" value="{{../_id}}">
+            <input type="hidden" name="bookID" value="{{Book._id}}">
+                <div class="field">
+                    <p>{{Book.name}}
+                    <input type="submit" value="Give Feedback">
+                </div>
+            </form>
+            {{/each}}
         {{/each}}
     </body>
+    <script>
+        function getOrderID(){
+            return document.getElementById
+        }
+    </script>
 
 </html>

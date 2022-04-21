@@ -5,32 +5,41 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link
-              rel="shortcut icon"
-              href="/Logo/favicon.ico"
-              type="image/x-icon" />
+            rel="shortcut icon"
+            href="/Logo/favicon.ico"
+            type="image/x-icon"
+        />
         <link
-              rel="stylesheet"
-              href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
-              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-              crossorigin="anonymous" />
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+            crossorigin="anonymous"
+        />
         <script
-                src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-                integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-                crossorigin="anonymous"></script>
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+            crossorigin="anonymous"
+        ></script>
         <link
-              rel="stylesheet"
-              href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.css" />
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.css"
+        />
         <script
-                src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+            src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+        ></script>
         <script
-                src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
+            src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js"
+        ></script>
         <script
-                src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"
-                integrity="sha512-dqw6X88iGgZlTsONxZK9ePmJEFrmHwpuMrsUChjAw1mRUhUITE5QU9pkcSox+ynfLhL15Sv2al5A0LVyDCmtUw=="
-                crossorigin="anonymous"
-                referrerpolicy="no-referrer"></script>
-        <link rel="stylesheet"
-              href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+            src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"
+            integrity="sha512-dqw6X88iGgZlTsONxZK9ePmJEFrmHwpuMrsUChjAw1mRUhUITE5QU9pkcSox+ynfLhL15Sv2al5A0LVyDCmtUw=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        ></script>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+        />
         <link rel="stylesheet" href="/css/table.css" />
         <link rel="stylesheet" href="/css/body.css" />
         <link rel="stylesheet" href="/css/card.css" />
@@ -42,13 +51,7 @@
         <script src="/jQuery/cursor.js"></script>
         <script src="/jQuery/starDisplay.js"></script>
         <style>
-            .navbar a {
-                color: black;
-            }
-
-            .checked {
-                color: orange;
-            }
+            .navbar a { color: black; } .checked { color: orange; }
 
         </style>
 
@@ -57,7 +60,8 @@
     <body>
         <nav class="navbar navbar-expand-md navbar-light">
             <div
-                 class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+                class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2"
+            >
                 <ul class="navbar-nav mr-auto">
                     {{#if session.isAdmin}}
                         <!-- Admin Headbar -->
@@ -70,9 +74,11 @@
                                 <i class="dropdown icon"></i>
                                 <div class="menu">
                                     <div class="item"><a
-                                           href="/admin/addBook">Add new Book</a></div>
+                                            href="/admin/addBook"
+                                        >Add new Book</a></div>
                                     <div class="item"><a
-                                           href="/admin/book/">View all Book</a></div>
+                                            href="/admin/book/"
+                                        >View all Book</a></div>
                                 </div>
                             </div>
                         </li>
@@ -82,9 +88,11 @@
                                 <i class="dropdown icon"></i>
                                 <div class="menu">
                                     <div class="item"><a
-                                           href="/admin/addUser">Add new Users</a></div>
+                                            href="/admin/addUser"
+                                        >Add new Users</a></div>
                                     <div class="item"><a
-                                           href="/admin/users/">View all Users</a></div>
+                                            href="/admin/users/"
+                                        >View all Users</a></div>
                                 </div>
                             </div>
                         </li>
@@ -94,9 +102,11 @@
                                 <i class="dropdown icon"></i>
                                 <div class="menu">
                                     <div class="item"><a
-                                           href="/admin/addCategory">Add new Category</a></div>
+                                            href="/admin/addCategory"
+                                        >Add new Category</a></div>
                                     <div class="item"><a
-                                           href="/admin/category">View all Categories</a></div>
+                                            href="/admin/category"
+                                        >View all Categories</a></div>
                                 </div>
                             </div>
                         </li>
@@ -112,15 +122,18 @@
                                 <div class="menu">
                                     <div class="item">
                                         <a
-                                           href="/book/category?cat=popular">What's Popular</a>
+                                            href="/book/category?cat=popular"
+                                        >What's Popular</a>
                                     </div>
                                     <div class="item">
                                         <a
-                                           href="/book/category?cat=editorChoice">Editor's Choice</a>
+                                            href="/book/category?cat=editorChoice"
+                                        >Editor's Choice</a>
                                     </div>
                                     <div class="item">
                                         <a
-                                           href="/book/category?cat=newlyAdded">Newly Added</a>
+                                            href="/book/category?cat=newlyAdded"
+                                        >Newly Added</a>
                                     </div>
                                     <div class="item">
                                         <a href="/book/category?cat=all">All
@@ -131,8 +144,9 @@
                         </li>
                         <li class="nav-item">
                             <a
-                               class="nav-link"
-                               href="/book/category?cat=all">Categories</a>
+                                class="nav-link"
+                                href="/book/category?cat=all"
+                            >Categories</a>
                         </li>
                     {{/if}}
                     <script>
@@ -144,21 +158,24 @@
                 <img src="/Logo/fpt.png" height="40px" alt="" />
             </div>
             <div
-                 class="navbar-collapse collapse w-100 order-3 order-md-0 dual-collapse2">
+                class="navbar-collapse collapse w-100 order-3 order-md-0 dual-collapse2"
+            >
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
                         <form action="/book/search" method="GET">
                             <div
-                                 class="ui fluid search"
-                                 style="margin-right: 30px">
+                                class="ui fluid search"
+                                style="margin-right: 30px"
+                            >
                                 <div class="ui icon input">
                                     <input
-                                           name="key"
-                                           class="prompt"
-                                           type="search"
-                                           placeholder="Search for Books..."
-                                           style="width: 400px;"
-                                           onsearch="searchDirect()" />
+                                        name="key"
+                                        class="prompt"
+                                        type="search"
+                                        placeholder="Search for Books..."
+                                        style="width: 400px;"
+                                        onsearch="searchDirect()"
+                                    />
                                     <i class="search icon"></i>
                                 </div>
                             </div>
@@ -171,9 +188,10 @@
                         <li class="nav-item">
                             <div class="ui simple dropdown item" id="dropdown">
                                 <span class="text"><img
-                                         src="/Avatars/{{session.avatar}}"
-                                         style="height: 50px; border-radius: 20px"
-                                         alt="" /></span>
+                                        src="/Avatars/{{session.avatar}}"
+                                        style="height: 50px; border-radius: 20px"
+                                        alt=""
+                                    /></span>
                                 <div class="menu" style="margin-top: 5px;">
                                     <div class="item disabled">Hello,
                                         {{session.firstName}}
@@ -181,7 +199,8 @@
                                     <div class="item"><a href="/user/edit">Edit
                                             Profile</a></div>
                                     <div class="item"><a
-                                           href="/user/orders">Purchase History</a></div>
+                                            href="/user/orders"
+                                        >Purchase History</a></div>
                                 </div>
                             </div>
                         </li>
@@ -204,13 +223,9 @@
         <span id="circle" class="circle"></span>
     </body>
     <script>
-        $(function () {
-            $(document).scroll(function () {
-                var $nav =
-                    $(".navbar"); $nav.toggleClass('scrolled', $(this).scrollTop() >
-                        $nav.height());
-            });
-        });
+        $(function () { $(document).scroll(function () { var $nav =
+        $(".navbar"); $nav.toggleClass('scrolled', $(this).scrollTop() >
+        $nav.height()); }); });
     </script>
 
 </html>

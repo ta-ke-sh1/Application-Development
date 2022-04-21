@@ -15,8 +15,13 @@
                <h4 class="ui dividing header">Order: {{ _id }}</h4>
                {{#each books}}
                <div class="field">
-                  <p>{{Book.name}}</p>
-                  </div>
+                  <p>{{Book.name}} 
+                  {{#if feedback}}
+                  <span>Feedback given</span>
+                  {{else}}
+                  <a href="/user/feedback?bookID={{ Book._id }}&orderID={{../_id}}">Give Feedback</a></p>
+                  {{/if}}
+               </div>
                {{/each}}
                <div class="fields">
                   <div class="field">
@@ -33,9 +38,6 @@
                   </div>
                   <div class="field">
                      <label>Date {{date}}</label>
-                  </div>
-                  <div class="field">
-                     <a href="">Feedback</a>
                   </div>
                </div>
             </div>

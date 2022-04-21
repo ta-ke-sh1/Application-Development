@@ -4,7 +4,7 @@ const router = express.Router();
 const {
     getUser,
     getObject,
-    createCipher,
+    statusUpdate,
     checkUser,
     insertObject,
     updateObject,
@@ -17,10 +17,10 @@ const algorithm = "aes-256-cbc";
 const Securitykey = "trungha";
 
 function requiresLogin(req, res, next) {
-    if (req.session) {
+    if (req.session["userName"] != null) {
         return next();
     } else {
-        var err = "You are not authorized, please login!";
+        var err = "Please register to access this site!";
         res.render("login", {
             error: err,
         });
@@ -31,7 +31,7 @@ router.get("/edit", (req, res) => {
     res.render("User/edit", {});
 });
 
-router.post("/addCart", async(req, res) => {
+router.post("/addCart", requiresLogin, async (req, res) => {
     const id = req.body.txtID;
     const quantity = req.body.numQuantity;
     console.log(id);
@@ -61,7 +61,7 @@ router.post("/addCart", async(req, res) => {
     res.redirect("/user/cart");
 });
 
-router.get("/cart", requiresLogin, async(req, res) => {
+router.get("/cart", requiresLogin, async (req, res) => {
     let cart = [];
     const dict2 = req.session["cart"];
     for (var key in dict2) {
@@ -71,7 +71,7 @@ router.get("/cart", requiresLogin, async(req, res) => {
     res.render("User/cart", { cart: cart });
 });
 
-router.get("/checkout", requiresLogin, async(req, res) => {
+router.get("/checkout", requiresLogin, async (req, res) => {
     var books = [];
     var total = 0;
     const dict2 = req.session["cart"];
@@ -91,7 +91,7 @@ router.get("/checkout", requiresLogin, async(req, res) => {
     });
 });
 
-router.post("/checkout", requiresLogin, async(req, res) => {
+router.post("/checkout", requiresLogin, async (req, res) => {
     let books = [];
     const dict2 = req.session["cart"];
 
@@ -106,19 +106,20 @@ router.post("/checkout", requiresLogin, async(req, res) => {
 
     const objectToInsert = {
         user: req.session["userName"],
-        date: Date.now(),
+        date: new Date(),
         books: books,
         address: req.body.txtAddress,
         phoneNumber: req.body.txtPhoneNum,
         total: parseFloat(req.body.numTotal),
         status: "Ongoing",
+        feedback: true,
     };
     await insertObject("Orders", objectToInsert);
     console.log("Dat hang thanh cong");
     res.redirect("/User/orders");
 });
 
-router.get("/edit", requiresLogin, async(req, res) => {
+router.get("/edit", requiresLogin, async (req, res) => {
     const objectToUpdate = await getObject(req.session.userID, "Users");
     res.render("User/edit", {
         user: objectToUpdate,
@@ -129,7 +130,7 @@ router.get("/profile", requiresLogin, (req, res) => {
     res.render("User/profile", {});
 });
 
-router.post("/edit", requiresLogin, async(req, res) => {
+router.post("/edit", requiresLogin, async (req, res) => {
     const fname = req.body.txtFirstName;
     const lname = req.body.txtLastName;
     const address = req.body.txtAddress;
@@ -178,33 +179,36 @@ router.post("/edit", requiresLogin, async(req, res) => {
     }
 });
 
-router.get("/orders", async(req, res) => {
+router.get("/orders", requiresLogin, async (req, res) => {
     const orders = await getOrders(req.session["userName"]);
     console.log(req.session["userName"]);
-    console.log(orders)
+    console.log(orders);
     res.render("User/order", {
         orders: orders,
     });
 });
 
-router.get("/feedback", requiresLogin, async(req, res) => {
-    const user = getObject(req.session["userID"], "Users");
-    const orders = getOrders(req.session["userName"]);
+router.get("/feedback", requiresLogin, async (req, res) => {
+    const user = await getObject(req.session["userID"], "Users");
+    const book = await getObject(req.query.bookID, "Books");
+    const order = await getObject(req.query.orderID, "Books");
     res.render("User/feedback", {
         user: user,
-        orders: orders,
+        book: book,
+        order: order,
     });
 });
 
-router.post("/feedback", requiresLogin, async(req, res) => {
+router.post("/feedback", requiresLogin, async (req, res) => {
     const Feedback = {
         user: req.session.username,
         product: req.body.bookID,
         content: req.body.txtContent,
         rating: req.body.numRating,
-        date: Date.now(),
+        date: new Date(),
     };
     await insertObject("Feedbacks", Feedback);
+    await statusUpdate(req.body.orderID, req.body.bookID);
     res.redirect("/orders");
 });
 

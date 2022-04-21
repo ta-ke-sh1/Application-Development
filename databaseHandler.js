@@ -196,6 +196,19 @@ async function advanceSearch(keyword, author, publisher, max, category) {
     }
 }
 
+async function statusUpdate(orderID, bookID) {
+    const dbo = await getDB();
+    return await dbo.collection("Order").updateOne(
+        {
+            $elemMatch: {
+                _id: orderID,
+                "books._id": bookID,
+            },
+        },
+        { $set: { "books.feedback": false } }
+    );
+}
+
 module.exports = {
     requiresLogin,
     insertObject,
@@ -212,4 +225,5 @@ module.exports = {
     homepageCategorize,
     getByCriteria,
     getCategoryByName,
+    statusUpdate,
 };

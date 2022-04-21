@@ -15,7 +15,7 @@ router.get("/", async (req, res) => {
     const idVal = req.query.id;
     const book = await getObject(idVal, "Books");
     var books = await advanceSearch("", book.author, book.publisher, 1000, "");
-    const feedbacks = await getObject(idval, "Orders");
+    const feedbacks = await getObject(idVal, "Orders");
     upd = parseInt(book.popularity) + 1;
     updateValue = { $set: { popularity: upd } };
     await updateObject("Books", book, updateValue);

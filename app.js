@@ -111,9 +111,11 @@ app.get("/login", (req, res) => {
 });
 
 app.get("/test", async (req, res) => {
-    var orders = await getOrders("trunghathe");
+    const orders = await getOrders("trunghathe");
     console.log(orders);
-    res.render("test", { orders: orders });
+    res.render("test", {
+        orders: orders,
+    });
 });
 
 app.post("/login", async (req, res) => {
