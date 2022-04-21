@@ -440,17 +440,19 @@ router.get("/orderupdate", requiresLogin, async(req, res) => {
     const orderid = req.query.id;
     const address = req.body.txtAddress;
     const phoneNumber = req.body.txtPhoneNum;
+    const total = req.body.txtTotal;
     const status = req.body.txtStatus;
     var updateValues = {
         $set: {
             address: address,
             phoneNumber: phoneNumber,
+            total: total,
             status: status,
         },
     };
-    const objectToUpdate = await getObject(id, "Orders");
-    await updateObject("Orders", objectToUpdate, updateValues);
-    res.redirect("/admin/Order/");
+    const objectToUpdate = await getObject(id, "orders");
+    await updateObject("orders", objectToUpdate, updateValues);
+    res.redirect("/admin/order/");
 })
 
 function encrypt(text) {
