@@ -84,8 +84,7 @@ router.post("/register", requiresLogin, async(req, res) => {
                 phoneNumber: phone,
                 avatar: avatar.name,
             };
-            insertObject("Users", objectToInsert);
-            res.redirect("/login");
+
         } else {
             const objectToInsert = {
                 userName: name,
@@ -98,10 +97,9 @@ router.post("/register", requiresLogin, async(req, res) => {
                 phoneNumber: phone,
                 avatar: "stock.jpg",
             };
-            insertObject("Users", objectToInsert);
-            res.redirect("/login");
         }
-
+        insertObject("Users", objectToInsert);
+        res.redirect("/login");
     } else {
         res.render("/Admin/register", {
             error: "User existed! Please re-try",
@@ -141,8 +139,7 @@ router.post("/addUser", requiresLogin, async(req, res) => {
                 phoneNumber: phone,
                 avatar: avatar.name,
             };
-            await insertObject("Users", objectToInsert);
-            res.redirect("/admin/users");
+
         } else {
             const objectToInsert = {
                 userName: name,
@@ -155,10 +152,10 @@ router.post("/addUser", requiresLogin, async(req, res) => {
                 phoneNumber: phone,
                 avatar: "stock.jpg",
             };
-            await insertObject("Users", objectToInsert);
-            res.redirect("/admin/users");
+
         }
-        
+        insertObject("Users", objectToInsert);
+        res.redirect("/admin/users");
     } else {
         res.render("Admin/addUser", {
             error: "Existing user!",
@@ -441,19 +438,13 @@ router.post("/search", requiresLogin, async(req, res) => {
 
 router.get("/orderupdate", requiresLogin, async(req, res) => {
     const orderid = req.query.id;
-    const address = req.body.txtAddress;
-    const phoneNumber = req.body.txtPhoneNum;
-    const total = req.body.txtTotal;
-    const status = req.body.txtStatus;
+    const status = req.body.txtstatus;
     var updateValues = {
         $set: {
-            address: address,
-            phoneNumber: phoneNumber,
-            total: total,
             status: status,
         },
     };
-    const objectToUpdate = await getObject(id, "orders");
+    const objectToUpdate = await getObject(orderid, "orders");
     await updateObject("orders", objectToUpdate, updateValues);
     res.redirect("/admin/order/");
 })
