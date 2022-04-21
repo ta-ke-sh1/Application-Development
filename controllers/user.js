@@ -173,7 +173,7 @@ router.post("/edit", requiresLogin, async(req, res) => {
     }
 });
 
-router.get("/orders", async(req, res) => {
+router.get("/orders", requiresLogin, async(req, res) => {
     const orders = await getAllObject(req.session['userName']);
     console.log(req.session['userName']);
     res.render("User/order"), {
