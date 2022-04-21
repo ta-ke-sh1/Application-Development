@@ -132,7 +132,7 @@ async function getObject(id, collectionName) {
 
 async function getAllObject(username) {
     const dbo = await getDB();
-    return await dbo.collection("Orders").find({ 'user': username });
+    return await dbo.collection("Orders").find({ 'user': username }).toArray();
 }
 
 async function updateObject(collectionName, objectToUpdate, values) {
