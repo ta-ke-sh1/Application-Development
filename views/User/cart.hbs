@@ -9,222 +9,105 @@
 
     <body>
         <style>
-            body {
-                color: #000;
-                overflow-x: hidden;
-                height: 100%;
-                background-color: #fff;
-                background-repeat: no-repeat
+            #middle {
+                padding: 15px 0px 15px 25px;
             }
 
-            .plus-minus {
-                position: relative
-            }
-
-            .plus {
-                position: absolute;
-                top: -4px;
-                left: 2px;
-                cursor: pointer
-            }
-
-            .minus {
-                position: absolute;
-                top: 8px;
-                left: 5px;
-                cursor: pointer
-            }
-
-            .vsm-text:hover {
-                color: #FF5252
-            }
-
-            .book,
-            .book-img {
-                width: 120px;
-                height: 180px;
-                border-radius: 5px
-            }
-
-            .book {
-                margin: 20px 15px 5px 15px
-            }
-
-            .border-top {
-                border-top: 1px solid #EEEEEE !important;
-                margin-top: 20px;
-                padding-top: 15px
-            }
-
-            .card {
-                margin: 40px 0px;
-                padding: 40px 50px;
-                border-radius: 20px;
-                border: none;
-                box-shadow: 1px 5px 10px 1px rgba(0, 0, 0, 0.2)
-            }
-
-            input,
-            textarea {
-                background-color: #F3E5F5;
-                padding: 8px 15px 8px 15px;
+            .img {
+                background-size: cover;
+                background-repeat: no-repeat;
+                background-position: 0px -170px;
+                height: 160px;
                 width: 100%;
-                border-radius: 5px !important;
-                box-sizing: border-box;
-                border: 1px solid #F3E5F5;
-                font-size: 15px !important;
-                color: #000 !important;
-                font-weight: 300
+                border-top-left-radius: 15px;
+                border-bottom-left-radius: 15px;
+                transition-duration: 0.7s;
             }
 
-            input:focus,
-            textarea:focus {
-                -moz-box-shadow: none !important;
-                -webkit-box-shadow: none !important;
-                box-shadow: none !important;
-                border: 1px solid #9FA8DA;
-                outline-width: 0;
-                font-weight: 400
+            .img:hover {
+                background-position: 0px -240px;
             }
 
-            button:focus {
-                -moz-box-shadow: none !important;
-                -webkit-box-shadow: none !important;
-                box-shadow: none !important;
-                outline-width: 0
+            #order {
+                padding: 0;
+                margin-bottom: 40px;
+                position: relative;
+                transition-duration: 0.5s;
             }
 
-            .pay {
-                width: 80px;
-                height: 40px;
-                border-radius: 5px;
-                border: 1px solid #673AB7;
-                margin: 10px 20px 10px 0px;
-                cursor: pointer;
-                box-shadow: 1px 5px 10px 1px rgba(0, 0, 0, 0.2)
+            .txt {
+                font-size: 22px;
+                margin-bottom: 0;
             }
 
-            .gray {
-                -webkit-filter: grayscale(100%);
-                -moz-filter: grayscale(100%);
-                -o-filter: grayscale(100%);
-                -ms-filter: grayscale(100%);
-                filter: grayscale(100%);
-                color: #E0E0E0
+            .book-name {
+                font-family: Editor;
+                font-size: 36px;
+                margin-bottom: 0;
+                overflow: hidden;
+                max-height: 160px;
             }
 
-            .gray .pay {
-                box-shadow: none
+            .block {
+                position: relative;
+                transition-duration: 0.5s;
             }
 
-            #tax {
-                border-top: 1px lightgray solid;
-                margin-top: 10px;
-                padding-top: 10px
+            #order:hover {
+                box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px,
+                    rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
             }
 
-            .btn-blue {
-                border: none;
-                border-radius: 10px;
-                background-color: #673AB7;
-                color: #fff;
-                padding: 8px 15px;
-                margin: 20px 0px;
-                cursor: pointer
+            .line {
+                width: 80%;
             }
 
-            .btn-blue:hover {
-                background-color: #311B92;
-                color: #fff
+            .circle {
+                background-color: crimson;
             }
-
-            #checkout {
-                float: left
+            .index{
+                position: absolute;
+                top: 0;
+                left: 0;
+                padding: 20px;
+                border-radius: 20px;
             }
-
-            #check-amt {
-                float: right
-            }
-
-            @media screen and (max-width: 768px) {
-
-                .book,
-                .book-img {
-                    width: 100px;
-                    height: 150px
-                }
-
-                .card {
-                    padding-left: 15px;
-                    padding-right: 15px
-                }
-
-                .mob-text {
-                    font-size: 13px
-                }
-
-                .pad-left {
-                    padding-left: 20px
-                }
-
-                .img {
-                    background-size: cover;
-                    background-repeat: no-repeat;
-                    background-position: center;
-                    height: 150px;
-                    width: 100px;
-                }
-            }
-
         </style>
         {{>header}}
-        <div class="container px-4 py-5 mx-auto">
-            <div class="row d-flex justify-content-center">
-                <div class="col-5">
-                    <h4 class="heading">Shopping Cart</h4>
-                </div>
-                <div class="col-7">
-                    <div class="row text-right">
-                        <div class="col-4">
-                            <h6 class="mt-2">Quantity</h6>
+        <div class="block" style="width: 80%; margin-top: 130px; background-color: transparent">
+            <div class="row tags" style="display: inline; margin-left: 2px">
+                <span class="heading" style="font-size: 40px;">My Cart</span>
+            </div>
+            <a href="/user/checkout">
+                <span class="head-link" style="float: right;">
+                    Checkout Now
+                </span>
+            </a>
+        </div>
+        {{#each cart}}
+            <div class="block" style="width: 80%;" id="order">
+                <div class="index">{{@index}}</div>
+                <div class="ui form">
+                    <div class="fields">
+                        <div class="six wide field">
+                            <div class="img" style="background-image: url('/Books/{{ Book.image }}');">
+                            </div>
                         </div>
-                        <div class="col-4">
-                            <h6 class="mt-2">Price</h6>
+                        <div class="four wide field" id="middle">
+                            <p class="book-name">{{ Book.name }}</p>
+                        </div>
+                        <div class="six wide field" id="middle">
+                            <center>
+                                <p class="txt ">Author: {{ Book.author }}</p>
+                                <hr class="line">
+                                <p class="txt" id="middle-text">Price: ${{Book.price}}</p>
+                                <hr class="line">
+                                <p class="txt">Quantity: {{Quantity}}</p>
+                            </center>
                         </div>
                     </div>
                 </div>
             </div>
-            {{#each cart}}
-                <div class="row d-flex justify-content-center border-top">
-                    <div class="col-5">
-                        <div class="row d-flex">
-                            <div class="img"> <img src="/Books/{{ Book.image }}" class="book-img"> </div>
-                            <div class="my-auto flex-column d-flex pad-left">
-                                <h5 class="mob-text"><strong>{{Book.name}}</strong></h5>
-                                <p class="mob-text">{{Book.author}}</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="my-auto col-7">
-                        <div class="row text-right">
-                            <div class="col-4">
-                                <div class="row d-flex justify-content-end px-3">
-                                    <p class="mb-0" id="cnt1">{{Quantity}}</p>
-                                    <div class="d-flex flex-column plus-minus"> <span class="vsm-text plus">+</span>
-                                        <span class="vsm-text minus">-</span> </div>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <h6 class="mob-text">{{Book.price}}</h6>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            {{/each}}
-           
-             </div>
-             <a href="/user/checkout"><button class="btn-block btn-blue"> <span> <span id="checkout">Checkout</span></button></a>
-        </div>
+        {{/each}}
     </body>
-
 </html>
