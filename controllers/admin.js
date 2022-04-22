@@ -43,7 +43,7 @@ router.get("/", requiresLogin, async (req, res) => {
         ongoing: count[0],
         delivering: count[1],
         returned: count[2],
-        finished: count[3]
+        finished: count[3],
     });
 });
 
@@ -92,7 +92,6 @@ router.post("/register", requiresLogin, async (req, res) => {
                 phoneNumber: phone,
                 avatar: avatar.name,
             };
-
         } else {
             const objectToInsert = {
                 userName: name,
@@ -147,7 +146,6 @@ router.post("/addUser", requiresLogin, async (req, res) => {
                 phoneNumber: phone,
                 avatar: avatar.name,
             };
-
         } else {
             const objectToInsert = {
                 userName: name,
@@ -160,7 +158,6 @@ router.post("/addUser", requiresLogin, async (req, res) => {
                 phoneNumber: phone,
                 avatar: "stock.jpg",
             };
-
         }
         insertObject("Users", objectToInsert);
         res.redirect("/admin/users");
@@ -267,7 +264,7 @@ router.post("/addNewCategory", requiresLogin, async (req, res) => {
         name: req.body.txtName,
         quote: req.body.txtQuote,
         author: req.body.txtAuthor,
-        background: req.body.txtCategory
+        background: req.body.txtCategory,
     };
     await insertObject("Categories", objectToInsert);
     res.redirect("/admin/category");
@@ -286,7 +283,7 @@ router.post("/updateCategory", requiresLogin, async (req, res) => {
             name: req.body.txtName,
             quote: req.body.txtQuote,
             author: req.body.txtAuthor,
-            background: req.body.txtCategory
+            background: req.body.txtCategory,
         },
     };
     const objectToUpdate = await getObject(id, "Categories");
@@ -319,7 +316,10 @@ router.post("/addNewBook", requiresLogin, (req, res) => {
     var image;
     if (req.files != null) {
         image = req.files.image;
-        image.name = name.replace(/[~`!@#$%^&*()+={}\[\];:\'\"<>.,\/\\\?-_]/g, '') + uniqid() + ".jpg";
+        image.name =
+            name.replace(/[~`!@#$%^&*()+={}\[\];:\'\"<>.,\/\\\?-_]/g, "") +
+            uniqid() +
+            ".jpg";
     } else image = "anonymous.jpg";
 
     const path = __dirname + "/../public/Books/" + image.name;
@@ -362,7 +362,10 @@ router.post("/updateBook", requiresLogin, async (req, res) => {
     const quantity = parseInt(req.body.numQuantity);
     if (req.files != null) {
         const image = req.files.image;
-        image.name = name.replace(/[~`!@#$%^&*()+={}\[\];:\'\"<>.,\/\\\?-_]/g, '') + uniqid() + ".jpg";
+        image.name =
+            name.replace(/[~`!@#$%^&*()+={}\[\];:\'\"<>.,\/\\\?-_]/g, "") +
+            uniqid() +
+            ".jpg";
         const path = __dirname + "/../public/Books/" + image.name;
         image.mv(path, (err) => {
             if (err) throw err;
@@ -446,68 +449,65 @@ router.post("/search", requiresLogin, async (req, res) => {
 router.post("/orderUpdate", requiresLogin, async (req, res) => {
     const orderID = req.body.orderID;
     const status = req.body.txtStatus;
-    const order = await getObject(orderID, "Order");
-    if (status == 'Delivering') {
-        for (var item in order.books) {
-            var book = await getObject(item.Book._id, 'Books');
-            var quantity = parseInt(book.quantity);
+    const order = await getObject(orderID, "Orders");
+    if (status == "Delivering") {
+        for (let i = 0; i < order.books.length; i++) {
+            var book = await getObject(order.books[i].Book._id, "Books");
             var updateValues = {
                 $set: {
-                    quantity: quantity - parseInt(item.Quantity)
+                    quantity: book.quantity - parseInt(order.books[i].Quantity),
+                },
+            };
+            await updateObject("Books", book, updateValues);
+        }
+    } else if (status == "Returned") {
+        for (let i = 0; i < order.books.length; i++) {
+            var book = await getObject(order.books[i].Book._id, "Books");
+            var updateValues = {
+                $set: {
+                    quantity: book.quantity + parseInt(order.books[i].Quantity),
+                },
+            };
+            await updateObject("Books", book, updateValues);
+        }
+    } else {
+        for (let i = 0; i < order.books.length; i++) {
+            var book = await getObject(order.books[i].Book._id, "Books");
+            var sold = book.sold;
+            if (sold == null) sold = 0;
+            var updateValues = {
+                $set: {
+                    sold: sold + parseInt(order.books[i].Quantity),
                 },
             };
             await updateObject("Books", book, updateValues);
         }
     }
-    else if (status == 'Returned') {
-        for (var item in order.books) {
-            var book = await getObject(item.Book._id, 'Books');
-            var sold = parseInt(book.sold);
-            var quantity = parseInt(book.quantity);
-            var updateValues = {
-                $set: {
-                    sold: sold - parseInt(item.quantity),
-                    quantity: quantity + parseInt(item.Quantity)
-                },
-            };
-            await updateObject("Books", book, updateValues);
-        }
-    }
-    else {
-        for (var item in order.books) {
-            var book = await getObject(item.Book._id, 'Books');
-            var sold = parseInt(book.sold);
-            var updateValues = {
-                $set: {
-                    sold: sold + parseInt(item.quantity),
-                },
-            };
-            await updateObject("Books", book, updateValues);
-        }
-    }
-    const objectToUpdate = await getObject(orderID, "orders");
-    await updateObject("orders", objectToUpdate, {
+    const objectToUpdate = await getObject(orderID, "Orders");
+    var updateValues = {
         $set: {
-            status: status
+            status: req.body.txtStatus,
         },
-    });
+    };
+    await updateObject("Orders", objectToUpdate, updateValues);
+    console.log("Order Updated!");
     res.redirect("/admin/order");
-})
+});
 
 router.get("/orderUpdate", requiresLogin, async (req, res) => {
     const orderID = req.query.id;
-    const order = await getObject(orderID, "Orders")
+    const order = await getObject(orderID, "Orders");
     res.render("admin/updateOrder", {
         order: order,
     });
-})
+});
 
 router.get("/order", requiresLogin, async (req, res) => {
     const orders = await getAll("Orders");
     res.render("admin/order", {
         orders: orders,
     });
-})
+});
 
 function encrypt(text) {
     let encrypted = crypto.createCipher(algorithm, Securitykey);

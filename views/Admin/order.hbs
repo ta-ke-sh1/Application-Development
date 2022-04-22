@@ -199,18 +199,24 @@
                         <div class="field">
                             <label>Shipping address{{address}}</label>
                         </div>
-                        <form action="orderUpdate" method="post">
+                        <div class="field">
+                            <label>Status: {{status}} </label>
+                        </div>
+                        <form action="orderUpdate" method="POST">
                             <div class="form-group col-md-50"> 
                                 <label class="form-control-label">Status</label> 
                                 <input type="hidden" name="orderID" value="{{ _id }}">
-                                <input type="text" name="txtStatus" value= "{{ status }}"> 
+                                <select name="txtStatus" id="">
+                                    <option value="{{status}}">{{status}}</option>
+                                    <option value="Delivering">Delivering</option>
+                                    <option value="Returned">Returned</option>
+                                    <option value="Finished">Finished</option>
+                                </select>
+                                <input type="submit" value="Update">
                             </div>
                         </form>
                         <div class="field">
                             <label>Date {{date}}</label>
-                        </div>
-                        <div class="field">
-                            <a href="">Feedback</a>
                         </div>
                     </div>
                 </div>

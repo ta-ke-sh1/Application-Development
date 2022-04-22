@@ -11,7 +11,7 @@ const {
     insertObject,
     getUser,
     checkUser,
-    getOrders,
+    getObject,
     getByCriteria,
     getCategoryByName,
 } = require("./databaseHandler");
@@ -105,20 +105,12 @@ app.get("/", async (req, res) => {
         userInfo: req.session.User,
         editorChoice: editorChoice,
         newlyAdded: newlyAdded,
-        popularCategories: popularCategories
+        popularCategories: popularCategories,
     });
 });
 
 app.get("/login", (req, res) => {
     res.render("login");
-});
-
-app.get("/test", async (req, res) => {
-    const orders = await getOrders("trunghathe");
-    console.log(orders);
-    res.render("test", {
-        orders: orders,
-    });
 });
 
 app.post("/login", async (req, res) => {
@@ -235,6 +227,17 @@ app.get("/logout", (req, res) => {
     req.session.destroy();
     res.redirect("/");
 });
+
+// Testing sites
+app.get("/test", async (req, res) => {
+    console.log(await getObject("62415f3e5318642f75ef166c", "Books"));
+    res.render("test");
+});
+
+app.post("/test", async (req, res) => {
+    console.log();
+});
+// Testing sites
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT);

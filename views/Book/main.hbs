@@ -78,17 +78,19 @@
         <br>
         <div class="block" style="min-width: 80%">
             <div class="row tags" style="display: inline;">
-                <span class="heading">Search results:</span>
+                <span class="heading">Please browse through our books:</span>
             </div>
+            <center>
             {{#if error}}
                 <div class="row">
                     <div class="error" style="margin-left: 15px; margin-bottom: 15px">
-                        <center>
+                        
                             {{error}}
-                        </center>
+                        
                     </div>
                 </div>
             {{/if}}
+            </center>
             <div class="book-cards">
                 {{#each books }}
                     <div class="item">

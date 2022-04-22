@@ -13,18 +13,26 @@
       <br><br><br>
       {{#each orders}}
          <div class="block" style="min-width: 80%; margin-top: 30px">
-            <h4 class="ui dividing header">Order: {{ _id }}</h4>
             <div class="ui form">
-               <h4 class="ui dividing header">Order: {{ _id }}</h4>
+               <span class="heading">Order: {{ _id }}</span>
+                  
+                  <br><br>
                {{#each books}}
                   <div class="field">
-                     <p>{{Book.name}}
-                        {{#if feedback}}
-                           <span>Feedback given</span>
-                        {{else}}
-                           <a href="/user/feedback?bookID={{ Book._id }}&orderID={{../_id}}">Give Feedback</a>
-                     </p>
-                     {{/if}}
+                     <p>{{Book.name}}</p>
+                     {{#if feedback}}
+                     <a href="#">
+                        <span class="head-link disabled" style="float: right;">
+                              Feedback Already Given
+                        </span>
+                     </a>
+                  {{else}}
+                     <a href="/user/feedback?bookID={{ Book._id }}&orderID={{../_id}}">
+                        <span class="head-link disabled" style="float: right;">
+                              Give Feedback
+                        </span>
+                     </a>
+                  {{/if}}
                   </div>
                {{/each}}
                <div class="fields">

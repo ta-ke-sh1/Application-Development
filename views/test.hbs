@@ -1,5 +1,4 @@
 <html lang="en">
-
     <head>
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -32,31 +31,20 @@
             rating)); $(this).html(`${fullStar}${halfStar}${noStar}`); }); }
             $(function () { $('.stars').stars(); });
         </script>
-        <script>
-
-        </script>
     </head>
 
     <body>
-        <h1>{{rating}}</h1>
-        {{#each orders}}      
-            {{#each books}}
-            <p>{{../_id}}- {{@index}}</p>
-            <form action="feedback" method="GET">
-            <input type="hidden" name="orderID" value="{{../_id}}">
-            <input type="hidden" name="bookID" value="{{Book._id}}">
-                <div class="field">
-                    <p>{{Book.name}}
-                    <input type="submit" value="Give Feedback">
-                </div>
-            </form>
-            {{/each}}
-        {{/each}}
+        <form action="test" method="get">
+            <select name="txtStatus" id="">
+                <option value="Ongoing">Ongoing</option>
+                <option value="Delivering">Delivering</option>
+                <option value="Returned">Returned</option>
+                <option value="Finished">Finished</option>
+            </select>
+            <input type="submit" value="Submit" />
+        </form>
     </body>
     <script>
-        function getOrderID(){
-            return document.getElementById
-        }
+        function getOrderID(){ return document.getElementById }
     </script>
-
 </html>

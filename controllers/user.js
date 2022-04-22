@@ -68,7 +68,14 @@ router.get("/cart", requiresLogin, async (req, res) => {
         book = await getObject(key, "Books");
         cart.push({ Book: book, Quantity: dict2[key] });
     }
-    res.render("User/cart", { cart: cart });
+    if (cart.length == 0) {
+        res.render("User/cart", {
+            cart: cart,
+            error: "Empty cart, please add some books",
+        });
+    } else {
+        res.render("User/cart", { cart: cart });
+    }
 });
 
 router.get("/checkout", requiresLogin, async (req, res) => {
@@ -117,7 +124,6 @@ router.post("/checkout", requiresLogin, async (req, res) => {
         status: "Ongoing",
     };
     await insertObject("Orders", objectToInsert);
-    console.log("Dat hang thanh cong");
     res.redirect("/User/orders");
 });
 
@@ -197,14 +203,14 @@ router.get("/feedback", async (req, res) => {
         book: book,
         order: order,
         bookID: req.query.bookID,
-        orderID: req.query.orderID
+        orderID: req.query.orderID,
     });
 });
 
 router.post("/feedback", async (req, res) => {
     console.log(req.body.numRating);
     const Feedback = {
-        user: req.session['userName'],
+        user: req.session["userName"],
         product: req.body.bookID,
         order: req.body.orderID,
         content: req.body.txtContent,

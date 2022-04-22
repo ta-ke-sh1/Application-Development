@@ -53,6 +53,13 @@
                 transition-duration: 0.5s;
             }
 
+            #error-block{
+                background-color: crimson;
+                color: white;
+                font-size: 25px;
+                padding: auto;
+            }
+
             #order:hover {
                 box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px,
                     rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
@@ -78,12 +85,15 @@
             <div class="row tags" style="display: inline; margin-left: 2px">
                 <span class="heading" style="font-size: 40px;">My Cart</span>
             </div>
+            {{#if cart}}  
             <a href="/user/checkout">
                 <span class="head-link" style="float: right;">
                     Checkout Now
                 </span>
             </a>
+            {{/if}}
         </div>
+        {{#if cart}}        
         {{#each cart}}
             <div class="block" style="width: 80%;" id="order">
                 <div class="index">{{@index}}</div>
@@ -109,5 +119,10 @@
                 </div>
             </div>
         {{/each}}
+        {{else}}
+        <div class="block" id="error-block" style="width: 40%;">
+            <center>{{error}}</center>
+        </div>
+        {{/if}}
     </body>
 </html>

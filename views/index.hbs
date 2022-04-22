@@ -64,6 +64,47 @@
                 scale: 0.8;
             }
 
+            .cat-link{
+                position: absolute;
+                top: 0;
+                right: 0;
+                margin: 20px 20px 0px 0px;
+                font-size: 18px;
+                font-family: Maison-Medium;
+                padding: 8px 17px;
+                border: 1px solid white;
+                border-radius: 15px;
+                color: white;
+                transition-duration: 0.3s;
+            }
+
+            .book-count{
+                position: absolute;
+                bottom: 0;
+                right: 0;
+                margin: 0px 20px 30px 0px; 
+                font-family: Maison-Medium;
+                font-size: 30px;
+                color: white;
+            }
+
+            .cat-name{
+                line-height: normal;
+                position: absolute;
+                font-family: Editor;
+                font-size: 56px;
+                color: white;
+                margin: 0px 0px 15px 19px;
+                bottom: 0;
+                left: 0;
+                max-width: 250px;
+            }
+
+            .cat-link:hover {
+                border: 1px solid crimson;
+                background-color: crimson;
+                color: white;
+            }
         </style>
     </head>
 
@@ -91,23 +132,22 @@
         </div>
         <div class="block" style="width: 81%;">
             <div class="row tags" style="display: inline;">
-                <span class="heading">Most Available Categories</span>
+                <span class="heading">Most Books Available</span>
             </div>
             <br>
             <div class="category-cards">
                 {{#each popularCategories }}
                     <div class="item">
-                        <div class="category-card" style="background-image: url({{background}});"">
-                            <h1>{{name}}</h1>
-                            <h1>{{bookCount}}</h1>
+                        <div class="category-card" style="background-image: url({{background}});">
+                            <span class="cat-name">{{name}}</span>
+                            <span class="book-count">{{bookCount}} books</span>
                             <a href="/book/category?cat={{name}}">
-                                <span class="head-link" style="float: right;">
+                                <span class="cat-link">
                                     See more
                                 </span>
                             </a>
                         </div>
                     </div>
-
                 {{/each}}
             </div>
         </div>
@@ -269,5 +309,4 @@
             $('.stars').stars();
         });
     </script>
-
 </html>
