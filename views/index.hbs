@@ -63,6 +63,7 @@
                 padding: 6px 10px 6px 10px;
                 scale: 0.8;
             }
+
         </style>
     </head>
 
@@ -88,6 +89,29 @@
                 <img src="/Logo/people.png" width="auto" height="664px" alt="">
             </div>
         </div>
+        <div class="block" style="width: 81%;">
+            <div class="row tags" style="display: inline;">
+                <span class="heading">Most Available Categories</span>
+            </div>
+            <br>
+            <div class="category-cards">
+                {{#each popularCategories }}
+                    <div class="item">
+                        <div class="category-card" style="background-image: url({{background}});"">
+                            <h1>{{name}}</h1>
+                            <h1>{{bookCount}}</h1>
+                            <a href="/book/category?cat={{name}}">
+                                <span class="head-link" style="float: right;">
+                                    See more
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+
+                {{/each}}
+            </div>
+        </div>
+        <br>
         <div class="block">
             <div class="row tags" style="display: inline;">
                 <span class="heading">What's popular</span>
@@ -245,4 +269,5 @@
             $('.stars').stars();
         });
     </script>
+
 </html>

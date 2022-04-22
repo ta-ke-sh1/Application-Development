@@ -263,13 +263,11 @@ router.get("/category", requiresLogin, async (req, res) => {
 
 //Add category
 router.post("/addNewCategory", requiresLogin, async (req, res) => {
-    const name = req.body.txtName;
-    const quote = req.body.txtQuote;
-    const author = req.body.txtAuthor;
     const objectToInsert = {
-        name: name,
-        quote: quote,
-        author: author,
+        name: req.body.txtName,
+        quote: req.body.txtQuote,
+        author: req.body.txtAuthor,
+        background: req.body.txtCategory
     };
     await insertObject("Categories", objectToInsert);
     res.redirect("/admin/category");
@@ -283,14 +281,12 @@ router.get("/addCategory", requiresLogin, (req, res) => {
 //Update category
 router.post("/updateCategory", requiresLogin, async (req, res) => {
     const id = req.body.txtID;
-    const name = req.body.txtName;
-    const quote = req.body.txtQuote;
-    const author = req.body.txtAuthor;
     var updateValues = {
         $set: {
-            name: name,
-            quote: quote,
-            author: author,
+            name: req.body.txtName,
+            quote: req.body.txtQuote,
+            author: req.body.txtAuthor,
+            background: req.body.txtCategory
         },
     };
     const objectToUpdate = await getObject(id, "Categories");

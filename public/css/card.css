@@ -121,3 +121,30 @@
     background-color: crimson;
     color: white;
 }
+
+.category-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(440px, 1fr));
+    gap: 25px 35px;
+    margin: 20px 0px;
+    padding: 0px 15px;
+}
+
+.category-card {
+    margin: 5px 0px 0px 0px;
+    border-radius: 15px;
+    position: relative;
+    height: 660px;
+    width: 440px;
+    transition-duration: 0.7s;
+    box-shadow: rgba(0, 0, 0, 0.1) -4px 9px 25px -6px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: -500px -0px;
+}
+
+.category-card:hover {
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 20px 25px -5px,
+        rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
+    background-position: -600px 0px;
+}

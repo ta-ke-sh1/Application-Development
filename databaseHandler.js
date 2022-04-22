@@ -118,6 +118,29 @@ async function homepageCategorize() {
         .toArray();
 }
 
+async function categoryCount(limit) {
+    const dbo = await getDB();
+    return await dbo
+        .collection("Categories")
+        .aggregate([
+            {
+                $lookup: {
+                    from: "Books",
+                    localField: "name",
+                    foreignField: "category",
+                    pipeline: [{ $sort: { popularity: -1 } }],
+                    as: "Books",
+                },
+            },
+            {
+                $addFields: { bookCount: { $size: "$Books" } },
+            },
+        ])
+        .sort({ bookCount: -1 })
+        .limit(limit)
+        .toArray();
+}
+
 async function insertObject(collectionName, objectToInsert) {
     const dbo = await getDB();
     const newObject = await dbo
@@ -250,6 +273,7 @@ async function updateRating(bookID, rating) {
 
 module.exports = {
     requiresLogin,
+    categoryCount,
     insertObject,
     updateObject,
     deleteObject,

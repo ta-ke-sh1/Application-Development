@@ -6,6 +6,7 @@ const hbs = require("hbs");
 const path = require("path");
 const fileUpload = require("express-fileupload");
 const {
+    categoryCount,
     getAll,
     insertObject,
     getUser,
@@ -97,12 +98,14 @@ app.get("/", async (req, res) => {
     let popular = await getByCriteria("popularity", 12);
     let newlyAdded = await getByCriteria("date", 12);
     let editorChoice = await getCategoryByName("Editor's Choice", 12);
+    let popularCategories = await categoryCount(3);
     res.render("index", {
         categories: categories,
         popular: popular,
         userInfo: req.session.User,
         editorChoice: editorChoice,
         newlyAdded: newlyAdded,
+        popularCategories: popularCategories
     });
 });
 
