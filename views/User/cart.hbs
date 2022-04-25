@@ -85,7 +85,7 @@
             <div class="row tags" style="display: inline; margin-left: 2px">
                 <span class="heading" style="font-size: 40px;">My Cart</span>
             </div>
-            {{#if cart}}  
+            {{#if cart}}
             <a href="/user/checkout">
                 <span class="head-link" style="float: right;">
                     Checkout Now
@@ -93,7 +93,7 @@
             </a>
             {{/if}}
         </div>
-        {{#if cart}}        
+        {{#if cart}}
         {{#each cart}}
             <div class="block" style="width: 80%;" id="order">
                 <div class="index">{{@index}}</div>
@@ -113,12 +113,30 @@
                                 <p class="txt" id="middle-text">Price: ${{Book.price}}</p>
                                 <hr class="line">
                                 <p class="txt">Quantity: {{Quantity}}</p>
+                                <hr class="line">
+                                <p class="txt">Subtotal: ${{Subtotal}}</p>
                             </center>
                         </div>
                     </div>
                 </div>
             </div>
         {{/each}}
+        <form action="checkout" method="post">
+            <input type="hidden" name="numTotal" value="{{total}}">
+            <div class="block" style="width: 40%; float: left; margin-left:5cm" id="checkout">
+                <div class="form-group">
+                    <label class="txt">Address</label>
+                    <p><input type="text" id="txtAddress" name="addr" placeholder="Address"></p>
+                </div>
+            </div>
+            <div class="block" style="width: 40%; float: left">
+                    <div class="form-group col-md-50"> <label class="txt">Phone Number</label>
+                    <p><input type="text" id="txtPhoneNumber" name="addr" placeholder="PhoneNumber"> </div></p>
+                </div>
+        </form>
+        <div class="block" style="width: 20%; float: right; margin-right: 4.8cm;">
+            <p class="txt" >Total: ${{total}}</p>
+        </div>
         {{else}}
         <div class="block" id="error-block" style="width: 40%;">
             <center>{{error}}</center>
