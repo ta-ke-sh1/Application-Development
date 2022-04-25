@@ -5,6 +5,7 @@ const {
     getUser,
     getObject,
     statusUpdate,
+    updateRating,
     checkUser,
     insertObject,
     updateObject,
@@ -203,7 +204,7 @@ router.post("/feedback", async(req, res) => {
         date: new Date(),
     };
     await insertObject("Feedbacks", Feedback);
-    await statusUpdate(req.body.orderID, req.body.bookID, false);
+    await statusUpdate(req.body.orderID, req.body.bookID, true);
     await updateRating(req.body.bookID, req.body.numRating);
     res.redirect("/user/orders");
 });

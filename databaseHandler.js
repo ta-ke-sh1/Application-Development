@@ -313,5 +313,6 @@ module.exports = {
     statusUpdate,
     getFeedback,
     orderCounting,
+    updateRating,
     getOrderByStatus,
 };
