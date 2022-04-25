@@ -81,16 +81,13 @@
             }
         </style>
         {{>header}}
+        <form action="checkout" method="post">
         <div class="block" style="width: 80%; margin-top: 130px; background-color: transparent">
             <div class="row tags" style="display: inline; margin-left: 2px">
                 <span class="heading" style="font-size: 40px;">My Cart</span>
             </div>
             {{#if cart}}
-            <a href="/user/checkout">
-                <span class="head-link" style="float: right;">
-                    Checkout Now
-                </span>
-            </a>
+            <input type="submit" value="checkout"style="float: right;">
             {{/if}}
         </div>
         {{#if cart}}
@@ -121,7 +118,7 @@
                 </div>
             </div>
         {{/each}}
-        <form action="checkout" method="post">
+        
             <input type="hidden" name="numTotal" value="{{total}}">
             <div class="block" style="width: 40%; float: left; margin-left:5cm" id="checkout">
                 <div class="form-group">
@@ -133,7 +130,7 @@
                     <div class="form-group col-md-50"> <label class="txt">Phone Number</label>
                     <p><input type="text" id="txtPhoneNumber" name="addr" placeholder="PhoneNumber"> </div></p>
                 </div>
-        </form>
+        
         <div class="block" style="width: 20%; float: right; margin-right: 4.8cm;">
             <p class="txt" >Total: ${{total}}</p>
         </div>
@@ -142,5 +139,6 @@
             <center>{{error}}</center>
         </div>
         {{/if}}
+        </form>
     </body>
 </html>

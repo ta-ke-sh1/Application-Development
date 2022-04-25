@@ -35,6 +35,7 @@ router.post("/addCart", requiresLogin, async(req, res) => {
     const id = req.body.txtID;
     const quantity = req.body.numQuantity;
     console.log(id);
+    var total = 0;
     //lay gia tri bien cart trong session [ co the chua co hoac da co gia tri]
     let myCart = req.session["cart"];
     if (myCart == null) {
@@ -108,6 +109,9 @@ router.post("/checkout", requiresLogin, async(req, res) => {
     await insertObject("Orders", objectToInsert);
     res.redirect("/User/orders");
 });
+router.get("/checkout", requiresLogin, async(req, res) => {
+    res.redirect("/user/orders");
+})
 
 router.get("/edit", requiresLogin, async(req, res) => {
     const objectToUpdate = await getObject(req.session.userID, "Users");
