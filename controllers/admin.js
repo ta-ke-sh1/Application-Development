@@ -303,7 +303,7 @@ router.get("/editCategory", requiresLogin, async (req, res) => {
 
 //Delete category
 router.get("/deleteCategory/:id", requiresLogin, async (req, res) => {
-    await deleteObject("Categories", getObject(req.params.id, "Categories"));
+    await deleteObject(req.params.id, "Categories");
     res.redirect("/admin/category/");
 });
 
