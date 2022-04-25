@@ -156,12 +156,11 @@ async function getObject(id, collectionName) {
     const obj = myCache.get(id);
     if (obj == undefined) {
         const dbo = await getDB();
-        myCache.set(id, await dbo.collection(collectionName).findOne({ _id: ObjectId(id) }));
-        console.log('Object saved in cache!')
+        newObject = await dbo.collection(collectionName).findOne({ _id: ObjectId(id) });
+        myCache.set(id, newObject);
         return newObject;
     }
     else {
-        console.log('Retrieved from cache!');
         return obj;
     } 
 }
