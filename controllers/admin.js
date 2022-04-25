@@ -146,6 +146,8 @@ router.post("/addUser", requiresLogin, async (req, res) => {
                 phoneNumber: phone,
                 avatar: avatar.name,
             };
+            insertObject("Users", objectToInsert);
+            res.redirect("/admin/users");
         } else {
             const objectToInsert = {
                 userName: name,
@@ -158,9 +160,10 @@ router.post("/addUser", requiresLogin, async (req, res) => {
                 phoneNumber: phone,
                 avatar: "stock.jpg",
             };
+            insertObject("Users", objectToInsert);
+            res.redirect("/admin/users");
         }
-        insertObject("Users", objectToInsert);
-        res.redirect("/admin/users");
+
     } else {
         res.render("Admin/addUser", {
             error: "Existing user!",
