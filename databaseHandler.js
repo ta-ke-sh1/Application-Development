@@ -271,6 +271,7 @@ async function statusUpdate(orderID, bookID, feedback) {
 
 async function refreshRating(bookID) {
     const dbo = await getDB();
+    var rating;
     var feedbacks = await dbo
         .collection("Feedbacks")
         .aggregate([
@@ -278,15 +279,24 @@ async function refreshRating(bookID) {
             { $group: { _id: "$product", total: { $sum: "$rating" } } },
         ])
         .toArray();
+
     var feedbackCount = await dbo
         .collection("Feedbacks")
         .countDocuments({ product: bookID });
-    if (parseInt(feedbackCount) > 0)
-        newRating = parseFloat(feedbacks[0].total) / parseFloat(feedbackCount);
+
+    if (parseInt(feedbackCount) > 0) {
+        var division = parseFloat(feedbacks[0].total) / parseFloat(feedbackCount);
+        newRating = division;
+        var integer = parseInt(feedbacks[0].total) / parseInt(feedbackCount);
+        if ((division - integer) * 10 <= 5) {
+            rating = Math.floor(division);
+        }
+        else rating = Math.ceil(division);
+    }
     else newRating = 0;
     return await updateObject("Books", await getObject(bookID, "Books"), {
         $set: {
-            rating: Math.round(parseInt(newRating)),
+            rating: parseInt(rating),
             floatRating: parseFloat(newRating.toFixed(1)),
             feedbackCount: parseInt(feedbackCount),
         },

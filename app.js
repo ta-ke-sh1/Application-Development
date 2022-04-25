@@ -114,7 +114,15 @@ app.get("/", async (req, res) => {
     });
 });
 
-app.get("/login", (req, res) => {
+function isLogin(req, res, next) {
+    if (req.session["userName"] == null) {
+        return next();
+    } else {
+        res.render("/");
+    }
+}
+
+app.get("/login", isLogin, (req, res) => {
     res.render("login");
 });
 
@@ -146,12 +154,7 @@ app.post("/login", async (req, res) => {
     }
 });
 
-app.get("/logout", (req, res) => {
-    req.session.destroy();
-    res.redirect("/");
-});
-
-app.get("/register", async (req, res) => {
+app.get("/register", isLogin, async (req, res) => {
     res.render("Admin/register");
 });
 
@@ -235,7 +238,7 @@ app.get("/logout", (req, res) => {
 
 // Testing sites
 app.get("/test", async (req, res) => {
-    console.log(getOrder);
+    
 });
 
 app.post("/test", async (req, res) => {
