@@ -2,8 +2,9 @@ const e = require("express");
 const { MongoClient, ObjectId } = require("mongodb");
 
 const URL =
-    "mongodb+srv://apple-user23:applesensei23@cluster0.1keu9.mongodb.net/Demo-1670?retryWrites=true&w=majority";
-const DATABASE_NAME = "Demo-1670";
+    "mongodb+srv://trung:jtnMWumJsr3f6F1l@cluster0.y6edm.mongodb.net/Application-1670?retryWrites=true&w=majority";
+
+const DATABASE_NAME = "Application-1670";
 
 const NodeCache = require("node-cache");
 const myCache = new NodeCache();
@@ -224,11 +225,12 @@ async function advanceSearch(keyword, author, publisher, max, category) {
 
 async function getFeedback(bookID, feedbackPage) {
     const dbo = await getDB();
-    return await dbo.collection("Feedbacks")
+    return await dbo
+        .collection("Feedbacks")
         .find({ product: bookID })
         .sort({ date: -1 })
         .skip((feedbackPage - 1) * 4)
-        .limit((feedbackPage) * 4)
+        .limit(feedbackPage * 4)
         .toArray();
 }
 

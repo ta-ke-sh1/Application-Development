@@ -14,9 +14,11 @@ const router = express.Router();
 
 router.get("/", async (req, res) => {
     const idVal = req.query.id;
-    const feedbackPage = req.query.feedbackPage;
+    var feedbackPage = req.query.feedbackPage;
     const book = await getObject(idVal, "Books");
     var books = await advanceSearch("", book.author, book.publisher, 1000, "");
+
+    if (feedbackPage == null) feedbackPage = 1;
     const feedbacks = await getFeedback(idVal, feedbackPage);
     upd = parseInt(book.popularity) + 1;
     updateValue = { $set: { popularity: upd } };
