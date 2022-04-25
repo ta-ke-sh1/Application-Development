@@ -8,6 +8,7 @@
     "hbs": "^4.2.0",
     "jquery": "^3.6.0",
     "mongodb": "^4.4.1",
+    "node-cache": "^5.1.2",
     "nodemon": "^2.0.15",
     "semantic-ui-dropdown": "^2.4.1",
     "uniqid": "^5.4.0"

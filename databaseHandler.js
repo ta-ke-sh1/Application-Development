@@ -4,6 +4,9 @@ const URL =
     "mongodb+srv://apple-user23:applesensei23@cluster0.1keu9.mongodb.net/Demo-1670?retryWrites=true&w=majority";
 const DATABASE_NAME = "Demo-1670";
 
+const NodeCache = require("node-cache");
+const myCache = new NodeCache();
+
 function requiresLogin(req, res, next) {
     if (req.session && req.session.isAdmin) {
         return next();
@@ -150,8 +153,17 @@ async function insertObject(collectionName, objectToInsert) {
 }
 
 async function getObject(id, collectionName) {
-    const dbo = await getDB();
-    return await dbo.collection(collectionName).findOne({ _id: ObjectId(id) });
+    const obj = myCache.get(id);
+    if (obj == undefined) {
+        const dbo = await getDB();
+        myCache.set(id, await dbo.collection(collectionName).findOne({ _id: ObjectId(id) }));
+        console.log('Object saved in cache!')
+        return newObject;
+    }
+    else {
+        console.log('Retrieved from cache!');
+        return obj;
+    } 
 }
 
 async function getOrders(username) {
