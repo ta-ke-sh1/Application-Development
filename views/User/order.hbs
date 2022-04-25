@@ -20,12 +20,10 @@
                {{#each books}}
                   <div class="field">
                      <p>{{Book.name}}</p>
-                     {{#if feedback}}
-                     <a href="#">
-                        <span class="head-link disabled" style="float: right;">
-                              Feedback Already Given
+                     {{#if feedback }}
+                        <span class="head-link disabled" style="float: right; background-color: gray;">
+                              Unvailable
                         </span>
-                     </a>
                   {{else}}
                      <a href="/user/feedback?bookID={{ Book._id }}&orderID={{../_id}}">
                         <span class="head-link disabled" style="float: right;">

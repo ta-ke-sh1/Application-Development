@@ -8,15 +8,15 @@ const Securitykey = "trungha";
 const {
     insertObject,
     getAll,
-    getOrders,
     orderCounting,
     deleteObject,
     getObject,
     getUser,
     updateObject,
     searchBook,
+    statusUpdate,
+    getOrderByStatus,
 } = require("../databaseHandler");
-const e = require("express");
 const async = require("hbs/lib/async");
 
 // access control
@@ -32,12 +32,11 @@ function requiresLogin(req, res, next) {
 }
 
 //neu request la: /admin
-router.get("/", requiresLogin, async (req, res) => {
+router.get("/", async (req, res) => {
     const count = await orderCounting();
     res.render("Admin/index", {
         books: await getAll("Books"),
         users: await getAll("Users"),
-        orders: await getAll("Orders"),
         categories: await getAll("Categories"),
         title: "Admin",
         ongoing: count[0],
@@ -446,7 +445,7 @@ router.post("/search", requiresLogin, async (req, res) => {
 });
 
 //Update Order Status
-router.post("/orderUpdate", requiresLogin, async (req, res) => {
+router.post("/orderUpdate", async (req, res) => {
     const orderID = req.body.orderID;
     const status = req.body.txtStatus;
     const order = await getObject(orderID, "Orders");
@@ -480,6 +479,7 @@ router.post("/orderUpdate", requiresLogin, async (req, res) => {
                     sold: sold + parseInt(order.books[i].Quantity),
                 },
             };
+            await statusUpdate(orderID, order.books[i].Status, false);
             await updateObject("Books", book, updateValues);
         }
     }
@@ -503,9 +503,15 @@ router.get("/orderUpdate", requiresLogin, async (req, res) => {
 });
 
 router.get("/order", requiresLogin, async (req, res) => {
-    const orders = await getAll("Orders");
+    const ongoing = await getOrderByStatus("Ongoing");
+    const delivering = await getOrderByStatus("Delivering");
+    const finished = await getOrderByStatus("Finished");
+    const returned = await getOrderByStatus("Returned");
     res.render("admin/order", {
-        orders: orders,
+        ongoing: ongoing,
+        delivering: delivering,
+        finished: finished,
+        returned: returned,
     });
 });
 

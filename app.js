@@ -14,6 +14,7 @@ const {
     getObject,
     getByCriteria,
     getCategoryByName,
+    getOrderByStatus,
 } = require("./databaseHandler");
 const cookieParser = require("cookie-parser");
 var session = require("express-session");
@@ -229,10 +230,7 @@ app.get("/logout", (req, res) => {
 });
 
 // Testing sites
-app.get("/test", async (req, res) => {
-    console.log(await getObject("62415f3e5318642f75ef166c", "Books"));
-    res.render("test");
-});
+app.get("/test", async (req, res) => {});
 
 app.post("/test", async (req, res) => {
     console.log();

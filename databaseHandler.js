@@ -6,9 +6,6 @@ const URL =
 
 const DATABASE_NAME = "Application-1670";
 
-const NodeCache = require("node-cache");
-const myCache = new NodeCache();
-
 function requiresLogin(req, res, next) {
     if (req.session && req.session.isAdmin) {
         return next();
@@ -99,6 +96,15 @@ async function getByCriteria(criteria, limit) {
             .limit(12)
             .toArray();
     }
+}
+
+async function getOrderByStatus(status) {
+    const dbo = await getDB();
+    return await dbo
+        .collection("Orders")
+        .find({ status: status })
+        .sort({ date: -1 })
+        .toArray();
 }
 
 async function homepageCategorize() {
@@ -252,15 +258,14 @@ async function orderCounting() {
     return res;
 }
 
-async function statusUpdate(orderID, bookID, rating) {
+async function statusUpdate(orderID, bookID, feedback) {
     const dbo = await getDB();
-    await updateRating(bookID, rating);
     return await dbo.collection("Orders").updateOne(
         {
             _id: ObjectId(orderID),
             books: { $elemMatch: { _id: ObjectId(bookID) } },
         },
-        { $set: { "books.$.feedback": true } }
+        { $set: { "books.$.feedback": feedback } }
     );
 }
 
@@ -308,4 +313,5 @@ module.exports = {
     statusUpdate,
     getFeedback,
     orderCounting,
+    getOrderByStatus,
 };

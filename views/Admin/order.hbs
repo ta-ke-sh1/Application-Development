@@ -175,54 +175,190 @@
             }
         }
 
+        .widget {
+                width: 100%;
+                max-height: 500px;
+                min-height: 500px;
+                overflow: auto;
+                padding: 0px 8px 12px 8px;
+            }
+
+        .widget th {
+            position: sticky;
+            top: 0;
+            z-index: 2;
+            background-color: white;
+            border-top: 1px solid red;
+            box-shadow: rgba(0, 0, 0, 0.08) 0px 10px 20px,
+                rgba(0, 0, 0, 0.05) 0px 6px 6px;
+        }
+
+        .widget::-webkit-scrollbar {
+            display: none;
+        }
     </style>
 
     <body>
         {{>header}}
         <div style="margin-top: 100px;"></div>
-        {{#each orders}}
-            <div class="block" style="min-width: 80%; margin-top: 30px">
-                <div class="ui form">
-                    <h4 class="ui dividing header">Order: {{ _id }}</h4>
-                    {{#each books}}
-                        <div class="field">
-                            <p>{{Book.name}}</p>
-                        </div>
-                    {{/each}}
-                    <div class="fields">
-                        <div class="field">
-                            <img src="" alt="">
-                        </div>
-                        <div class="field">
-                            <label>Total Price {{total}}</label>
-                        </div>
-                        <div class="field">
-                            <label>Shipping address{{address}}</label>
-                        </div>
-                        <div class="field">
-                            <label>Status: {{status}} </label>
-                        </div>
-                        <form action="orderUpdate" method="POST">
-                            <div class="form-group col-md-50"> 
-                                <label class="form-control-label">Status</label> 
-                                <input type="hidden" name="orderID" value="{{ _id }}">
-                                <select name="txtStatus" id="">
-                                    <option value="{{status}}">{{status}}</option>
-                                    <option value="Delivering">Delivering</option>
-                                    <option value="Returned">Returned</option>
-                                    <option value="Finished">Finished</option>
-                                </select>
-                                <input type="submit" value="Update">
-                            </div>
-                        </form>
-                        <div class="field">
-                            <label>Date {{date}}</label>
-                        </div>
-                    </div>
-                </div>
-                </tr>
+        <div class="block" style="width: 80%; margin-top: 30px">
+            <div class="row tags" style="display: inline;">
+                <span class="heading">New Orders</span>
             </div>
-        {{/each}}
+            <br><br>
+            <div class="widget">
+                <table class="ui padded selectable fixed table tbl">
+                    <tr>
+                        <th class="center aligned">Order ID</th>
+                        <th class="center aligned">Username</th>
+                        <th class="center aligned">Order Date</th>
+                        <th class="center aligned">Books</th>
+                        <th class="center aligned">Address</th>
+                        <th class="center aligned">Telephone</th>
+                        <th class="center aligned">Total</th>
+                        <th class="center aligned">Update Order</th>
+                    </tr>
+                    {{#each ongoing}}
+                        <tr>
+                            <td class="center aligned">{{_id}}</td>
+                            <td class="center aligned">{{user}}</td>
+                            <td class="center aligned">{{user}}</td>
+                            <td class="center aligned">
+                                {{#each books}}
+                                <p>{{Book.name}} - {{Quantity}} - {{ Subtotal}}</p>
+                                {{/each}}
+                            </td>
+                            <td class="center aligned">{{address}}</td>
+                            <td class="center aligned" style="width: 80px;">{{telephone}}</td>
+                            <td class="center aligned" style="width: 60px;">{{total}}</td>
+                            <td class="center aligned">
+                                <form action="orderUpdate" method="POST" class="ui form">
+                                    <input type="hidden" name="orderID" value="{{_id}}">
+                                    <input type="hidden" name="txtStatus" value="Delivering">
+                                    <input type="submit" value="Delivering">
+                                </form>
+                            </td>
+                        </tr>
+                    {{/each}}
+                </table>
+            </div>
+        </div>
+        <div class="block" style="width: 80%; margin-top: 30px">
+            <div class="row tags" style="display: inline;">
+                <span class="heading">Delivering Orders</span>
+            </div>
+            <br><br>
+            <div class="widget">
+                <table class="ui padded selectable fixed table tbl">
+                    <tr>
+                        <th class="center aligned">Order ID</th>
+                        <th class="center aligned">Username</th>
+                        <th class="center aligned">Order Date</th>
+                        <th class="center aligned">Books</th>
+                        <th class="center aligned">Address</th>
+                        <th class="center aligned">Telephone</th>
+                        <th class="center aligned">Total</th>
+                        <th class="center aligned">Update Order</th>
+                    </tr>
+                    {{#each delivering }}
+                        <tr>
+                            <td class="center aligned">{{_id}}</td>
+                            <td class="center aligned">{{user}}</td>
+                            <td class="center aligned">{{user}}</td>
+                            <td class="center aligned">
+                                {{#each books}}
+                                <p>{{Book.name}} - {{Quantity}} - {{ Subtotal}}</p>
+                                {{/each}}
+                            </td>
+                            <td class="center aligned">{{address}}</td>
+                            <td class="center aligned" style="width: 80px;">{{telephone}}</td>
+                            <td class="center aligned" style="width: 60px;">{{total}}</td>
+                            <td class="center aligned">
+                                <form action="orderUpdate" method="POST">
+                                    <input type="hidden" name="orderID" value="{{_id}}">
+                                    <input type="hidden" name="txtStatus" value="Finished">
+                                    <input type="submit" value="Finished">
+                                </form>
+                                <br>
+                                <form action="orderUpdate" method="POST" class="ui form">
+                                    <input type="hidden" name="orderID" value="{{_id}}">
+                                    <input type="hidden" name="txtStatus" value="Returned">
+                                    <input type="submit" value="Returned">
+                                </form>
+                            </td>
+                        </tr>
+                    {{/each}}
+                </table>
+            </div>
+        </div>
+        <div class="block" style="width: 80%; margin-top: 30px">
+            <div class="row tags" style="display: inline;">
+                <span class="heading">Finished Orders</span>
+            </div>
+            <br><br>
+            <div class="widget">
+                <table class="ui padded selectable fixed table tbl">
+                    <tr>
+                        <th class="center aligned">Order ID</th>
+                        <th class="center aligned">Username</th>
+                        <th class="center aligned">Order Date</th>
+                        <th class="center aligned">Books</th>
+                        <th class="center aligned">Address</th>
+                        <th class="center aligned">Telephone</th>
+                        <th class="center aligned">Total</th>
+                    </tr>
+                    {{#each finished}}
+                        <tr>
+                            <td class="center aligned">{{_id}}</td>
+                            <td class="center aligned">{{user}}</td>
+                            <td class="center aligned">{{user}}</td>
+                            <td class="center aligned">
+                                {{#each books}}
+                                <p>{{Book.name}} - {{Quantity}} - {{ Subtotal}}</p>
+                                {{/each}}
+                            </td>
+                            <td class="center aligned">{{address}}</td>
+                            <td class="center aligned" style="width: 80px;">{{telephone}}</td>
+                            <td class="center aligned" style="width: 60px;">{{total}}</td>
+                        </tr>
+                    {{/each}}
+                </table>
+            </div>
+        </div>
+        <div class="block" style="width: 80%; margin-top: 30px">
+            <div class="row tags" style="display: inline;">
+                <span class="heading">Returned Orders</span>
+            </div>
+            <br><br>
+            <div class="widget">
+                <table class="ui padded selectable fixed table tbl">
+                    <tr>
+                        <th class="center aligned">Order ID</th>
+                        <th class="center aligned">Username</th>
+                        <th class="center aligned">Order Date</th>
+                        <th class="center aligned">Books</th>
+                        <th class="center aligned">Address</th>
+                        <th class="center aligned">Telephone</th>
+                        <th class="center aligned">Total</th>
+                    </tr>
+                    {{#each returned }}
+                        <tr>
+                            <td class="center aligned">{{_id}}</td>
+                            <td class="center aligned">{{user}}</td>
+                            <td class="center aligned">{{user}}</td>
+                            <td class="center aligned">
+                                {{#each books}}
+                                <p>{{Book.name}} - {{Quantity}} - {{ Subtotal}}</p>
+                                {{/each}}
+                            </td>
+                            <td class="center aligned">{{address}}</td>
+                            <td class="center aligned" style="width: 80px;">{{telephone}}</td>
+                            <td class="center aligned" style="width: 60px;">{{total}}</td>
+                        </tr>
+                    {{/each}}
+                </table>
+            </div>
+        </div>
         {{>footer}}
     </body>
 

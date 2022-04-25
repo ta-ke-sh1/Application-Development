@@ -34,15 +34,9 @@
     </head>
 
     <body>
-        <form action="test" method="get">
-            <select name="txtStatus" id="">
-                <option value="Ongoing">Ongoing</option>
-                <option value="Delivering">Delivering</option>
-                <option value="Returned">Returned</option>
-                <option value="Finished">Finished</option>
-            </select>
-            <input type="submit" value="Submit" />
-        </form>
+        {{#each orders}}
+            <p>{{@index}}</p>
+        {{/each}}
     </body>
     <script>
         function getOrderID(){ return document.getElementById }

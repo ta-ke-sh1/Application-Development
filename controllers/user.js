@@ -110,7 +110,7 @@ router.post("/checkout", requiresLogin, async (req, res) => {
             Book: book,
             Quantity: dict2[key],
             Subtotal: dict2[key] * book.price,
-            feedback: false,
+            feedback: true,
         });
     }
 
@@ -217,7 +217,8 @@ router.post("/feedback", async (req, res) => {
         date: new Date(),
     };
     await insertObject("Feedbacks", Feedback);
-    await statusUpdate(req.body.orderID, req.body.bookID, req.body.numRating);
+    await statusUpdate(req.body.orderID, req.body.bookID, false);
+    await updateRating(req.body.bookID, req.body.numRating);
     res.redirect("/user/orders");
 });
 
