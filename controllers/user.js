@@ -5,7 +5,6 @@ const {
     getUser,
     getObject,
     statusUpdate,
-    updateRating,
     checkUser,
     insertObject,
     updateObject,
@@ -59,7 +58,11 @@ router.post("/addCart", requiresLogin, async(req, res) => {
     for (var key in dict2) {
         book = await getObject(key, "Books");
         total += dict2[key] * book.price;
-        cart.push({ Book: book, Quantity: dict[key], Subtotal: dict2[key] * book.price, });
+        cart.push({
+            Book: book,
+            Quantity: dict[key],
+            Subtotal: dict2[key] * book.price,
+        });
     }
     res.redirect("/user/cart");
 });
@@ -71,7 +74,11 @@ router.get("/cart", requiresLogin, async(req, res) => {
     for (var key in dict2) {
         book = await getObject(key, "Books");
         total += dict2[key] * book.price;
-        cart.push({ Book: book, Quantity: dict2[key], Subtotal: dict2[key] * book.price, });
+        cart.push({
+            Book: book,
+            Quantity: dict2[key],
+            Subtotal: dict2[key] * book.price,
+        });
     }
     if (cart.length == 0) {
         res.render("User/cart", {
@@ -114,7 +121,7 @@ router.post("/checkout", requiresLogin, async(req, res) => {
 
 router.get("/checkout", requiresLogin, async(req, res) => {
     res.redirect("/user/orders");
-})
+});
 
 router.get("/edit", requiresLogin, async(req, res) => {
     const objectToUpdate = await getObject(req.session.userID, "Users");
@@ -207,7 +214,6 @@ router.post("/feedback", async(req, res) => {
     };
     await insertObject("Feedbacks", Feedback);
     await statusUpdate(req.body.orderID, req.body.bookID, true);
-    await updateRating(req.body.bookID, req.body.numRating);
     res.redirect("/user/orders");
 });
 

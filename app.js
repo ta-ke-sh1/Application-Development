@@ -230,7 +230,9 @@ app.get("/logout", (req, res) => {
 });
 
 // Testing sites
-app.get("/test", async (req, res) => {});
+app.get("/test", async (req, res) => {
+    console.log(getOrder);
+});
 
 app.post("/test", async (req, res) => {
     console.log();

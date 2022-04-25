@@ -1,4 +1,5 @@
 const express = require("express");
+const hbs = require("hbs");
 const {
     getAll,
     getObject,
@@ -9,15 +10,26 @@ const {
     searchBook,
     advanceSearch,
     getCategoryByName,
+    refreshRating,
 } = require("../databaseHandler");
 const router = express.Router();
+
+hbs.handlebars.registerHelper("indexFix", function (value) {
+    value += 1;
+    return value;
+});
+
+hbs.handlebars.registerHelper("indexReverse", function (value) {
+    if (value >= 1) return (value -= 1);
+    else return 0;
+});
 
 router.get("/", async (req, res) => {
     const idVal = req.query.id;
     var feedbackPage = req.query.feedbackPage;
     const book = await getObject(idVal, "Books");
     var books = await advanceSearch("", book.author, book.publisher, 1000, "");
-
+    await refreshRating(req.query.id);
     if (feedbackPage == null) feedbackPage = 1;
     const feedbacks = await getFeedback(idVal, feedbackPage);
     upd = parseInt(book.popularity) + 1;
@@ -27,6 +39,7 @@ router.get("/", async (req, res) => {
         book: book,
         books: books,
         feedbacks: feedbacks,
+        feedbackPage: feedbackPage++,
     });
 });
 
