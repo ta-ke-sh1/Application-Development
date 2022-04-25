@@ -108,6 +108,7 @@ router.post("/checkout", requiresLogin, async(req, res) => {
         status: "Ongoing",
     };
     await insertObject("Orders", objectToInsert);
+    req.session["cart"] = [];
     res.redirect("/User/orders");
 });
 router.get("/checkout", requiresLogin, async(req, res) => {
