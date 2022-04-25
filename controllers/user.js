@@ -111,6 +111,7 @@ router.post("/checkout", requiresLogin, async(req, res) => {
     req.session["cart"] = [];
     res.redirect("/User/orders");
 });
+
 router.get("/checkout", requiresLogin, async(req, res) => {
     res.redirect("/user/orders");
 })
