@@ -162,7 +162,6 @@ router.post("/addUser", requiresLogin, async (req, res) => {
             insertObject("Users", objectToInsert);
             res.redirect("/admin/users");
         }
-
     } else {
         res.render("Admin/addUser", {
             error: "Existing user!",
@@ -482,7 +481,7 @@ router.post("/orderUpdate", async (req, res) => {
                     sold: sold + parseInt(order.books[i].Quantity),
                 },
             };
-            await statusUpdate(orderID, order.books[i].Status, false);
+            await statusUpdate(orderID, order.books[i].Book._id, false);
             await updateObject("Books", book, updateValues);
         }
     }

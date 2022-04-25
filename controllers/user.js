@@ -5,7 +5,6 @@ const {
     getUser,
     getObject,
     statusUpdate,
-    updateRating,
     checkUser,
     insertObject,
     updateObject,
@@ -32,7 +31,7 @@ router.get("/edit", (req, res) => {
     res.render("User/edit", {});
 });
 
-router.post("/addCart", requiresLogin, async(req, res) => {
+router.post("/addCart", requiresLogin, async (req, res) => {
     const id = req.body.txtID;
     const quantity = req.body.numQuantity;
     console.log(id);
@@ -59,19 +58,27 @@ router.post("/addCart", requiresLogin, async(req, res) => {
     for (var key in dict2) {
         book = await getObject(key, "Books");
         total += dict2[key] * book.price;
-        cart.push({ Book: book, Quantity: dict[key], Subtotal: dict2[key] * book.price, });
+        cart.push({
+            Book: book,
+            Quantity: dict[key],
+            Subtotal: dict2[key] * book.price,
+        });
     }
     res.redirect("/user/cart");
 });
 
-router.get("/cart", requiresLogin, async(req, res) => {
+router.get("/cart", requiresLogin, async (req, res) => {
     let cart = [];
     var total = 0;
     const dict2 = req.session["cart"];
     for (var key in dict2) {
         book = await getObject(key, "Books");
         total += dict2[key] * book.price;
-        cart.push({ Book: book, Quantity: dict2[key], Subtotal: dict2[key] * book.price, });
+        cart.push({
+            Book: book,
+            Quantity: dict2[key],
+            Subtotal: dict2[key] * book.price,
+        });
     }
     if (cart.length == 0) {
         res.render("User/cart", {
@@ -83,7 +90,7 @@ router.get("/cart", requiresLogin, async(req, res) => {
     }
 });
 
-router.post("/checkout", requiresLogin, async(req, res) => {
+router.post("/checkout", requiresLogin, async (req, res) => {
     let books = [];
     const dict2 = req.session["cart"];
 
@@ -110,11 +117,11 @@ router.post("/checkout", requiresLogin, async(req, res) => {
     await insertObject("Orders", objectToInsert);
     res.redirect("/User/orders");
 });
-router.get("/checkout", requiresLogin, async(req, res) => {
+router.get("/checkout", requiresLogin, async (req, res) => {
     res.redirect("/user/orders");
-})
+});
 
-router.get("/edit", requiresLogin, async(req, res) => {
+router.get("/edit", requiresLogin, async (req, res) => {
     const objectToUpdate = await getObject(req.session.userID, "Users");
     res.render("User/edit", {
         user: objectToUpdate,
@@ -125,7 +132,7 @@ router.get("/profile", requiresLogin, (req, res) => {
     res.render("User/profile", {});
 });
 
-router.post("/edit", requiresLogin, async(req, res) => {
+router.post("/edit", requiresLogin, async (req, res) => {
     const fname = req.body.txtFirstName;
     const lname = req.body.txtLastName;
     const address = req.body.txtAddress;
@@ -174,14 +181,14 @@ router.post("/edit", requiresLogin, async(req, res) => {
     }
 });
 
-router.get("/orders", requiresLogin, async(req, res) => {
+router.get("/orders", requiresLogin, async (req, res) => {
     const orders = await getOrders(req.session["userName"]);
     res.render("User/order", {
         orders: orders,
     });
 });
 
-router.get("/feedback", async(req, res) => {
+router.get("/feedback", async (req, res) => {
     const user = await getObject(req.session["userID"], "Users");
     const book = await getObject(req.query.bookID, "Books");
     const order = await getObject(req.query.orderID, "Orders");
@@ -194,7 +201,7 @@ router.get("/feedback", async(req, res) => {
     });
 });
 
-router.post("/feedback", async(req, res) => {
+router.post("/feedback", async (req, res) => {
     const Feedback = {
         user: req.session["userName"],
         product: req.body.bookID,
@@ -205,7 +212,6 @@ router.post("/feedback", async(req, res) => {
     };
     await insertObject("Feedbacks", Feedback);
     await statusUpdate(req.body.orderID, req.body.bookID, true);
-    await updateRating(req.body.bookID, req.body.numRating);
     res.redirect("/user/orders");
 });
 

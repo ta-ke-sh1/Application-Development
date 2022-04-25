@@ -269,11 +269,8 @@ async function statusUpdate(orderID, bookID, feedback) {
     );
 }
 
-async function updateRating(bookID, rating) {
+async function refreshRating(bookID) {
     const dbo = await getDB();
-    var count = await dbo
-        .collection("Orders")
-        .countDocuments({ books: { $elemMatch: { _id: ObjectId(bookID) } } });
     var feedbacks = await dbo
         .collection("Feedbacks")
         .aggregate([
@@ -281,14 +278,16 @@ async function updateRating(bookID, rating) {
             { $group: { _id: "$product", total: { $sum: "$rating" } } },
         ])
         .toArray();
-    var newRating = rating;
-    if (parseFloat(count) > 0)
-        newRating = parseFloat(feedbacks[0].total) / parseFloat(count);
+    var feedbackCount = await dbo
+        .collection("Feedbacks")
+        .countDocuments({ product: bookID });
+    if (parseInt(feedbackCount) > 0)
+        newRating = parseFloat(feedbacks[0].total) / parseFloat(feedbackCount);
     return await updateObject("Books", await getObject(bookID, "Books"), {
         $set: {
             rating: Math.round(parseInt(newRating)),
             floatRating: parseFloat(newRating.toFixed(1)),
-            feedbackCount: parseInt(count),
+            feedbackCount: parseInt(feedbackCount),
         },
     });
 }
@@ -304,6 +303,7 @@ module.exports = {
     getOrders,
     checkUser,
     getUser,
+    refreshRating,
     searchBook,
     advanceSearch,
     getAllCriterias,
@@ -313,6 +313,5 @@ module.exports = {
     statusUpdate,
     getFeedback,
     orderCounting,
-    updateRating,
     getOrderByStatus,
 };

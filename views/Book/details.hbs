@@ -100,6 +100,13 @@
                 padding-top: 4px;
             }
 
+            input[type=submit]{
+                background-color: white;
+            }
+
+            input[type=submit]:hover{
+                background-color: crimson;
+            }
         </style>
     </head>
 
@@ -223,28 +230,32 @@
             </div>
         </div>
         <br>
+        {{#if feedbacks}}
         <div class="block" style="height: fit-content; width: 80%">
             <div class="row tags" style="display: inline;">
                 <span class="heading">Feedbacks</span>
-                <a href="#">
-                    <span class="head-link" style="float: right;">
-                            Previous Page
-                    </span>
-                </a>
-                <a href="#">
-                    <span class="head-lin" style="float: right;">
-                            Next Page
-                    </span>
-                </a>
+                <form action="/book" method="get" style="float: right;">
+                    <input type="hidden" name="id" value="{{ book._id }}">
+                    <input type="hidden" name="feedbackPage" value="{{indexFix feedbackPage }}">
+                    <input type="submit" class="head-link" value="Next Page">
+                </form>
+                <form action="/book" method="get" style="float: right; margin-right: 20px">
+                    <input type="hidden" name="id" value="{{ book._id }}">
+                    <input type="hidden" name="feedbackPage" value="{{indexReverse feedbackPage }}">
+                    <input type="submit" class="head-link" value="Previous Page" >
+                </form>
             </div>
+            <br><br>
             {{#each feedbacks }}
-                <p>
+                <p style="border-top: 1px solid gray;">
                     <div class="row tags" style="display: inline;">
                         <span class="heading">{{user}}</span>
                         <div class="rating">
                             <p>Rating: {{ rating }}/5 -
                                 <span class="stars" data-rating={{ rating }}
                                       data-num-stars="5"></span>
+                                <br>
+                                {{date}}
                             </p>
                             <script>
                                 $(function () {
@@ -253,12 +264,27 @@
                             </script>
                         </div>
                     </div>
-                    <p>{{date}}</p>
-                    <p>{{content}}</p>
+                    <p style="margin-top: -40px; font-size: 22px">{{content}}</p>
                 </p>
-                <br>
-            {{/each}}
+            {{/each}} 
         </div>
+        {{else}}
+        <div class="block" style="height: fit-content; width: 80%">
+            <div class="row tags" style="display: inline;">
+                <span class="heading">No Feedback Available</span>
+                <form action="/book" method="get" style="float: right;">
+                    <input type="hidden" name="id" value="{{ book._id }}">
+                    <input type="hidden" name="feedbackPage" value="{{indexFix feedbackPage }}">
+                    <input type="submit" class="head-link" value="Next Page">
+                </form>
+                <form action="/book" method="get" style="float: right; margin-right: 20px">
+                    <input type="hidden" name="id" value="{{ book._id }}">
+                    <input type="hidden" name="feedbackPage" value="{{indexReverse feedbackPage }}">
+                    <input type="submit" class="head-link" value="Previous Page">
+                </form>
+            </div>
+        </div>
+        {{/if}}
         <br>
         {{#if session.isAdmin}}
         {{else}}
