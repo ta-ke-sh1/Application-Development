@@ -208,7 +208,6 @@ router.get("/feedback", async (req, res) => {
 });
 
 router.post("/feedback", async (req, res) => {
-    console.log(req.body.numRating);
     const Feedback = {
         user: req.session["userName"],
         product: req.body.bookID,

@@ -87,15 +87,19 @@
                 scale: 0.8;
             }
 
-            #middle{
-                border-left: 1px solid #CDCDCE;;
-                border-right: 1px solid #CDCDCE;;
+            #middle {
+                border-left: 1px solid #CDCDCE;
+                ;
+                border-right: 1px solid #CDCDCE;
+                ;
                 padding: 0px 20px;
                 margin: 0px 16px;
             }
-            #info p{
+
+            #info p {
                 padding-top: 4px;
             }
+
         </style>
     </head>
 
@@ -104,7 +108,7 @@
         <br>
         <div class="container">
             <br><br>
-            <div class="row" >
+            <div class="row">
                 <div class="col">
                     <div class="img" style="background-image: url('/Books/{{ book.image }}');">
                     </div>
@@ -119,7 +123,7 @@
                         <div class="fields" id="info">
                             <div class="field">
                                 <div class="rating">
-                                    <p>Rating: {{ book.rating }}/5 -
+                                    <p>Rating: {{ book.floatRating }}/5 -
                                         <span class="stars" data-rating={{ book.rating}}
                                               data-num-stars="5"></span>
                                     </p>
@@ -129,7 +133,7 @@
                                 <p>Sold: {{ book.sold }}</p>
                             </div>
                             <div class="field">
-                                <p>Feedback: {{ book.feedbackCount}}</p>
+                                <p>Feedback: {{ book.feedbackCount }}</p>
                             </div>
                         </div>
                         <script>
@@ -219,17 +223,38 @@
             </div>
         </div>
         <br>
-        <div class="block" style="height: 300px; width: 80%">
+        <div class="block" style="height: fit-content; width: 80%">
             <div class="row tags" style="display: inline;">
                 <span class="heading">Feedbacks</span>
             </div>
+            {{#each feedbacks }}
+                <p>
+                    <div class="row tags" style="display: inline;">
+                        <span class="heading">{{user}}</span>
+                        <div class="rating">
+                            <p>Rating: {{ rating }}/5 -
+                                <span class="stars" data-rating={{ rating }}
+                                      data-num-stars="5"></span>
+                            </p>
+                            <script>
+                                $(function () {
+                                    $('.stars').stars();
+                                });
+                            </script>
+                        </div>
+                    </div>
+                    <p>{{date}}</p>
+                    <p>{{content}}</p>
+                </p>
+                <br>
+            {{/each}}
         </div>
         <br>
         {{#if session.isAdmin}}
         {{else}}
             <div class="block" style="width: 80%">
                 <div class="row tags" style="display: inline;">
-                    <span class="heading">Books from this author:</span>
+                    <span class="heading">More Books From This Author:</span>
                 </div>
                 <div class="book-cards">
                     {{#each books }}

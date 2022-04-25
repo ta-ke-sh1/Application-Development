@@ -1,3 +1,4 @@
+const e = require("express");
 const { MongoClient, ObjectId } = require("mongodb");
 
 const URL =
@@ -149,20 +150,11 @@ async function insertObject(collectionName, objectToInsert) {
     const newObject = await dbo
         .collection(collectionName)
         .insertOne(objectToInsert);
-    console.log("New Object added");
 }
 
 async function getObject(id, collectionName) {
-    const obj = myCache.get(id);
-    if (obj == undefined) {
-        const dbo = await getDB();
-        newObject = await dbo.collection(collectionName).findOne({ _id: ObjectId(id) });
-        myCache.set(id, newObject);
-        return newObject;
-    }
-    else {
-        return obj;
-    } 
+    const dbo = await getDB();
+    return await dbo.collection(collectionName).findOne({ _id: ObjectId(id) });
 }
 
 async function getOrders(username) {
@@ -230,9 +222,14 @@ async function advanceSearch(keyword, author, publisher, max, category) {
     }
 }
 
-async function getFeedback(bookID) {
+async function getFeedback(bookID, feedbackPage) {
     const dbo = await getDB();
-    return await dbo.collection("Feedbacks").find({ _id: ObjectId(bookID) });
+    return await dbo.collection("Feedbacks")
+        .find({ product: bookID })
+        .sort({ date: -1 })
+        .skip((feedbackPage - 1) * 4)
+        .limit((feedbackPage) * 4)
+        .toArray();
 }
 
 async function orderCounting() {
@@ -256,7 +253,6 @@ async function orderCounting() {
 async function statusUpdate(orderID, bookID, rating) {
     const dbo = await getDB();
     await updateRating(bookID, rating);
-    console.log("Rating updated!");
     return await dbo.collection("Orders").updateOne(
         {
             _id: ObjectId(orderID),
@@ -283,8 +279,8 @@ async function updateRating(bookID, rating) {
         newRating = parseFloat(feedbacks[0].total) / parseFloat(count);
     return await updateObject("Books", await getObject(bookID, "Books"), {
         $set: {
-            rating: parseInt(newRating),
-            floatRating: parseFloat(newRating),
+            rating: Math.round(parseInt(newRating)),
+            floatRating: parseFloat(newRating.toFixed(1)),
             feedbackCount: parseInt(count),
         },
     });
