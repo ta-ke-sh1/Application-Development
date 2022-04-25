@@ -121,7 +121,7 @@
                     </div>
                 </div>
                 <div class="col" style="width: 500px; margin-top: 15px">
-                    <form action="user/addCart" method="POST" class="ui form" enctype="multipart/form-data">
+                    <form action="/user/addCart" method="POST" class="ui form" enctype="multipart/form-data">
                         <input type="hidden" name="txtID" value="{{book._id}}">
                         <div class="field">
                             <p class="book-name">{{ book.name }}</p>
@@ -202,7 +202,7 @@
                                         </center>
                                     </div>
                                     <center>
-                                        <input type="number" name="numQuantity" id="number" class="inp">
+                                        <input type="number" name="numQuantity" id="number" class="inp" min="1" max="{{book.quantity}}">
                                     </center>
                                     <div class="value-button" id="increase" onclick="increaseValue()"
                                          value="Increase Value">

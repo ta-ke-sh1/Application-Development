@@ -16,14 +16,15 @@
       <div class="block" style="width: 80%; margin-top: 30px">
             <div class="row tags" style="display: inline;">
                <span class="heading">Order ID: {{_id}}</span>
+               <span class="heading" style="float: right">Total: ${{total}}</span>
                <div class="body"> Order Date: {{date}}</div>
                <div class="body">Address: {{address}}</div>
                <div class="body">Telephone: {{phoneNumber}}</div>
+               <div class="body">Status: {{status}}</div>
             </div>
-            <br><br>
+            <br>
             <div class="widget">
                <table class="ui padded selectable fixed table tbl">
-
                   <tr>
                         <th class="center aligned">Books name</th>
                         <th class="center aligned">Quantity</th>
@@ -38,11 +39,11 @@
                            <td class="center aligned">
                               <center>
                                  {{#if feedback }}
-                                 <span class="head-link disabled" style=" background-color: gray;">
+                                 <span class="head-link disabled" style=" background-color: gray; color: white; border: none">
                                  Unvailable
                                  </span>
                               {{else}}
-                                 <a href="/user/feedback?bookID={{ Book._id }}&orderID={{../_id}}">
+                                 <a href="/feedback?bookID={{ Book._id }}&orderID={{../_id}}">
                                  <span class="head-link disabled">
                                  Give Feedback
                                  </span>
@@ -53,7 +54,7 @@
                            </td>
                         </tr>
                </table>
-               <span class="heading" style="float: right">Total: ${{total}}</span>
+               
             </div>
       </div>
       {{/each}}

@@ -85,13 +85,17 @@ hbs.registerPartial(
 const adminController = require("./controllers/admin");
 app.use("/admin", adminController);
 
-// book controller
 const bookController = require("./controllers/book");
 app.use("/book", bookController);
 
-// book controller
 const userController = require("./controllers/user");
 app.use("/user", userController);
+
+const orderController = require("./controllers/order");
+app.use("/order", orderController);
+
+const feedbackController = require("./controllers/feedback");
+app.use("/feedback", feedbackController);
 
 // Homepage
 app.get("/", async (req, res) => {

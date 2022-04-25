@@ -166,7 +166,7 @@ async function getObject(id, collectionName) {
 
 async function getOrders(username) {
     const dbo = await getDB();
-    return await dbo.collection("Orders").find({ user: username }).toArray();
+    return await dbo.collection("Orders").find({ user: username }).sort({ date: -1 }).toArray();
 }
 
 async function updateObject(collectionName, objectToUpdate, values) {
@@ -283,6 +283,7 @@ async function refreshRating(bookID) {
         .countDocuments({ product: bookID });
     if (parseInt(feedbackCount) > 0)
         newRating = parseFloat(feedbacks[0].total) / parseFloat(feedbackCount);
+    else newRating = 0;
     return await updateObject("Books", await getObject(bookID, "Books"), {
         $set: {
             rating: Math.round(parseInt(newRating)),
