@@ -456,7 +456,7 @@ router.post("/orderUpdate", async (req, res) => {
             var book = await getObject(order.books[i].Book._id, "Books");
             var updateValues = {
                 $set: {
-                    quantity: book.quantity - parseInt(order.books[i].Quantity),
+                    quantity: parseInt(book.quantity) - parseInt(order.books[i].Quantity),
                 },
             };
             await updateObject("Books", book, updateValues);
@@ -466,7 +466,7 @@ router.post("/orderUpdate", async (req, res) => {
             var book = await getObject(order.books[i].Book._id, "Books");
             var updateValues = {
                 $set: {
-                    quantity: book.quantity + parseInt(order.books[i].Quantity),
+                    quantity: parseInt(book.quantity) + parseInt(order.books[i].Quantity),
                 },
             };
             await updateObject("Books", book, updateValues);
@@ -478,7 +478,7 @@ router.post("/orderUpdate", async (req, res) => {
             if (sold == null) sold = 0;
             var updateValues = {
                 $set: {
-                    sold: sold + parseInt(order.books[i].Quantity),
+                    sold: parseInt(sold) + parseInt(order.books[i].Quantity),
                 },
             };
             await statusUpdate(orderID, order.books[i].Book._id, false);

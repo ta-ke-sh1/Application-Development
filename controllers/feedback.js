@@ -42,7 +42,7 @@ router.post("/", requiresLogin, async (req, res) => {
     };
     await insertObject("Feedbacks", Feedback);
     await statusUpdate(req.body.orderID, req.body.bookID, true);
-    res.redirect("/user/orders");
+    res.redirect("/order");
 });
 
 module.exports = router;
